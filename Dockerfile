@@ -119,7 +119,7 @@ WORKDIR /var/lib/jenkins/vision
 
 #RUN export BUILD_VERSION=$(git describe --tags --exact | sed 's/^v//')  && \
 RUN python3 setup.py bdist_wheel && \
-    pip install dist/torchvision-*-cp310-cp310-linux_x86_64.whl && \
+    pip install dist/torchvision-*.whl && \
     mkdir -p /vision/dist && \
     true
 
