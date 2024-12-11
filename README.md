@@ -1,1 +1,1 @@
-# gfx803_rocm
+# gfx803_rocm general
