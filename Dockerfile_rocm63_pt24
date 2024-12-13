@@ -1,9 +1,7 @@
-# Docker Buildfile for ROCm 6.2 to use ComfyUI with a RX570 / Polaris AMD GPU
-# build and compiled by Robert Rosenbusch at August 2024
+# Docker Buildfile for ROCm 6.3 to use ComfyUI with a RX570 / Polaris / gfx803 AMD GPU
+# created, build and compiled by Robert Rosenbusch at December 2024
 
-#FROM rocm/pytorch:rocm6.2_ubuntu22.04_py3.10_pytorch_release_2.3.0
 FROM rocm/pytorch:rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0
-#FROM rocm/pytorch:rocm6.2.2_ubuntu22.04_py3.10_pytorch_release_2.3.0
 
 ENV PORT=8188 \
     COMMANDLINE_ARGS='' \
@@ -73,8 +71,8 @@ RUN echo "BUILDING rocBLAS with ARCH: ${ROCM_ARCH} and JOBS: ${MAX_JOBS}" && \
     ./install.sh -ida ${ROCM_ARCH} -j ${MAX_JOBS} && \
     true
 
-######
-# If you trust my WHL-Files i uploaded at github and you are able to transfer th WHL-Files into this Docker-Image!? Then comment out the following lines to the next ######
+###########
+# If you trust my WHL-Files i uploaded at github and you are able to transfer th WHL-Files into this Docker-Image!? Then comment out the following lines to the next ###########
 ##
 # git clone PyTorch Version you need for
 ### PyTorch Version
@@ -130,12 +128,9 @@ RUN cp /var/lib/jenkins/vision/dist/*.whl /vision/dist && \
 
 ######
 # End of building pytorch and torchvision WHL-Files
-######
+###########
 
 EXPOSE ${PORT}
-EXPOSE 22/tcp
 
-#VOLUME [ "/ComfyUI", "/ComfyUI/custom_nodes","/ComfyUI/models","/ComfyUI/output","/ComfyUI/input"]
-#ENTRYPOINT python main.py --listen --use-split-cross-attention --port "${PORT}"
 CMD ["/bin/bash","-c"]
 

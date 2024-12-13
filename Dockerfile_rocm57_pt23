@@ -1,3 +1,5 @@
+# Docker Buildfile for ROCm 5.7 to use ComfyUI with a RX570 / Polaris / gfx803 AMD GPU
+# created, build and compiled by Robert Rosenbusch at May 2024
 
 FROM rocm/pytorch:rocm5.7_ubuntu22.04_py3.10_pytorch_2.0.1
 ENV PORT=8188 \
@@ -57,8 +59,8 @@ RUN apt-get -y update && \
     true
 
 
-######
-# If you trust my WHL-Files i uploaded at github and you are able to transfer th WHL-Files into this Docker-Image!? Then comment out the following lines to the next ######
+###########
+# If you trust my WHL-Files i uploaded at github and you are able to transfer th WHL-Files into this Docker-Image!? Then comment out the following lines to the next ###########
 ##
 # git clone PyTorch Version you need for
 ### PyTorch Version
@@ -88,13 +90,12 @@ RUN python setup.py clean && \
 RUN python3 tools/amd_build/build_amd.py && \
      true
 
-
 RUN echo "** BUILDING PYTORCH *** " && \ 
      python3 setup.py bdist_wheel && \
      true
 
 RUN echo "** INSTALL PYTORCH ***" && \    
-     pip install dist/torch*-cp310-cp310-linux_x86_64.whl && \
+     pip install dist/torch*.whl && \
      true
 
 # # Build Vision
@@ -102,19 +103,13 @@ WORKDIR /vision
 
 #RUN export BUILD_VERSION=$(git describe --tags --exact | sed 's/^v//')  && \
 RUN python3 setup.py bdist_wheel && \
-    pip install dist/torchvision-*-cp310-cp310-linux_x86_64.whl && \
+    pip install dist/torchvision*.whl && \
     true
 
 ######
 # End of building pytorch and torchvision WHL-Files
-######
-
-
-
+###########
 
 EXPOSE ${PORT}
-EXPOSE 22/tcp
 
-#VOLUME [ "/ComfyUI", "/ComfyUI/custom_nodes","/ComfyUI/models","/ComfyUI/output","/ComfyUI/input"]
-#ENTRYPOINT python main.py --listen --use-split-cross-attention --port "${PORT}"
 CMD ["/bin/bash","-c"]
