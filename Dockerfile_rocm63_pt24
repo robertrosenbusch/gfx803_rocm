@@ -133,4 +133,3 @@ RUN cp /var/lib/jenkins/vision/dist/*.whl /vision/dist && \
 EXPOSE ${PORT}
 
 CMD ["/bin/bash","-c"]
-
