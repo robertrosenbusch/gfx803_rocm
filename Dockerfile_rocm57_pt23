@@ -21,6 +21,7 @@ ENV PORT=8188 \
     PYTHONUNBUFFERED=1 \
     PYTHONENCODING=UTF-8\      
     REQS_FILE='requirements.txt' \
+    PIP_ROOT_USER_ACTION='ignore' \
     COMMANDLINE_ARGS='' 
 
 ## Write the Environment VARSs to global... to compile later with while you use #docker save# or #docker commit#
