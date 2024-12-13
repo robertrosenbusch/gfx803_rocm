@@ -6,7 +6,7 @@ This repo provides a docker buildfile based on the original ROCm-Dockerimage to 
 
 |OS            |linux|Python|ROCm |PyTorch|Torchvision|GPU|
 |--------------|-----|------|-----|-----|-----|-----|
-|Ubuntu-22.04.2|6.X and 5.19 |3.12|6.3.0|2.4.0|0.19.0|RX570/580/590 aka Polaris 20/21 aka GCN 4|
+|Ubuntu-24.04|6.X and 5.19 |3.12|6.3.0|2.4.0|0.19.0|RX570/580/590 aka Polaris 20/21 aka GCN 4|
 
 ## BIG BEWARE. The included WHL-Files on this github-repo are compiled, tested and uploaded for GFX803 into this Dockerfile-Image i published!!! 
 
@@ -25,4 +25,4 @@ This repo provides a docker buildfile based on the original ROCm-Dockerimage to 
 5. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined  -p 8188:8188 rocm63_pt24:latest`
 6. install ComfyUI and download a Model inside the container _OR_ use [my ComfyUI-Container-Dockerfile](https://github.com/robertrosenbusch/gfx803_rocm_comfyui)
 7. After installing ComfyUI _reinstall_ pytorch and torchvision wheels into your ComfyUI-Python-Environment. You will find the Polaris compiled Python-Wheel-Files into the "/pytorch/dist" and "/vision/dist" Directory or if you use the precompiled WHL file from this repo into the directory you are mapped and transfered.
-8. Since ROCm 6.0 you have to use the "--lowvram" option at ComfyUI to create correct results. *Dont know why* ...
+8. Since ROCm 6.0 you have to use the _"--lowvram"_ option at ComfyUI's main.py to create correct results. *Dont know why* ...
