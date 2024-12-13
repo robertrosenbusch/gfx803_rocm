@@ -2,7 +2,7 @@
 
 This repo provides a docker buildfile based on the original ROCm-Dockerimage to compile PyTorch and Torchvision for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) generation to generate AI Pics on ComfyUI. PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polaris generation in the original PIP repository. And of course not compiled too in the official ROCm-PyTorch Dockerfile. However, if Polaris 20/21 GPU support is to be used in ComfyUI, there is no way around newly compiled PyTorch and Torchvision whl/wheel python files. And in ROCm 6.X you have to recompile rocBLAS-Library too. That what this Docker Buildfile will do for you.
 
-## ROCm-6.2.0 in a Dockerfile
+## ROCm-6.3.0 in a Dockerfile
 
 |OS            |linux|Python|ROCm |PyTorch|Torchvision|GPU|
 |--------------|-----|------|-----|-----|-----|-----|
@@ -23,5 +23,6 @@ This repo provides a docker buildfile based on the original ROCm-Dockerimage to 
 3. if you trust my compiled WHL-Files into this git-repo, just comment out from Line #76 to Line #116 and import the whl-Files into the container after the building process
 4. build your Docker image via `docker build . -t 'rocm63_pt24:latest'`
 5. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined  -p 8188:8188 rocm63_pt24:latest`
-6. install ComfyUI and download a Model inside the container
-7. After installing ComfyUI _reinstall_ pytorch and torchvision wheels into your ComfyUI-Python-Environment. you find the Polaris compiled Python-Wheel-Files into the "/pytorch/dist" and "/vision/dist" Directory or if you use the precompiled WHL file from this repo into the directory you are mapped and transfered.
+6. install ComfyUI and download a Model inside the container _OR_ use [my ComfyUI-Container-Dockerfile](https://github.com/robertrosenbusch/gfx803_rocm_comfyui)
+7. After installing ComfyUI _reinstall_ pytorch and torchvision wheels into your ComfyUI-Python-Environment. You will find the Polaris compiled Python-Wheel-Files into the "/pytorch/dist" and "/vision/dist" Directory or if you use the precompiled WHL file from this repo into the directory you are mapped and transfered.
+8. Since ROCm 6.0 you have to use the "--lowvram" option at ComfyUI to create correct results. *Dont know why* ...

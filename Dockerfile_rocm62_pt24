@@ -60,7 +60,6 @@ RUN apt-get -y update && \
     true
 
 ENV ROCBLAS_GIT_VERSION="rocm-6.2.0"
-#ENV PYTORCH_GIT_VERSION="nightly"
 RUN echo "Checkout ROCBLAS: ${ROCBLAS_GIT_VERSION} " && \
     git clone https://github.com/ROCm/rocBLAS.git -b ${ROCBLAS_GIT_VERSION} /rocblas && \
     true
