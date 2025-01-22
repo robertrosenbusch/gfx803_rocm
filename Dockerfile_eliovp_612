@@ -1,8 +1,7 @@
-# Docker Buildfile for ROCm 6.3 to use ComfyUI with a RX570 / Polaris / gfx803 AMD GPU
-# created, build and compiled by Robert Rosenbusch at December 2024
+# Docker Buildfile for ROCm 6.2 to use ComfyUI with a RX570 / Polaris / gfx803 AMD GPU
+# build and compiled by Robert Rosenbusch at August 2024
 
-FROM rocm/pytorch:rocm6.2_ubuntu22.04_py3.10_pytorch_release_2.3.0
-
+FROM eliovp/rocm6.2_py3.11_torch2.5_vllm0.4.3:v1.0
 ENV PORT=8188 \
     COMMANDLINE_ARGS='' \
     ### how many CPUCores are using while compiling
@@ -17,6 +16,12 @@ ENV PORT=8188 \
     USE_ROCM=1 \ 
     USE_NINJA=1 \
     FORCE_CUDA=1 \ 
+    PYTORCH_TEST_WITH_ROCM=1 \
+    PYTORCH_TESTING_DEVICE_ONLY_FOR=cuda \
+    HSA_FORCE_FINE_GRAIN_PCIE=1 \
+    TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1 \
+    USE_FLASH_ATTENTION=1 \
+    #PYTORCH_TUNABLEOP_ENABLED=1 \
 #######
     DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
@@ -36,6 +41,13 @@ RUN echo MAX_JOBS=${MAX_JOBS} >> /etc/environment && \
     echo USE_ROCM=${USE_ROCM} >> /etc/environment && \
     echo USE_NINJA=${USE_NINJA} >> /etc/environment && \
     echo FORCE_CUDA=${FORCE_CUDA} >> /etc/environment && \
+    echo PYTORCH_TEST_WITH_ROCM=${PYTORCH_TEST_WITH_ROCM} >> /etc/environment && \
+    echo PYTORCH_TESTING_DEVICE_ONLY_FOR=${PYTORCH_TESTING_DEVICE_ONLY_FOR} >> /etc/environment && \
+    echo HSA_FORCE_FINE_GRAIN_PCIE=${HSA_FORCE_FINE_GRAIN_PCIE} >> /etc/environment && \
+    echo TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=${TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL} >> /etc/environment && \
+    echo USE_FLASH_ATTENTION=${USE_FLASH_ATTENTION} >> /etc/environment && \
+    #echo PYTORCH_TUNABLEOP_ENABLED=${PYTORCH_TUNABLEOP_ENABLED} >> /etc/environment && \
+    echo PIP_ROOT_USER_ACTION=${PIP_ROOT_USER_ACTION} >> /etc/environment && \
     true
 
 ## Export the AMD Stuff
@@ -49,19 +61,36 @@ RUN export MAX_JOBS=${MAX_JOBS} && \
     export USE_ROCM=${USE_ROCM}  && \
     export USE_NINJA=${USE_NINJA} && \
     export FORCE_CUDA=${FORCE_CUDA} && \
+    export PYTORCH_TEST_WITH_ROCM=${PYTORCH_TEST_WITH_ROCM} && \
+    export PYTORCH_TESTING_DEVICE_ONLY_FOR=${PYTORCH_TESTING_DEVICE_ONLY_FOR} && \
+    export HSA_FORCE_FINE_GRAIN_PCIE=${HSA_FORCE_FINE_GRAIN_PCIE} && \
+    export TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=${TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL} && \
+    export USE_FLASH_ATTENTION=${USE_FLASH_ATTENTION} && \
+    #export  PYTORCH_TUNABLEOP_ENABLED=${PYTORCH_TUNABLEOP_ENABLED} && \
+    export PIP_ROOT_USER_ACTION=${PIP_ROOT_USER_ACTION} && \
     true
 
 # Update System and install ffmpeg for SDXL video and python virtual Env
-RUN apt update && \
-    apt-get install -y --no-install-recommends ffmpeg virtualenv google-perftools ccache tmux mc pigz plocate && \
+RUN apt-get -y update && \
+    apt-get install -y --no-install-recommends ffmpeg virtualenv google-perftools ccache tmux mc pigz plocate  p7zip-full && \
     pip install --upgrade pip wheel && \
     pip install cmake mkl mkl-include && \ 
     apt --fix-broken install -y && \
     true
 
+######## START rocblas gfx library
+
+RUN echo "GFX803 rocblas Library "  && \
+    mkdir rocblas_lib && \
+    cd rocblas_lib && \
+    wget https://github.com/likelovewant/ROCmLibs-for-gfx1103-AMD780M-APU/releases/download/v0.6.1.2/rocm.gfx803.optic.vega10.logic.hip.sdk.6.1.2.7z && \
+    7z x rocm.gfx803.optic.vega10.logic.hip.sdk.6.1.2.7z  && \
+    cp -r library/* /opt/rocm/lib/rocblas/library/ && \
+    true
+######## END rocblas gfx library    
 
 ENV ROCBLAS_GIT_VERSION="rocm-6.2.0"
-RUN echo "Checkout ROCBLAS: ${ROCBLAS_GIT_VERSION}" && \
+RUN echo "Checkout ROCBLAS: ${ROCBLAS_GIT_VERSION} " && \
     git clone https://github.com/ROCm/rocBLAS.git -b ${ROCBLAS_GIT_VERSION} /rocblas && \
     true
 
@@ -71,32 +100,41 @@ RUN echo "BUILDING rocBLAS with ARCH: ${ROCM_ARCH} and JOBS: ${MAX_JOBS}" && \
     ./install.sh -ida ${ROCM_ARCH} -j ${MAX_JOBS} && \
     true
 
-RUN echo "Checkout Trtion Flash Attention" && \
-    #git clone https://github.com/triton-lang/triton /triton && \
-    #cd /triton && \
-    #git checkout 3ca2f498e98ed7249b82722587c511a5610e00c4 && \
-    #pip install --verbose -e python && \
-#    export FLASH_ATTENTION_TRITON_AMD_ENABLE="TRUE" && \
-#    cd flash-attention && \
-#    python setup.py install && \
-    true   
+
+
+RUN echo "Checkout hipBLASLt " && \
+    git clone https://github.com/ROCmSoftwarePlatform/hipBLASLt /hipBLASLt && \
+    true
+
+WORKDIR /hipBLASLt
+
+RUN echo "Install hipBLASLt " && \
+    #apt --fix-broken install -y && \
+    #apt install rocm-ocl-icd   -y && \
+    #apt install rocm-dev -y && \
+    #./install.sh -idc && \
+    true
 
 ###########
-# If you trust my WHL-Files i uploaded at github and you are able to transfer th WHL-Files into this Docker-Image!? Then comment out the following lines to the next ###########
+# If you trust my WHL-Files i uploaded at github _and_ you are able to transfer the WHL-Files into this Docker-Image... Then comment out the following lines to the next ###########
 ##
 # git clone PyTorch Version you need for
 ### PyTorch Version
 
-ENV PYTORCH_GIT_VERSION="release/2.2"
-#ENV PYTORCH_GIT_VERSION="v2.4.1"
+ENV PYTORCH_GIT_VERSION="v2.4.1"
 #ENV PYTORCH_GIT_VERSION="nightly"
 RUN echo "Checkout PyTorch Version: ${PYTORCH_GIT_VERSION} " && \  
-   git clone --recursive https://github.com/pytorch/pytorch.git -b ${PYTORCH_GIT_VERSION} /pytorch && \
+    git clone --recursive https://github.com/pytorch/pytorch.git -b ${PYTORCH_GIT_VERSION} /pytorch && \
+    true
+
+#git clone Torchvision you need
+## Torchvision Version
+ENV TORCH_GIT_VERSION="release/0.19"
+#ENV TORCH_GIT_VERSION="nightly"
+RUN echo "Checkout Torchvision Version: ${TORCH_GIT_VERSION} " && \ 
+   git clone https://github.com/pytorch/vision.git -b ${TORCH_GIT_VERSION} /vision && \
    true
 
-
-
-#WORKDIR /var/lib/jenkins/pytorch
 WORKDIR /pytorch
 RUN echo "BULDING PYTORCH $(git describe --tags --exact | sed 's/^v//')" && \
     mkdir -p /pytorch/dist && \
@@ -109,31 +147,20 @@ RUN python setup.py clean && \
 RUN python3 tools/amd_build/build_amd.py && \
      true
 
-
 RUN echo "** BUILDING PYTORCH *** " && \ 
      python3 setup.py bdist_wheel && \
      true
 
 RUN echo "** INSTALL PYTORCH ***" && \    
-     pip install dist/*.whl && \
+     pip install dist/torch*.whl && \
      true     
 
-# # Build Vision
-
-#git clone Torchvision you need
-## Torchvision Version
-ENV TORCH_GIT_VERSION="release/0.17"
-#ENV TORCH_GIT_VERSION="nightly"
-#RUN echo "Checkout Torchvision Version: ${TORCH_GIT_VERSION} " && \ 
-#   git clone https://github.com/pytorch/vision.git -b ${TORCH_GIT_VERSION} /vision && \
-#   true
-
-WORKDIR /var/lib/jenkins/vision
-#WORKDIR /vision
+ # Build Vision
+WORKDIR /vision
 
 #RUN export BUILD_VERSION=$(git describe --tags --exact | sed 's/^v//')  && \
 RUN python3 setup.py bdist_wheel && \
-    pip install dist/*.whl && \
+    pip install dist/torchvision*.whl && \
     mkdir -p /vision/dist && \
     true
 
@@ -149,3 +176,4 @@ RUN python3 setup.py bdist_wheel && \
 EXPOSE ${PORT}
 
 CMD ["/bin/bash","-c"]
+
