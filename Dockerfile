@@ -17,11 +17,14 @@ ENV PORT=8188 \
     USE_ROCM=1 \ 
     USE_NINJA=1 \
     FORCE_CUDA=1 \ 
+    #TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1 \
+    #PYTORCH_TUNABLEOP_ENABLED=1 \
 #######
     DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
     PYTHONENCODING=UTF-8\      
     REQS_FILE='requirements.txt' \
+    PIP_ROOT_USER_ACTION='ignore' \
     COMMANDLINE_ARGS='' 
 
 ## Write the Environment VARSs to global... to compile later with while you use #docker save# or #docker commit#
@@ -35,6 +38,9 @@ RUN echo MAX_JOBS=${MAX_JOBS} >> /etc/environment && \
     echo USE_ROCM=${USE_ROCM} >> /etc/environment && \
     echo USE_NINJA=${USE_NINJA} >> /etc/environment && \
     echo FORCE_CUDA=${FORCE_CUDA} >> /etc/environment && \
+    #echo TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=${TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL} >> /etc/environment && \
+    #echo PYTORCH_TUNABLEOP_ENABLED=${PYTORCH_TUNABLEOP_ENABLED} >> /etc/environment && \
+    echo PIP_ROOT_USER_ACTION=${PIP_ROOT_USER_ACTION} >> /etc/environment && \
     true
 
 ## Export the AMD Stuff
@@ -48,11 +54,13 @@ RUN export MAX_JOBS=${MAX_JOBS} && \
     export USE_ROCM=${USE_ROCM}  && \
     export USE_NINJA=${USE_NINJA} && \
     export FORCE_CUDA=${FORCE_CUDA} && \
+    #export TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=${TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL} && \
+    #export  PYTORCH_TUNABLEOP_ENABLED=${PYTORCH_TUNABLEOP_ENABLED} && \
+    export PIP_ROOT_USER_ACTION=${PIP_ROOT_USER_ACTION} && \
     true
 
 # Update System and install ffmpeg for SDXL video and python virtual Env
-RUN apt-get -y update && \
-    apt-get -y upgrade && \
+RUN apt-get update -y && \
     apt-get install -y --no-install-recommends ffmpeg virtualenv google-perftools ccache tmux mc pigz plocate && \
     pip install --upgrade pip wheel && \
     pip install cmake mkl mkl-include && \ 
@@ -72,37 +80,29 @@ RUN echo "BUILDING rocBLAS with ARCH: ${ROCM_ARCH} and JOBS: ${MAX_JOBS}" && \
     true
 
 ###########
-# If you trust my WHL-Files i uploaded at github and you are able to transfer th WHL-Files into this Docker-Image!? Then comment out the following lines to the next ###########
 ##
 # git clone PyTorch Version you need for
-### PyTorch Version
+### Build PyTorch
 
-#ENV PYTORCH_GIT_VERSION="release/2.4"
-#ENV PYTORCH_GIT_VERSION="nightly"
-#RUN echo "Checkout PyTorch Version: ${PYTORCH_GIT_VERSION} " && \  
-#    git clone --recursive https://github.com/pytorch/pytorch.git -b ${PYTORCH_GIT_VERSION} /pytorch && \
-#    true
+ENV PYTORCH_GIT_VERSION="rocm6.3_it_with_prebuilt_aot"
+RUN echo "Checkout PyTorch Version: ${PYTORCH_GIT_VERSION} " && \  
+    git clone --recursive https://github.com/ROCm/pytorch.git -b ${PYTORCH_GIT_VERSION} /pytorch && \
+    true
 
-#git clone Torchvision you need
-## Torchvision Version
-#ENV TORCH_GIT_VERSION="release/0.19"
-#ENV TORCH_GIT_VERSION="nightly"
-#RUN echo "Checkout Torchvision Version: ${TORCH_GIT_VERSION} " && \ 
-#   git clone https://github.com/pytorch/vision.git -b ${TORCH_GIT_VERSION} /vision && \
-#   true
-
-WORKDIR /var/lib/jenkins/pytorch
+#WORKDIR /var/lib/jenkins/pytorch
+WORKDIR /pytorch
 RUN echo "BULDING PYTORCH $(git describe --tags --exact | sed 's/^v//')" && \
     mkdir -p /pytorch/dist && \
     true 
 
-RUN python setup.py clean && \
+RUN python --version && \
+     python setup.py clean && \
      pip install -r ${REQS_FILE} && \
      true
+   
 
 RUN python3 tools/amd_build/build_amd.py && \
      true
-
 
 RUN echo "** BUILDING PYTORCH *** " && \ 
      python3 setup.py bdist_wheel && \
@@ -112,19 +112,29 @@ RUN echo "** INSTALL PYTORCH ***" && \
      pip install dist/torch*.whl && \
      true     
 
-# # Build Vision
-WORKDIR /var/lib/jenkins/vision
 
-#RUN export BUILD_VERSION=$(git describe --tags --exact | sed 's/^v//')  && \
+### Build Vision
+
+#git clone Torchvision Version you need
+## Torchvision Version
+ENV TORCH_GIT_VERSION="release/0.20"
+#ENV TORCH_GIT_VERSION="nightly"
+RUN echo "Checkout Torchvision Version: ${TORCH_GIT_VERSION} " && \ 
+   git clone https://github.com/pytorch/vision.git -b ${TORCH_GIT_VERSION} /vision && \
+   true
+
+#WORKDIR /var/libs/jenkins/vision
+WORKDIR /vision
+
 RUN python3 setup.py bdist_wheel && \
     pip install dist/torchvision-*.whl && \
     mkdir -p /vision/dist && \
     true
 
 
-RUN cp /var/lib/jenkins/vision/dist/*.whl /vision/dist && \
-    cp /var/lib/jenkins/pytorch/dist/*.whl /pytorch/dist  && \
-    true
+#RUN cp /var/lib/jenkins/vision/dist/*.whl /vision/dist && \
+#    cp /var/lib/jenkins/pytorch/dist/*.whl /pytorch/dist  && \
+#    true
 
 ######
 # End of building pytorch and torchvision WHL-Files
