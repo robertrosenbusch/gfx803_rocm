@@ -8,7 +8,6 @@ This repo provides a docker buildfile based on the original ROCm-Dockerimage to 
 |--------------|-----|------|-----|-----|-----|-----|
 |Ubuntu-24.04|6.X and 5.19 |3.12|6.3.0|2.5.0|0.20.0|RX570/580/590 aka Polaris 20/21 aka GCN 4|
 
-## BIG BEWARE. The included WHL-Files on this github-repo are compiled, tested and uploaded for GFX803 into this Dockerfile-Image i published!!! 
 
 * Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
 
