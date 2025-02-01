@@ -89,8 +89,8 @@ RUN echo "Checkout PyTorch Version: ${PYTORCH_GIT_VERSION} " && \
     git clone --recursive https://github.com/ROCm/pytorch.git -b ${PYTORCH_GIT_VERSION} /pytorch && \
     true
 
-WORKDIR /var/lib/jenkins/pytorch
-#WORKDIR /pytorch
+#WORKDIR /var/lib/jenkins/pytorch
+WORKDIR /pytorch
 RUN echo "BULDING PYTORCH $(git describe --tags --exact | sed 's/^v//')" && \
     mkdir -p /pytorch/dist && \
     true 
@@ -109,7 +109,7 @@ RUN echo "** BUILDING PYTORCH *** " && \
      true
 
 RUN echo "** INSTALL PYTORCH ***" && \    
-     pip install dist/*.whl && \
+     pip install dist/torch*.whl && \
      true     
 
 
@@ -133,8 +133,8 @@ RUN python3 setup.py bdist_wheel && \
 
 
 #RUN cp /var/lib/jenkins/vision/dist/*.whl /vision/dist && \
-RUN    cp /var/lib/jenkins/pytorch/dist/*.whl /pytorch/dist  && \
-    true
+#    cp /var/lib/jenkins/pytorch/dist/*.whl /pytorch/dist  && \
+#    true
 
 ######
 # End of building pytorch and torchvision WHL-Files

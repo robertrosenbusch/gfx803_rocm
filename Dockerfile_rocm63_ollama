@@ -79,6 +79,16 @@ RUN echo "BUILDING rocBLAS with ARCH: ${ROCM_ARCH} and JOBS: ${MAX_JOBS}" && \
     ./install.sh -ida ${ROCM_ARCH} -j ${MAX_JOBS} && \
     true
 
+## Checkout interactive LLM Benchmark for Ollama
+RUN git clone https://github.com/willybcode/llm-benchmark.git /llm-benchmark && \
+    true 
+
+WORKDIR /llm-benchmark
+RUN pip install -r requirements.txt && \
+    sed -i 's/return \[model\["name"\] for model in models/return \[model\["model"\] for model in models/' benchmark.py&& \ 
+    sed -i 's/return OllamaResponse.model_validate(last_element)/return last_element/' benchmark.py &&\
+    true
+
 ## Compile Ollama
 ENV OLLAMA_GIT_VERSION="v0.5.4"
 RUN echo "Checkout OLLAMA: ${OLLAMA_GIT_VERSION}" && \
@@ -92,18 +102,8 @@ RUN echo "CPU Ollame Replace for gfx803"  && \
     mv ollama ollama_cpu && \
     sed -i 's/var RocmComputeMajorMin = "9"/var RocmComputeMajorMin = "8"/' discover/gpu.go && \
     make -j ${MAX_JOBS} && \
-    mv ollama ollama_gpu && \
     true
 
-## Compile Benchmark for Ollama
-RUN git clone https://github.com/willybcode/llm-benchmark.git /llm-benchmark && \
-    true 
-
-WORKDIR /llm-benchmark
-RUN pip install -r requirements.txt && \
-    sed -i 's/return \[model\["name"\] for model in models/return \[model\["model"\] for model in models/' benchmark.py&& \ 
-    sed -i 's/return OllamaResponse.model_validate(last_element)/return last_element/' benchmark.py &&\
-    true
 
 EXPOSE ${PORT}
 
