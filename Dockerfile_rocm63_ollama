@@ -1,9 +1,9 @@
 # Docker Buildfile for ROCm 6.3 to use ComfyUI with a RX570 / Polaris / gfx803 AMD GPU
 # created, build and compiled by Robert Rosenbusch at December 2024
 
-FROM rocm/pytorch:rocm6.1.3_ubuntu22.04_py3.10_pytorch_release-2.1.2
+FROM rocm/pytorch:rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0
 
-ENV PORT=8188 \
+ENV PORT=11434 \
     COMMANDLINE_ARGS='' \
     ### how many CPUCores are using while compiling
     MAX_JOBS=14 \ 
@@ -59,87 +59,51 @@ RUN export MAX_JOBS=${MAX_JOBS} && \
     export PIP_ROOT_USER_ACTION=${PIP_ROOT_USER_ACTION} && \
     true
 
-# Update System and install ffmpeg for SDXL video and python virtual Env
+## Update System and install golang for ollama and python virtual Env
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends ffmpeg virtualenv google-perftools ccache tmux mc pigz plocate && \
+    apt-get install -y --no-install-recommends virtualenv google-perftools ccache tmux mc pigz plocate golang && \
     pip install --upgrade pip wheel && \
     pip install cmake mkl mkl-include && \ 
-    apt --fix-broken install -y && \
+    # symlink for Ollama
+    ln -s /opt/rocm-6.3.0 /opt/rocm && \
     true
 
-
-ENV ROCBLAS_GIT_VERSION="rocm-6.1.2"  
+## Compile rocBLAS     
+ENV ROCBLAS_GIT_VERSION="rocm-6.3.0"
 RUN echo "Checkout ROCBLAS: ${ROCBLAS_GIT_VERSION}" && \
     git clone https://github.com/ROCm/rocBLAS.git -b ${ROCBLAS_GIT_VERSION} /rocblas && \
     true
 
 WORKDIR /rocblas
-
 RUN echo "BUILDING rocBLAS with ARCH: ${ROCM_ARCH} and JOBS: ${MAX_JOBS}" && \
     ./install.sh -ida ${ROCM_ARCH} -j ${MAX_JOBS} && \
     true
 
-###########
-##
-# git clone PyTorch Version you need for
-### Build PyTorch
-
-ENV PYTORCH_GIT_VERSION="release/2.4"
-#ENV PYTORCH_GIT_VERSION="nightly"
-RUN echo "Checkout PyTorch Version: ${PYTORCH_GIT_VERSION} " && \  
-    git clone --recursive https://github.com/pytorch/pytorch.git -b ${PYTORCH_GIT_VERSION} /pytorch && \
+## Compile Ollama
+ENV OLLAMA_GIT_VERSION="v0.5.4"
+RUN echo "Checkout OLLAMA: ${OLLAMA_GIT_VERSION}" && \
+    git clone https://github.com/likelovewant/ollama-for-amd.git -b ${OLLAMA_GIT_VERSION} /ollama && \
     true
 
-#WORKDIR /var/lib/jenkins/pytorch
-WORKDIR /pytorch
-RUN echo "BULDING PYTORCH $(git describe --tags --exact | sed 's/^v//')" && \
-    mkdir -p /pytorch/dist && \
+WORKDIR /ollama
+RUN echo "CPU Ollame Replace for gfx803"  && \
+    sed -i 's/^HIP_ARCHS_COMMON := .*/HIP_ARCHS_COMMON := gfx803/' make/Makefile.rocm && \
+    make -j ${MAX_JOBS} && \
+    mv ollama ollama_cpu && \
+    sed -i 's/var RocmComputeMajorMin = "9"/var RocmComputeMajorMin = "8"/' discover/gpu.go && \
+    make -j ${MAX_JOBS} && \
+    mv ollama ollama_gpu && \
+    true
+
+## Compile Benchmark for Ollama
+RUN git clone https://github.com/willybcode/llm-benchmark.git /llm-benchmark && \
     true 
 
-RUN python --version && \
-     python setup.py clean && \
-     pip install -r ${REQS_FILE} && \
-     true
-   
-
-RUN python3 tools/amd_build/build_amd.py && \
-     true
-
-RUN echo "** BUILDING PYTORCH *** " && \ 
-     python3 setup.py bdist_wheel && \
-     true
-
-RUN echo "** INSTALL PYTORCH ***" && \    
-     pip install dist/torch*.whl && \
-     true     
-
-
-### Build Vision
-
-#git clone Torchvision Version you need
-## Torchvision Version
-ENV TORCH_GIT_VERSION="release/0.20"
-#ENV TORCH_GIT_VERSION="nightly"
-RUN echo "Checkout Torchvision Version: ${TORCH_GIT_VERSION} " && \ 
-   git clone https://github.com/pytorch/vision.git -b ${TORCH_GIT_VERSION} /vision && \
-   true
-
-#WORKDIR /var/libs/jenkins/vision
-WORKDIR /vision
-
-RUN python3 setup.py bdist_wheel && \
-    pip install dist/torchvision-*.whl && \
-    mkdir -p /vision/dist && \
+WORKDIR /llm-benchmark
+RUN pip install -r requirements.txt && \
+    sed -i 's/return \[model\["name"\] for model in models/return \[model\["model"\] for model in models/' benchmark.py&& \ 
+    sed -i 's/return OllamaResponse.model_validate(last_element)/return last_element/' benchmark.py &&\
     true
-
-
-#RUN cp /var/lib/jenkins/vision/dist/*.whl /vision/dist && \
-#    cp /var/lib/jenkins/pytorch/dist/*.whl /pytorch/dist  && \
-#    true
-
-######
-# End of building pytorch and torchvision WHL-Files
-###########
 
 EXPOSE ${PORT}
 
