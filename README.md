@@ -6,12 +6,12 @@ This repo provides a docker buildfile based on the original ROCm-Dockerimage to 
 
 |OS            |linux|Python|ROCm |PyTorch|Torchvision|GPU|
 |--------------|-----|------|-----|-----|-----|-----|
-|Ubuntu-24.04|6.X and 5.19 |3.12|6.3.0|2.5.0|0.20.0|RX570/580/590 aka Polaris 20/21 aka GCN 4|
+|Ubuntu-24.04|6.X and 5.19 |3.12|6.3.0|2.5.1|0.20.0|RX570/580/590 aka Polaris 20/21 aka GCN 4|
 
 
 * Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
 
-* PyTorch GIT: [v2.5.0](https://github.com/ROCm/pytorch/tree/rocm6.3_it_with_prebuilt_aot)
+* PyTorch GIT: [v2.5.1](https://github.com/ROCm/pytorch/tree/release/2.5)
 * Torchvison GIT: [v0.20.0](https://github.com/pytorch/vision/releases/tag/v0.20.0)
 * rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
 
