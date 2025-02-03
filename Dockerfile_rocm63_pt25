@@ -84,7 +84,8 @@ RUN echo "BUILDING rocBLAS with ARCH: ${ROCM_ARCH} and JOBS: ${MAX_JOBS}" && \
 # git clone PyTorch Version you need for
 ### Build PyTorch
 
-ENV PYTORCH_GIT_VERSION="rocm6.3_it_with_prebuilt_aot"
+#ENV PYTORCH_GIT_VERSION="rocm6.3_it_with_prebuilt_aot"
+ENV PYTORCH_GIT_VERSION="release/2.5"
 RUN echo "Checkout PyTorch Version: ${PYTORCH_GIT_VERSION} " && \  
     git clone --recursive https://github.com/ROCm/pytorch.git -b ${PYTORCH_GIT_VERSION} /pytorch && \
     true
