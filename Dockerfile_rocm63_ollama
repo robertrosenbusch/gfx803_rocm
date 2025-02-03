@@ -1,9 +1,10 @@
-# Docker Buildfile for ROCm 6.3 to use ComfyUI with a RX570 / Polaris / gfx803 AMD GPU
-# created, build and compiled by Robert Rosenbusch at December 2024
+# Docker Buildfile for ROCm 6.3 to use Ollama with a RX570 / Polaris / gfx803 AMD GPU
+# created, build and compiled by Robert Rosenbusch at January 2025
+# include llm-benchmnark and open-webui 
 
 FROM rocm/pytorch:rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0
 
-ENV PORT=11434 \
+ENV PORT=8080 \
     COMMANDLINE_ARGS='' \
     ### how many CPUCores are using while compiling
     MAX_JOBS=14 \ 
@@ -89,6 +90,11 @@ RUN pip install -r requirements.txt && \
     sed -i 's/return OllamaResponse.model_validate(last_element)/return last_element/' benchmark.py &&\
     true
 
+WORKDIR /    
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
+    pip install open-webui && \
+    true
+ 
 ## Compile Ollama
 ENV OLLAMA_GIT_VERSION="v0.5.4"
 RUN echo "Checkout OLLAMA: ${OLLAMA_GIT_VERSION}" && \
@@ -104,6 +110,7 @@ RUN echo "CPU Ollame Replace for gfx803"  && \
     make -j ${MAX_JOBS} && \
     true
 
+ENTRYPOINT ./ollama serve & open-webui serve 
 
 EXPOSE ${PORT}
 
