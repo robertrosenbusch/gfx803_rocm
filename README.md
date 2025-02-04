@@ -11,7 +11,7 @@ This repo provides a docker main buildfile based on the original ROCm-Dockerimag
 ## ROCm-6.3.0 Ollama an Webopen-webui in a Dockerfile
 
 |OS            |linux|Python|ROCm |Ollama|GPU|
-|--------------|-----|------|-----|------|------|-----|
+|--------------|-----|------|-----|------|-----|
 |Ubuntu-24.04|6.X and 5.19 |3.12|6.3.0|v0.5.4|RX570/580/590 aka Polaris 20/21 aka GCN 4|
 
 
