@@ -8,22 +8,26 @@ This repo provides a docker main buildfile based on the original ROCm-Dockerimag
 |--------------|-----|------|-----|-----|-----|-----|
 |Ubuntu-24.04|6.X and 5.19 |3.12|6.3.0|2.5.1|0.20.0|RX570/580/590 aka Polaris 20/21 aka GCN 4|
 
+* Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
+* PyTorch GIT: [v2.5.1](https://github.com/ROCm/pytorch/tree/release/2.5)
+* Torchvison GIT: [v0.20.0](https://github.com/pytorch/vision/releases/tag/v0.20.0)
+* rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
+
 ## ROCm-6.3.0 Ollama an Webopen-webui in a Dockerfile
 
 |OS            |linux|Python|ROCm |Ollama|GPU|
 |--------------|-----|------|-----|------|-----|
 |Ubuntu-24.04|6.X and 5.19 |3.12|6.3.0|v0.5.4|RX570/580/590 aka Polaris 20/21 aka GCN 4|
+* Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
+* rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
+* Ollama for AMD: [v0.5.4](https://github.com/likelovewant/ollama-for-amd/releases/tag/v0.5.4)
 
 
 
 ## ROCm-6.3.0 Ollama Benchmark on RX570
 ![GFX803_rocm63_ollama_benchmark](https://github.com/robertrosenbusch/gfx803_rocm/blob/b3db63e7824effa281a5a386d8e1b4dd252aec94/benchmark/gfx803_rocm63_ollama_benchmark.png?raw=true)
 
-* Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
 
-* PyTorch GIT: [v2.5.1](https://github.com/ROCm/pytorch/tree/release/2.5)
-* Torchvison GIT: [v0.20.0](https://github.com/pytorch/vision/releases/tag/v0.20.0)
-* rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
 --
 
 - It is _not_ necessary to install the entire ROCm-Stack on the host system. _Unless_ you want to use something to optimize your GPU via rocm-smi. In my case, I need the rocm stuff to reduce the power consumption of my RX570 GPU to 145 watts with `rocm-smi --setpoweroverdrive 145 && watch -n2 rocm-smi` every time I restart the container.
