@@ -2,12 +2,17 @@
 
 This repo provides a docker buildfile based on the original ROCm-Dockerimage to compile PyTorch and Torchvision for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) generation to generate AI Pics on ComfyUI. PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polaris generation in the original PIP repository. And of course not compiled too in the official ROCm-PyTorch Dockerfile. However, if Polaris 20/21 GPU support is to be used in ComfyUI, there is no way around newly compiled PyTorch and Torchvision whl/wheel python files. And in ROCm 6.X you have to recompile rocBLAS-Library too. That what this Docker Buildfile will do for you.
 
-## ROCm-6.3.0 in a Dockerfile
+## ROCm-6.3.0 PyTorch for ComfyUI in a Dockerfile
 
 |OS            |linux|Python|ROCm |PyTorch|Torchvision|GPU|
 |--------------|-----|------|-----|-----|-----|-----|
 |Ubuntu-24.04|6.X and 5.19 |3.12|6.3.0|2.5.1|0.20.0|RX570/580/590 aka Polaris 20/21 aka GCN 4|
 
+## ROCm-6.3.0 Ollama an Webopen-webui in a Dockerfile
+
+|OS            |linux|Python|ROCm |Ollama|GPU|
+|--------------|-----|------|-----|-----|-----|-----|
+|Ubuntu-24.04|6.X and 5.19 |3.12|6.3.0|v0.5.4|RX570/580/590 aka Polaris 20/21 aka GCN 4|
 
 * Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
 
