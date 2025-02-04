@@ -1,6 +1,6 @@
 # ROCm 6.3.0 , PyTorch 2.5, Torchvision 0.20 with AMD GFX803 aka AMD Polaris aka AMD RX570/RX580/RX590 for ComfyUI
 
-This repo provides a docker buildfile based on the original ROCm-Dockerimage to compile PyTorch and Torchvision for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) generation to generate AI Pics on ComfyUI. PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polaris generation in the original PIP repository. And of course not compiled too in the official ROCm-PyTorch Dockerfile. However, if Polaris 20/21 GPU support is to be used in ComfyUI, there is no way around newly compiled PyTorch and Torchvision whl/wheel python files. And in ROCm 6.X you have to recompile rocBLAS-Library too. That what this Docker Buildfile will do for you.
+This repo provides a docker main buildfile based on the original ROCm-Dockerimage to compile PyTorch and Torchvision for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) generation to generate AI Pics on ComfyUI. And a Dockerfile to build Ollama on the same ROCm Stack. PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polaris generation in the original PIP repository. And of course not compiled too in the official ROCm-PyTorch Dockerfile. However, if Polaris 20/21 GPU support is to be used in ComfyUI, there is no way around newly compiled PyTorch and Torchvision whl/wheel python files. And for Ollama in ROCm 6.X you have to recompile the rocBLAS-Library. That what this Docker Buildfile(s) will do for you.
 
 ## ROCm-6.3.0 PyTorch for ComfyUI in a Dockerfile
 
@@ -10,15 +10,21 @@ This repo provides a docker buildfile based on the original ROCm-Dockerimage to 
 
 ## ROCm-6.3.0 Ollama an Webopen-webui in a Dockerfile
 
-|OS            |linux|Python|ROCm |Ollama|GPU|
-|--------------|-----|------|-----|-----|-----|-----|
+|OS            |linux|Python|ROCm |Ollama|v0.5.4|GPU|
+|--------------|-----|------|-----|------|------|-----|
 |Ubuntu-24.04|6.X and 5.19 |3.12|6.3.0|v0.5.4|RX570/580/590 aka Polaris 20/21 aka GCN 4|
+
+
+
+## ROCm-6.3.0 Ollama Benchmark on RX570
+![GFX803_rocm63_ollama_benchmark](https://github.com/robertrosenbusch/gfx803_rocm/benchmark/gfx803_rocm63_ollama_benchmark.png
 
 * Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
 
 * PyTorch GIT: [v2.5.1](https://github.com/ROCm/pytorch/tree/release/2.5)
 * Torchvison GIT: [v0.20.0](https://github.com/pytorch/vision/releases/tag/v0.20.0)
 * rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
+--
 
 - It is _not_ necessary to install the entire ROCm-Stack on the host system. _Unless_ you want to use something to optimize your GPU via rocm-smi. In my case, I need the rocm stuff to reduce the power consumption of my RX570 GPU to 145 watts with `rocm-smi --setpoweroverdrive 145 && watch -n2 rocm-smi` every time I restart the container.
 
