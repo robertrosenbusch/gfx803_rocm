@@ -90,6 +90,7 @@ RUN pip install -r requirements.txt && \
     sed -i 's/return OllamaResponse.model_validate(last_element)/return last_element/' benchmark.py &&\
     true
 
+## Install Open WebUI    
 WORKDIR /    
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
     pip install open-webui && \
