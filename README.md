@@ -13,12 +13,11 @@ This repo provides a docker main buildfile based on the original ROCm-Dockerimag
 * Torchvison GIT: [v0.20.0](https://github.com/pytorch/vision/releases/tag/v0.20.0)
 * rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
 
-### ROCm-6.3.0 ComfyUI Benchmark on RX570
+##### ROCm-6.3.0 ComfyUI Benchmark on RX570
 |CPU/GPU       |Flux -Schnell (1024x1024)|SD3.5  (1024x1024)|SDXL  (1024x1024)|SD 1.5  (512x512)|SD 1.5  (512x768)|
 |--------------|-----|------|-----|-----|-----|
 |ROCm 6.3 + PyTorch v2.5|63.72 s/it|19.56 s/it|7.57 s/it| 1.19 s/it|1.92 s/it|
 |ROCm 5.7 + PyTorch v2.3|58.85 s/it|19.87 s/it|8.33 s/it|1.22 s/it|1.97 s/it|
-
 
 
 ## ROCm-6.3.0 Ollama / Webopen-webui in a Dockerfile
@@ -31,11 +30,7 @@ This repo provides a docker main buildfile based on the original ROCm-Dockerimag
 * Ollama for AMD: [v0.5.4](https://github.com/likelovewant/ollama-for-amd/releases/tag/v0.5.4)
 * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
 
-
-
-
-
-## ROCm-6.3.0 Ollama v0.5.4 Benchmark on RX570
+##### ROCm-6.3.0 Ollama v0.5.4 Benchmark on RX570
 |CPU/GPU       |lindeepseek-r1:8b|llama3.1:8b|llama2:7b|
 |--------------|-----|------|-----|
 |GPU AMD RX570|Total: 18.19 t/s|Total: 18.80 t/s|Total: 27.46 t/s|
