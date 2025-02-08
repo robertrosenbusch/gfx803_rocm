@@ -1,6 +1,6 @@
-# ROCm 6.3.0 , PyTorch 2.5, Torchvision 0.20 with AMD GFX803 aka AMD Polaris aka AMD RX570/RX580/RX590 for ComfyUI
+# ROCm 6.3.0, PyTorch 2.5, Torchvision 0.20 with AMD GFX803 aka AMD Polaris aka AMD RX570/RX580/RX590 for ComfyUI or Ollama
 
-This repo provides a docker main buildfile based on the original ROCm-Dockerimage to compile PyTorch and Torchvision for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) generation to generate AI Pics on ComfyUI. And a Dockerfile to build Ollama on the same ROCm Stack. PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polaris generation in the original PIP repository. And of course not compiled too in the official ROCm-PyTorch Dockerfile. However, if Polaris 20/21 GPU support is to be used in ComfyUI, there is no way around newly compiled PyTorch and Torchvision whl/wheel python files. And for Ollama in ROCm 6.X you have to recompile the rocBLAS-Library. That what this Docker Buildfile(s) will do for you.
+This repo provides a docker main buildfile based on the original ROCm-Dockerimage to compile PyTorch and Torchvision for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) generation to generate AI Pics on ComfyUI. And a Dockerfile to build Ollama on the same ROCm Stack. PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polaris generation in the original PIP repository. And of course not compiled too in the official ROCm-PyTorch Dockerfile. However, if Polaris 20/21 GPU support is to be used in ComfyUI, there is no way around newly compiled PyTorch and Torchvision whl/wheel python files. And for Ollama in ROCm 6.X you have to recompile the rocBLAS-Library too. That what this Docker Buildfile(s) will do for you.
 
 ## ROCm-6.3.0 PyTorch for ComfyUI in a Dockerfile
 
@@ -31,7 +31,7 @@ This repo provides a docker main buildfile based on the original ROCm-Dockerimag
 * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
 
 ##### ROCm-6.3.0 Ollama v0.5.4 Benchmark on RX570
-|CPU/GPU       |lindeepseek-r1:8b|llama3.1:8b|llama2:7b|
+|CPU/GPU       |deepseek-r1:8b|llama3.1:8b|llama2:7b|
 |--------------|-----|------|-----|
 |GPU AMD RX570|Total: 18.19 t/s|Total: 18.80 t/s|Total: 27.46 t/s|
 |CPU AMD Ryzen 7 3700x| Total: 7.33 t/s|Total: 7.53 t/s|Total: 8.76 t/s|
