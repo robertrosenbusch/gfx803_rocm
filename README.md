@@ -16,7 +16,7 @@ This repo provides a docker main buildfile based on the original ROCm-Dockerimag
 ##### ROCm-6.3.0 ComfyUI Benchmark on RX570
 |CPU/GPU       |Flux -Schnell (1024x1024)|SD3.5  (1024x1024)|SDXL  (1024x1024)|SD 1.5  (512x512)|SD 1.5  (512x768)|
 |--------------|-----|------|-----|-----|-----|
-|ROCm 6.3 + PyTorch v2.5|[63.72 s/it](https://github.com/robertrosenbusch/gfx803_rocm/benchmark/comfyui_schnell_1024x1024.png)|19.56 s/it|7.57 s/it| 1.19 s/it|1.92 s/it|
+|ROCm 6.3 + PyTorch v2.5|[63.72 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_schnell_1024x1024.png)|19.56 s/it|7.57 s/it| 1.19 s/it|1.92 s/it|
 |ROCm 5.7 + PyTorch v2.3|58.85 s/it|19.87 s/it|8.33 s/it|1.22 s/it|1.97 s/it|
 
 
