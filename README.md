@@ -22,9 +22,9 @@ This repo provides a docker main buildfile based on the original ROCm-Dockerimag
 
 ## ROCm-6.3.0 Ollama / Webopen-webui in a Dockerfile
 
-|OS            |linux|Python|ROCm |Ollama|GPU|
-|--------------|-----|------|-----|------|-----|
-|Ubuntu-24.04|6.X and 5.19 |3.12|6.3.0|v0.5.4|RX570/580/590 aka Polaris 20/21 aka GCN 4|
+|OS            |linux|Python|ROCm |Ollama|GPU|Mapping Port|
+|--------------|-----|------|-----|------|-----|-----|
+|Ubuntu-24.04|6.X and 5.19 |3.12|6.3.0|v0.5.4|RX570/580/590 aka Polaris 20/21 aka GCN 4|8080|
 * Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
 * rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
 * Ollama for AMD: [v0.5.4](https://github.com/likelovewant/ollama-for-amd/releases/tag/v0.5.4)
@@ -33,8 +33,8 @@ This repo provides a docker main buildfile based on the original ROCm-Dockerimag
 ##### ROCm-6.3.0 Ollama v0.5.4 Benchmark on RX570 vs CPU Ryzen7 3700x
 |CPU/GPU       |deepseek-r1:8b|llama3.1:8b|llama2:7b|
 |--------------|-----|------|-----|
-|GPU AMD RX570|Total: 18.19 t/s|Total: 18.80 t/s|Total: 27.46 t/s|
-|CPU AMD Ryzen 7 3700x| Total: 7.33 t/s|Total: 7.53 t/s|Total: 8.76 t/s|
+|[GPU AMD RX570](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/gpu_rocm63_ollama_benchmark.png)|Total: 18.19 t/s|Total: 18.80 t/s|Total: 27.46 t/s|
+|[CPU AMD Ryzen 7 3700x](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/cpu_rocm63_ollama_benchmark.png)| Total: 7.33 t/s|Total: 7.53 t/s|Total: 8.76 t/s|
 
 ![GFX803_rocm63_ollama_benchmark](https://github.com/robertrosenbusch/gfx803_rocm/blob/b3db63e7824effa281a5a386d8e1b4dd252aec94/benchmark/gfx803_rocm63_ollama_benchmark.png?raw=true)
 
