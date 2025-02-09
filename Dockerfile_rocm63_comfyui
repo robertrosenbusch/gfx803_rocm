@@ -71,6 +71,6 @@ RUN ./venv/bin/pip install -e /pyrsmi && \
 ENV args="" 
 EXPOSE ${PORT}
 ### Use "--lowvram" to get a correct output
-# ENTRYPOINT ./venv/bin/python main.py --listen --lowvram --port ${PORT} --fast --use-pytorch-cross-attention ${COMMANDLINE_ARGS}  >> /comfy/comfy_rocm63_pt24.log 2>&1
+# ENTRYPOINT ./venv/bin/python main.py --listen --lowvram --port ${PORT}  >> /comfy/comfy_rocm63_pt25.log 2>&1
 
 CMD ["/bin/bash","-c"]
