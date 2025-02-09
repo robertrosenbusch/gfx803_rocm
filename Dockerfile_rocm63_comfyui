@@ -1,0 +1,76 @@
+# Docker Buildfile for ComfyUI to use a RX570 / Polaris / gfx803 AMD GPU with ROCm 6.3
+# created, build and compiled by Robert Rosenbusch at December 2024
+FROM rocm63_pt25:v3
+
+
+SHELL ["/bin/bash", "-c"]  
+ENV PORT=8188 \
+    DEBIAN_FRONTEND=noninteractive \
+    PYTHONUNBUFFERED=1 \
+    radePYTHONIOENCODING=UTF-8 \
+    REQS_FILE='requirements.txt' \
+    COMMANDLINE_ARGS='' \
+    PIP_ROOT_USER_ACTION='ignore' \
+    ### For your AMD GPU
+    PYTORCH_ROCM_ARCH=gfx803 
+
+WORKDIR /
+
+RUN pip install cmake mkl mkl-include && \
+    pip install --upgrade pip wheel && \
+    true
+
+### Install PyRSMI to monitore the GPU via ComfyUI-Crystools    
+RUN git clone https://github.com/ROCm/pyrsmi /pyrsmi && \
+    true
+
+WORKDIR /pyrsmi
+
+RUN python -m pip install -e . && \
+    true
+
+WORKDIR /    
+
+### Install and Compile ComfyUI, reinstall pytorch and torchvision WHL Files
+RUN git clone https://github.com/comfyanonymous/ComfyUI.git /ComfyUI && \
+    true
+
+WORKDIR /ComfyUI
+
+RUN touch comfi.sh && \
+    chmod +x comfi.sh && \
+    true
+
+RUN python -m venv venv && \
+    ./venv/bin/python -m pip install --upgrade pip && \
+    ./venv/bin/pip install psutil && \
+    ./venv/bin/pip install -r requirements.txt && \
+    ./venv/bin/pip uninstall -y torch torchvision && \    
+    ./venv/bin/pip install /pytorch/dist/*.whl && \
+    ./venv/bin/pip install /vision/dist/*.whl && \
+    ./venv/bin/python -m pip install -e /pyrsmi/. && \
+    ./venv/bin/python -m pip uninstall numpy -y && \
+    ./venv/bin/pip install numpy==1.26.4 && \
+    true    
+
+### Install ComfyUI Manager    
+WORKDIR /ComfyUI/custom_nodes
+
+RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git &&\
+    true
+
+### Install PyRSMI to ComfyUI-Environment
+WORKDIR /ComfyUI    
+
+RUN pip install psutil && \
+    true    
+
+RUN ./venv/bin/pip install -e /pyrsmi && \
+    true
+    
+ENV args="" 
+EXPOSE ${PORT}
+### Use "--lowvram" to get a correct output
+# ENTRYPOINT ./venv/bin/python main.py --listen --lowvram --port ${PORT} --fast --use-pytorch-cross-attention ${COMMANDLINE_ARGS}  >> /comfy/comfy_rocm63_pt24.log 2>&1
+
+CMD ["/bin/bash","-c"]
