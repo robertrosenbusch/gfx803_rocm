@@ -111,8 +111,6 @@ RUN echo "CPU Ollame Replace for gfx803"  && \
     make -j ${MAX_JOBS} && \
     true
 
-#ENTRYPOINT ./ollama serve & open-webui serve 
-
 EXPOSE ${PORT}
 
 CMD ["/bin/bash","-c"]
