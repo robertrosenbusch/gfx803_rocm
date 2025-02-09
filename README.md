@@ -53,7 +53,15 @@ This repo provides a docker main buildfile based on the original ROCm-Dockerimag
 8. Since ROCm 6.0 you have to use the _`--lowvram`_ option at ComfyUI's main.py to create correct results. *Dont know why* ...
 9. Since PyTorch 2.4 you have to use the _`MIOPEN_LOG_LEVEL=3`_ Environment-Var to surpress HipBlas-Warnings. *Dont know why* ...
 
-# Install ROCm 6.3 via Docker for ComfyUI
+
+## Install ComfyUI for ROCm 6.3 
 
 1. install the docker-subsystem / docker.io on your linux system
 2. download the latest file version of this github-repos vi git clone
+
+# Install Ollana for ROCm 6.3
+
+1. install the docker-subsystem / docker.io on your linux system
+2. download the latest file version of this github-repos vi git clone
+3. build your Docker image via `docker build -f Dockerfile_rocm63_ollama -t 'rocm63_ollama:latest'`
+4. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 --name rocm63_ollama rocm63_ollama:latest`
