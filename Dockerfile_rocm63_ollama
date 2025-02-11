@@ -4,7 +4,9 @@
 
 FROM rocm/pytorch:rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0
 
-ENV PORT=8080 \
+ENV WEBGUI_PORT=8080 \
+    OLLAMA_PORT=11434 \
+    OLLAMA_LISTENIP=0.0.0.0 \
     COMMANDLINE_ARGS='' \
     ### how many CPUCores are using while compiling
     MAX_JOBS=14 \ 
@@ -29,7 +31,8 @@ ENV PORT=8080 \
     COMMANDLINE_ARGS='' 
 
 ## Write the Environment VARSs to global... to compile later with while you use #docker save# or #docker commit#
-RUN echo MAX_JOBS=${MAX_JOBS} >> /etc/environment && \ 
+RUN echo OLLAMA_HOST=${OLLAMA_LISTENIP}:${OLLAMA_PORT} >> /etc/environment && \ 
+    echo MAX_JOBS=${MAX_JOBS} >> /etc/environment && \ 
     echo HSA_OVERRIDE_GFX_VERSION=${HSA_OVERRIDE_GFX_VERSION} >> /etc/environment && \ 
     echo PYTORCH_ROCM_ARCH=${PYTORCH_ROCM_ARCH} >> /etc/environment && \ 
     echo ROCM_ARCH=${ROCM_ARCH} >> /etc/environment && \ 
@@ -45,7 +48,8 @@ RUN echo MAX_JOBS=${MAX_JOBS} >> /etc/environment && \
     true
 
 ## Export the AMD Stuff
-RUN export MAX_JOBS=${MAX_JOBS} && \ 
+RUN export OLLAMA_HOST=${OLLAMA_LISTENIP}:${OLLAMA_PORT} && \
+    export MAX_JOBS=${MAX_JOBS} && \ 
     export HSA_OVERRIDE_GFX_VERSION=${HSA_OVERRIDE_GFX_VERSION} && \
     export ROC_ENABLE_PRE_VEGA=${ROC_ENABLE_PRE_VEGA} && \
     export PYTORCH_ROCM_ARCH=${PYTORCH_ROCM_ARCH} && \
@@ -111,6 +115,6 @@ RUN echo "CPU Ollame Replace for gfx803"  && \
     make -j ${MAX_JOBS} && \
     true
 
-EXPOSE ${PORT}
+EXPOSE ${WEBGUI_PORT} ${OLLAMA_PORT}
 
 CMD ["/bin/bash","-c"]

@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"cline.modelSettings.o3Mini.reasoningEffort": "low"
+	}
+}
