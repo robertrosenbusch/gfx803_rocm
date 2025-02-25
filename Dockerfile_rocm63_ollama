@@ -100,21 +100,31 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
     pip install open-webui && \
     true
  
-## Compile Ollama
-ENV OLLAMA_GIT_VERSION="v0.5.4"
+## Checkout Ollama
+ENV OLLAMA_GIT_VERSION="v0.5.12"
 RUN echo "Checkout OLLAMA: ${OLLAMA_GIT_VERSION}" && \
-    git clone https://github.com/likelovewant/ollama-for-amd.git -b ${OLLAMA_GIT_VERSION} /ollama && \
+    git clone https://github.com/ollama/ollama.git -b ${OLLAMA_GIT_VERSION} /ollama && \
     true
 
+## Replace gfx803 on Ollama    
 WORKDIR /ollama
-RUN echo "CPU Ollame Replace for gfx803"  && \
-    sed -i 's/^HIP_ARCHS_COMMON := .*/HIP_ARCHS_COMMON := gfx803/' make/Makefile.rocm && \
-    make -j ${MAX_JOBS} && \
-    mv ollama ollama_cpu && \
+RUN echo "REPLACE Ollama Source for gfx803"  && \
     sed -i 's/var RocmComputeMajorMin = "9"/var RocmComputeMajorMin = "8"/' discover/gpu.go && \
-    make -j ${MAX_JOBS} && \
+    sed -i 's/"gfx900;gfx940;gfx941;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102;gfx906:xnack-;gfx908:xnack-;gfx90a:xnack+;gfx90a:xnack-" /"gfx803;gfx900;gfx940;gfx941;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102;gfx906:xnack-;gfx908:xnack-;gfx90a:xnack+;gfx90a:xnack-" /g' CMakePresets.json && \
+    sed -i 's/"list(FILTER AMDGPU_TARGETS INCLUDE REGEX "^gfx(900|94[012]|101[02]|1030|110[012])$")"/"list(FILTER AMDGPU_TARGETS INCLUDE REGEX "^gfx(803|900|94[012]|101[02]|1030|110[012])$")"/g' CMakeLists.txt && \
+    true
+
+## Compile for Ollama    
+RUN echo "BUILDING Ollama for gfx803" && \
+    cmake -B build -DAMDGPU_TARGETS="${ROCM_ARCH}" && \
+    cmake --build build && \    
+    go generate ./... && \
+    go build . && \
     true
 
 EXPOSE ${WEBGUI_PORT} ${OLLAMA_PORT}
 
-CMD ["/bin/bash","-c"]
+ENTRYPOINT ["/ollama/ollama"]
+CMD ["serve"]
+
+#CMD ["/bin/bash","-c"]
