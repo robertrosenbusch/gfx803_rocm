@@ -62,6 +62,7 @@ This repo provides a docker main buildfile based on the original ROCm-Dockerimag
 3. build your Docker image via `docker build -f Dockerfile_rocm63_ollama . -t 'rocm63_ollama:latest'`
 4. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434 --name rocm63_ollama rocm63_ollama:latest bash`
 5. Enter to the Dockercontainer `docker exec -ti rocm63_ollama bash`
-5. [download a model](https://ollama.com/search) you need for e.g. `./ollama run deepseek-r1:1.5b`
-6. Start Open-WebUI `open-webui serve &` --> http://YOUR_LOCAL_IP:8080
-7. For Benchmark your downloaded Models use `python /llm-benchmark/benchmark.py`
+6. [download a model](https://ollama.com/search) you need for e.g. `./ollama run deepseek-r1:1.5b`
+7. Start Open-WebUI `open-webui serve &` 
+8. Open your Webbrowser `http://YOUR_LOCAL_IP:8080` to use Open-WebUI
+9. For Benchmark your downloaded Models use `python /llm-benchmark/benchmark.py`
