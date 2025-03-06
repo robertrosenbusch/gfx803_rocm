@@ -6,7 +6,7 @@ FROM rocm/pytorch:rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0
 
 ENV WEBGUI_PORT=8080 \
     OLLAMA_PORT=11434 \
-    OLLAMA_LISTENIP=0.0.0.0 \
+    OLLAMA_HOST=0.0.0.0 &&\
     COMMANDLINE_ARGS='' \
     ### how many CPUCores are using while compiling
     MAX_JOBS=14 \ 
@@ -31,7 +31,8 @@ ENV WEBGUI_PORT=8080 \
     COMMANDLINE_ARGS='' 
 
 ## Write the Environment VARSs to global... to compile later with while you use #docker save# or #docker commit#
-RUN echo OLLAMA_HOST=${OLLAMA_LISTENIP}:${OLLAMA_PORT} >> /etc/environment && \ 
+#RUN echo OLLAMA_HOST="${OLLAMA_LISTENIP}:${OLLAMA_PORT}" >> /etc/environment && \ 
+RUN echo OLLAMA_HOST="${OLLAMA_HOST}" >> /etc/environment && \ 
     echo MAX_JOBS=${MAX_JOBS} >> /etc/environment && \ 
     echo HSA_OVERRIDE_GFX_VERSION=${HSA_OVERRIDE_GFX_VERSION} >> /etc/environment && \ 
     echo PYTORCH_ROCM_ARCH=${PYTORCH_ROCM_ARCH} >> /etc/environment && \ 
@@ -48,7 +49,8 @@ RUN echo OLLAMA_HOST=${OLLAMA_LISTENIP}:${OLLAMA_PORT} >> /etc/environment && \
     true
 
 ## Export the AMD Stuff
-RUN export OLLAMA_HOST=${OLLAMA_LISTENIP}:${OLLAMA_PORT} && \
+#RUN export OLLAMA_HOST="${OLLAMA_LISTENIP}:${OLLAMA_PORT}" && \
+RUN export OLLAMA_HOST="${OLLAMA_HOST}" && \
     export MAX_JOBS=${MAX_JOBS} && \ 
     export HSA_OVERRIDE_GFX_VERSION=${HSA_OVERRIDE_GFX_VERSION} && \
     export ROC_ENABLE_PRE_VEGA=${ROC_ENABLE_PRE_VEGA} && \
@@ -122,9 +124,15 @@ RUN echo "BUILDING Ollama for gfx803" && \
     go build . && \
     true
 
+RUN touch ol_serve.sh && \
+    echo "export OLLAMA_HOST=0.0.0.0" > ol_serve.sh && \
+    echo "./ollama serve&" >> ol_serve.sh && \
+    chmod +x ol_serve.sh && \
+    true    
+
 EXPOSE ${WEBGUI_PORT} ${OLLAMA_PORT}
 
-ENTRYPOINT ["/ollama/ollama"]
-CMD ["serve"]
+#ENTRYPOINT ["/ollama/ol_serve.sh"]
+#CMD ["/ollama/ol_serve.sh"]
 
-#CMD ["/bin/bash","-c"]
+ CMD ["/bin/bash","-c"]
