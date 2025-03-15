@@ -1,4 +1,4 @@
-# Docker Buildfile for whisperX/CTranslate2-rocm to use a RX570 / Polaris / gfx803 AMD GPU with ROCm 6.3
+# Docker Buildfile for  Whisper-WebUI/whisperX/CTranslate2-rocm to use a RX570 / Polaris / gfx803 AMD GPU with ROCm 6.3
 # created, build and compiled by Robert Rosenbusch at March 2025
 FROM rocm63_pt25:latest
 
@@ -18,9 +18,7 @@ WORKDIR /
 
 RUN pip install cmake mkl mkl-include && \
     pip install --upgrade pip wheel && \
-    true
-
-RUN pip install faster_whisper &&\
+    pip install faster_whisper &&\
     true
 
 ### Checkout and Prepare CTranslate-for-ROCm
@@ -29,7 +27,7 @@ RUN git clone https://github.com/arlo-phoenix/CTranslate2-rocm.git --recurse-sub
     true 
 
 SHELL ["conda", "run", "--no-capture-output", "-n", "py_3.12", "/bin/bash", "-c"]    
-### Install Conda-Libs for CTranslate-for-rocm
+### Install libc++ Conda-Libs to compile CTranslate-for-rocm
 RUN conda install -y -c conda-forge libstdcxx-ng=12 &&\
     conda install -y -c conda-forge libstdcxx-ng=13 &&\
     true
@@ -54,10 +52,10 @@ RUN pip install -r install_requirements.txt &&\
     echo LD_LIBRARY_PATH=$LD_LIBRARY_PATH >> /etc/environment && \
     true
 
-WORKDIR /    
-### Checkout and Whisper-WebUI    
+### Checkout and Whisper-WebUI       
+WORKDIR /     
 RUN git clone https://github.com/jhj0517/Whisper-WebUI.git &&\
-        true
+    true
 
 WORKDIR /Whisper-WebUI
 ### Install Whisper-WebUI and reinstall all necesarry WHL into the Python Environment
@@ -83,6 +81,5 @@ RUN touch whisp.sh && \
 ENV args="" 
 EXPOSE ${WHISPERX_GUI_PORT}
 
-### Use "--lowvram" to get a correct output
 # ENTRYPOINT ./venv/bin/python app.py --whisper_type faster-whisper --share --server_name 0.0.0.0 --server_port ${WHISPERX_GUI_PORT}
 CMD ["/bin/bash","-c"]
