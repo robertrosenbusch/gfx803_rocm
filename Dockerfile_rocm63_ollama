@@ -129,23 +129,7 @@ RUN touch ol_serve.sh && \
     echo "export OLLAMA_HOST=0.0.0.0" > ol_serve.sh && \
     echo "./ollama serve&" >> ol_serve.sh && \
     chmod +x ol_serve.sh && \
-    true  
-    
-##############
-WORKDIR /
-RUN git clone https://github.com/arlo-phoenix/CTranslate2-rocm.git --recurse-submodules &&\
-    #conda init &&\
-    #bash && \
-    #conda activate py_3.9 && \    
     true
-
-WORKDIR /CTranslate2-rocm
-RUN CLANG_CMAKE_CXX_COMPILER=clang++ CXX=clang++ HIPCXX="$(hipconfig -l)/clang" HIP_PATH="$(hipconfig -R)" cmake -S . -B build -DWITH_MKL=OFF -DWITH_HIP=ON -DCMAKE_HIP_ARCHITECTURES=$PYTORCH_ROCM_ARCH -DBUILD_TESTS=ON -DWITH_CUDNN=ON &&\
-    cmake --build build -- -j${MAX_JOBS} &&\
-    cd build && \
-    # cmake --install .  &&\
-    true
-
 
 EXPOSE ${WEBGUI_PORT} ${OLLAMA_PORT}
 
