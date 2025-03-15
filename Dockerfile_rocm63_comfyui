@@ -7,7 +7,7 @@ SHELL ["/bin/bash", "-c"]
 ENV PORT=8188 \
     DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
-    radePYTHONIOENCODING=UTF-8 \
+    PYTHONENCODING==UTF-8 \
     REQS_FILE='requirements.txt' \
     COMMANDLINE_ARGS='' \
     PIP_ROOT_USER_ACTION='ignore' \
@@ -46,7 +46,7 @@ RUN python -m venv venv && \
     ./venv/bin/python -m pip install --upgrade pip && \
     ./venv/bin/pip install psutil && \
     ./venv/bin/pip install -r requirements.txt && \
-    ./venv/bin/pip uninstall -y torch torchvision && \    
+    ./venv/bin/pip uninstall -y torch torchvision torchaudio && \    
     ./venv/bin/pip install /pytorch/dist/*.whl && \
     ./venv/bin/pip install /vision/dist/*.whl && \
     ./venv/bin/python -m pip install -e /pyrsmi/. && \
@@ -54,9 +54,14 @@ RUN python -m venv venv && \
     ./venv/bin/pip install numpy==1.26.4 && \
     true    
 
+WORKDIR /audio
+RUN echo "** BUILDING Torchaudio **" && \
+    /ComfyUI/venv/bin/python setup.py develop && \
+    /ComfyUI/venv/bin/python setup.py install && \
+    true    
+
 ### Install ComfyUI Manager    
 WORKDIR /ComfyUI/custom_nodes
-
 RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git &&\
     true
 
@@ -64,9 +69,7 @@ RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git &&\
 WORKDIR /ComfyUI    
 
 RUN pip install psutil && \
-    true    
-
-RUN ./venv/bin/pip install -e /pyrsmi && \
+    ./venv/bin/pip install -e /pyrsmi && \
     true
     
 ENV args="" 

@@ -1,5 +1,5 @@
 # Docker Buildfile for ROCm 6.3 to use ComfyUI with a RX570 / Polaris / gfx803 AMD GPU
-# created, build and compiled by Robert Rosenbusch at December 2024
+# created, build and compiled by Robert Rosenbusch at December 2024 / March 2025
 
 FROM rocm/pytorch:rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0
 
@@ -68,9 +68,13 @@ RUN export MAX_JOBS=${MAX_JOBS} && \
 # Update System and install ffmpeg for SDXL video and python virtual Env
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends ffmpeg virtualenv google-perftools ccache tmux mc pigz plocate && \
+    # For Ollama and whisperx    
+    apt-get install -y --no-install-recommends libomp-dev libopenblas-dev &&\
     pip install --upgrade pip wheel && \
     pip install cmake mkl mkl-include && \ 
     apt --fix-broken install -y && \
+    # symlink for Ollama
+    ln -s /opt/rocm-6.3.0 /opt/rocm && \
     true
 
 ###########
@@ -102,8 +106,8 @@ RUN echo "** BUILDING PYTORCH *** " && \
     mkdir -p /pytorch/dist && \
     python setup.py clean && \
     pip install -r ${REQS_FILE} && \
-    python3 tools/amd_build/build_amd.py && \
-    python3 setup.py bdist_wheel && \
+    python tools/amd_build/build_amd.py && \
+    python setup.py bdist_wheel && \
     pip install dist/torch*.whl && \
     true     
 
@@ -135,8 +139,9 @@ RUN echo "** Checkout Torchaudio Version: ${TORCHAUDIO_GIT_VERSION} **" && \
 
 WORKDIR /audio
 RUN echo "** BUILDING Torchaudio **" && \
-    python /audio/setup.py develop && \
-    python /audio/setup.py install && \
+    #python /audio/setup.py develop && \
+    #python /audio/setup.py install && \
+    python setup.py bdist_wheel && \
     true
 #RUN cp /var/lib/jenkins/vision/dist/*.whl /vision/dist && \
 #    cp /var/lib/jenkins/pytorch/dist/*.whl /pytorch/dist  && \

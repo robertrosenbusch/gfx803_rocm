@@ -6,7 +6,7 @@ FROM rocm/pytorch:rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0
 
 ENV WEBGUI_PORT=8080 \
     OLLAMA_PORT=11434 \
-    OLLAMA_HOST=0.0.0.0 &&\
+    OLLAMA_HOST=0.0.0.0\
     COMMANDLINE_ARGS='' \
     ### how many CPUCores are using while compiling
     MAX_JOBS=14 \ 
@@ -32,7 +32,7 @@ ENV WEBGUI_PORT=8080 \
 
 ## Write the Environment VARSs to global... to compile later with while you use #docker save# or #docker commit#
 #RUN echo OLLAMA_HOST="${OLLAMA_LISTENIP}:${OLLAMA_PORT}" >> /etc/environment && \ 
-RUN echo OLLAMA_HOST="${OLLAMA_HOST}" >> /etc/environment && \ 
+RUN echo OLLAMA_HOST=${OLLAMA_HOST} >> /etc/environment && \ 
     echo MAX_JOBS=${MAX_JOBS} >> /etc/environment && \ 
     echo HSA_OVERRIDE_GFX_VERSION=${HSA_OVERRIDE_GFX_VERSION} >> /etc/environment && \ 
     echo PYTORCH_ROCM_ARCH=${PYTORCH_ROCM_ARCH} >> /etc/environment && \ 
@@ -50,7 +50,7 @@ RUN echo OLLAMA_HOST="${OLLAMA_HOST}" >> /etc/environment && \
 
 ## Export the AMD Stuff
 #RUN export OLLAMA_HOST="${OLLAMA_LISTENIP}:${OLLAMA_PORT}" && \
-RUN export OLLAMA_HOST="${OLLAMA_HOST}" && \
+RUN export OLLAMA_HOST=${OLLAMA_HOST} && \
     export MAX_JOBS=${MAX_JOBS} && \ 
     export HSA_OVERRIDE_GFX_VERSION=${HSA_OVERRIDE_GFX_VERSION} && \
     export ROC_ENABLE_PRE_VEGA=${ROC_ENABLE_PRE_VEGA} && \
@@ -69,6 +69,7 @@ RUN export OLLAMA_HOST="${OLLAMA_HOST}" && \
 ## Update System and install golang for ollama and python virtual Env
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends virtualenv google-perftools ccache tmux mc pigz plocate golang && \
+    apt-get install -y --no-install-recommends libomp-dev && \
     pip install --upgrade pip wheel && \
     pip install cmake mkl mkl-include && \ 
     # symlink for Ollama
@@ -128,7 +129,23 @@ RUN touch ol_serve.sh && \
     echo "export OLLAMA_HOST=0.0.0.0" > ol_serve.sh && \
     echo "./ollama serve&" >> ol_serve.sh && \
     chmod +x ol_serve.sh && \
-    true    
+    true  
+    
+##############
+WORKDIR /
+RUN git clone https://github.com/arlo-phoenix/CTranslate2-rocm.git --recurse-submodules &&\
+    #conda init &&\
+    #bash && \
+    #conda activate py_3.9 && \    
+    true
+
+WORKDIR /CTranslate2-rocm
+RUN CLANG_CMAKE_CXX_COMPILER=clang++ CXX=clang++ HIPCXX="$(hipconfig -l)/clang" HIP_PATH="$(hipconfig -R)" cmake -S . -B build -DWITH_MKL=OFF -DWITH_HIP=ON -DCMAKE_HIP_ARCHITECTURES=$PYTORCH_ROCM_ARCH -DBUILD_TESTS=ON -DWITH_CUDNN=ON &&\
+    cmake --build build -- -j${MAX_JOBS} &&\
+    cd build && \
+    # cmake --install .  &&\
+    true
+
 
 EXPOSE ${WEBGUI_PORT} ${OLLAMA_PORT}
 

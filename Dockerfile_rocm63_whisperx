@@ -1,0 +1,88 @@
+# Docker Buildfile for whisperX/CTranslate2-rocm to use a RX570 / Polaris / gfx803 AMD GPU with ROCm 6.3
+# created, build and compiled by Robert Rosenbusch at March 2025
+FROM rocm63_pt25:latest
+
+
+SHELL ["/bin/bash", "-c"]  
+ENV WHISPERX_GUI_PORT=7860 \
+    DEBIAN_FRONTEND=noninteractive \
+    PYTHONUNBUFFERED=1 \
+    PYTHONENCODING==UTF-8 \
+    REQS_FILE='requirements.txt' \
+    COMMANDLINE_ARGS='' \
+    PIP_ROOT_USER_ACTION='ignore' \
+    ### For your AMD GPU
+    PYTORCH_ROCM_ARCH=gfx803 
+
+WORKDIR /
+
+RUN pip install cmake mkl mkl-include && \
+    pip install --upgrade pip wheel && \
+    true
+
+RUN pip install faster_whisper &&\
+    true
+
+### Checkout and Prepare CTranslate-for-ROCm
+RUN git clone https://github.com/arlo-phoenix/CTranslate2-rocm.git --recurse-submodules && \
+    conda init &&\
+    true 
+
+SHELL ["conda", "run", "--no-capture-output", "-n", "py_3.12", "/bin/bash", "-c"]    
+### Install Conda-Libs for CTranslate-for-rocm
+RUN conda install -y -c conda-forge libstdcxx-ng=12 &&\
+    conda install -y -c conda-forge libstdcxx-ng=13 &&\
+    true
+
+### Compile and build WHL CTranslate-for-ROCm
+WORKDIR /CTranslate2-rocm
+RUN CLANG_CMAKE_CXX_COMPILER=clang++ CXX=clang++ HIPCXX="$(hipconfig -l)/clang" HIP_PATH="$(hipconfig -R)" cmake -S . -B build -DWITH_MKL=OFF -DWITH_HIP=ON -DCMAKE_HIP_ARCHITECTURES=$PYTORCH_ROCM_ARCH -DBUILD_TESTS=ON -DWITH_CUDNN=ON &&\
+    cmake --build build -- -j $MAX_JOBS &&\
+    cd build &&\
+    true 
+
+WORKDIR /CTranslate2-rocm/build
+RUN cmake --install . --prefix $CONDA_PREFIX && \
+    ldconfig &&\
+    true
+
+WORKDIR /CTranslate2-rocm/python
+RUN pip install -r install_requirements.txt &&\
+    python setup.py bdist_wheel &&\
+    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/ &&\
+    pip install dist/*.whl &&\
+    echo LD_LIBRARY_PATH=$LD_LIBRARY_PATH >> /etc/environment && \
+    true
+
+WORKDIR /    
+### Checkout and Whisper-WebUI    
+RUN git clone https://github.com/jhj0517/Whisper-WebUI.git &&\
+        true
+
+WORKDIR /Whisper-WebUI
+### Install Whisper-WebUI and reinstall all necesarry WHL into the Python Environment
+RUN python -m venv venv && \
+    ./venv/bin/python -m pip install --upgrade pip && \
+    ./venv/bin/pip install -r requirements.txt && \
+    ./venv/bin/pip install gradio gradio_i18n &&\
+    ./venv/bin/pip install whisperx &&\
+    ./venv/bin/pip uninstall -y torch torchvision torchaudio && \    
+    ./venv/bin/pip install /pytorch/dist/*.whl && \
+    ./venv/bin/pip install /vision/dist/*.whl && \
+    ./venv/bin/pip install /audio/dist/*.whl && \
+    ./venv/bin/pip install --force-reinstall  /CTranslate2-rocm/python/dist/*.whl &&\    
+    ./venv/bin/python -m pip uninstall numpy -y && \
+    ./venv/bin/pip install numpy==1.26.4 &&\
+    true    
+
+RUN touch whisp.sh && \
+    echo "./venv/bin/python app.py --whisper_type faster-whisper --share --server_name 0.0.0.0 --server_port ${WHISPERX_GUI_PORT}" > whisp.sh && \
+    chmod +x whisp.sh && \
+    true    
+
+ENV args="" 
+EXPOSE ${WHISPERX_GUI_PORT}
+
+### Use "--lowvram" to get a correct output
+# ENTRYPOINT ./venv/bin/python app.py --whisper_type faster-whisper --share --server_name 0.0.0.0 --server_port ${WHISPERX_GUI_PORT}
+CMD ["/bin/bash","-c"]
