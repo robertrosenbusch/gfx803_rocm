@@ -66,3 +66,50 @@ This repo provides a docker main buildfile based on the original ROCm-Dockerimag
 7. Start Open-WebUI `open-webui serve &` 
 8. Open your Webbrowser `http://YOUR_LOCAL_IP:8080` to use Open-WebUI
 9. For Benchmark your downloaded Models use `python /llm-benchmark/benchmark.py`
+
+> [!NOTE]
+> You should have at least 8 GB of RAM available to run the 7B models, 16 GB to run the 13B models, and 32 GB to run the 33B models.
+
+🚧 **my todoist stats:**
+<!-- TODO-IST:START -->
+🏆  8,004 Karma Points           
+🌸  Completed 0 tasks today           
+✅  Completed 673 tasks so far           
+⏳  Longest streak is 10 days
+
+- ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `#f03c15`
+- ![#c5f015](https://placehold.co/15x15/c5f015/c5f015.png) `#c5f015`
+- ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `#1589F0`
+
+
+
+🔴🟠🟡🟢🔵🟣🟤⚫⚪🔘🛑⭕
+
+🟥🟧🟨🟩🟦🟪🟫⬛⬜🔲🔳⏹☑✅❎
+
+❤️🧡💛💚💙💜🤎🖤🤍♥️💔💖💘💝💗💓💟💕❣️♡
+
+🔺🔻🔷🔶🔹🔸♦💠💎💧🧊
+
+🏴🏳🚩🏁
+
+◻️◼️◾️◽️▪️▫️
+❌ Closed PR
+<!-- TODO-IST:END -->
+
+
+
+> [!NOTE]
+> Highlights information that users should take into account, even when skimming.
+
+> [!TIP]
+> Optional information to help a user be more successful.
+
+> [!IMPORTANT]
+> Crucial information necessary for users to succeed.
+
+> [!WARNING]
+> Critical content demanding immediate user attention due to potential risks.
+
+> [!CAUTION]
+> Negative potential consequences of an action.
