@@ -97,13 +97,21 @@ This repo provides a docker main buildfile based on the original ROCm-Dockerimag
 ❌ Closed PR
 <!-- TODO-IST:END -->
 
-
+> [!NOTE]
+1. Make sure, that both Kernel-Devices `/dev/dri` and `/dev/kfd` are aviable 
+2. Make sure, your Mainboard support [PCIe atomic](https://github.com/ROCm/ROCm/issues/2224#issuecomment-2299689450)  `sudo grep flags /sys/class/kfd/kfd/topology/nodes/*/io_links/0/properties`
 
 > [!NOTE]
-> Highlights information that users should take into account, even when skimming.
-> |OS            |linux|Python|ROCm |Ollama|GPU|Mapping Port|
-> |--------------|-----|------|-----|------|-----|-----|
-> |Ubuntu-24.04|6.X and 5.19 |3.12|6.3.0|v0.5.12|RX570/580/590 aka Polaris 20/21 aka GCN 4|8080,11434|
+1. Make sure your user to start the Dockercontainer is a member of both groups `render`and `video`. 
+2. it could be possible (depends on your Linux-Distro) to add [a udev-Rulel](https://github.com/ROCm/ROCm/issues/1798#issuecomment-1849112550). You should reboot after adding groups to your user.
+
+
+> [!CAUTION]
+> After some research in Ollama and PyTorch, cause the devices `/dev/dri` and `/dev/kfd` crashed with SegFaults. Please proofe your used Linux-Kernel Version.
+> |Kernel Version|6.2|6.8|6.9|6.10|6.11|6.12|6.13|6.14|
+> |--------------|-----|------|-----|------|-----|-----|-----|-----|
+> |(not)working|✅|✅|✅|✅|✅|🟥|🟥|✅|
+
 > * Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
 > * rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
 > * Ollama : [v0.5.12](https://github.com/ollama/ollama/releases/tag/v0.5.12)
