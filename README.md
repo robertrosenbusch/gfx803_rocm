@@ -11,15 +11,17 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 > #### At General
 > 1. This is an hobby enthusiastic Project into my freetime. gfx803 is not supported since over two years on any Linux-Distro and was never designed to do some AI-Stuff. So be carefull. Feel free to ask or to make some hints to improve this "project"
 > 2. The published Dockercontainers downloaded a lot of stuff and needed a lot of time and storage space to recompile the neccesarry Stuff for gfx803. Big aware, its not my fault.
-> 3. Make sure you had have a good ISP-Connection, around 100 Gig free Storage and one to three hours time to recompile, depends what kind of APP you wanna use.
+> 3. Make sure you had have a good ISP-Connection, around 100 Gig free Storage and one to three hours time to recompile, depends what kind of APP you wanna use and you Hardware/ISP.
 > 4. Feel free to rebuild this Dockerfile for gfx803 on your Distro-Baremetal-ROCm to use it natively. I am not interessted on, cause i dont wanna maintain any specific Distro-Version. I am sorry.
 
 
 > [!NOTE]
+> #### ROCm Hardware Necesarrys
 > 1. Make sure, that both Kernel-Devices `/dev/dri` and `/dev/kfd` are aviable 
 > 2. Make sure, your Mainboard support [PCIe atomic](https://github.com/ROCm/ROCm/issues/2224#issuecomment-2299689450)  `sudo grep flags /sys/class/kfd/kfd/topology/nodes/*/io_links/0/properties`
 
 > [!NOTE]
+> #### ROCm Software Necesarrys
 > 1. Make sure your user to start the Dockercontainer is a member of both groups `render`and `video`. 
 > 2. it could be possible (depends on your Linux-Distro) to add [a udev-Rulel](https://github.com/ROCm/ROCm/issues/1798#issuecomment-1849112550). 
 
@@ -28,6 +30,7 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 
 
 > [!CAUTION]
+> #### Prevent ROCm SegFaults on your Linux Distro
 > After some research/feedback from Users who are using Dockercontainer from this GIT in [Ollama](https://github.com/robertrosenbusch/gfx803_rocm/issues/8#issue-2919996555) and [PyTorch/ComfyUI](https://github.com/robertrosenbusch/gfx803_rocm/issues/13#issuecomment-2754796999), cause the devices `/dev/dri` and  `/dev/kfd` crashed with SegFaults. Please proofe your used Linux-Kernel Version and switch up or down to a well know working Kernel-Version. Fedora 41, Arch and Debian 13 using (in April 2015) suspected Linux-Kernel-Versions as default.
 > |Kernel Version|5.19|6.2|6.8|6.9|6.10|6.11|6.12|6.13|6.14|
 > |--------------|-----|-----|------|-----|------|-----|-----|-----|-----|
