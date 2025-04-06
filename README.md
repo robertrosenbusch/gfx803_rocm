@@ -21,7 +21,7 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 
 
 > [!CAUTION]
-> After some research/feedback from Users who are using Dockercontainer from this GIT in [Ollama](https://github.com/robertrosenbusch/gfx803_rocm/issues/8#issue-2919996555) and [PyTorch/ComfyUI](https://github.com/robertrosenbusch/gfx803_rocm/issues/13#issuecomment-2754796999), cause the devices `/dev/dri` and  `/dev/kfd` crashed with SegFaults. Please proofe your used Linux-Kernel Version. Fedora 41 and Debian 13 using (in April 2015) both the suspected Linux-Kernel-Versions
+> After some research/feedback from Users who are using Dockercontainer from this GIT in [Ollama](https://github.com/robertrosenbusch/gfx803_rocm/issues/8#issue-2919996555) and [PyTorch/ComfyUI](https://github.com/robertrosenbusch/gfx803_rocm/issues/13#issuecomment-2754796999), cause the devices `/dev/dri` and  `/dev/kfd` crashed with SegFaults. Please proofe your used Linux-Kernel Version and switch up or down to a well know working Kernel-Version. Fedora 41, Arch and Debian 13 using (in April 2015) suspected Linux-Kernel-Versions as default.
 > |Kernel Version|5.19|6.2|6.8|6.9|6.10|6.11|6.12|6.13|6.14|
 > |--------------|-----|-----|------|-----|------|-----|-----|-----|-----|
 > |working on Ollama/PyTorch|✅|✅|✅|✅|✅|✅|🟥|🟥|✅|
