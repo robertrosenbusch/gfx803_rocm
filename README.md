@@ -1,6 +1,6 @@
 # ROCm 6.3.0, PyTorch 2.5, Torchvision 0.20 with AMD GFX803 aka AMD Polaris aka AMD RX570/RX580/RX590 for ComfyUI, Ollama an whisperX
 
-This repo provides a docker main buildfile based on the original ROCm-Dockerimage to compile PyTorch and Torchvision/Torchaudio for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) generation to generate AI Pics on ComfyUI and fast automatic speech recognition with WhisperX. And a Dockerfile to build Ollama on the same ROCm Stack. 
+This repo provides a docker main buildfile based on the original AMD ROCm-Dockerimage to compile PyTorch and Torchvision/Torchaudio for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) generation to generate AI Pics on ComfyUI, fast automatic speech recognition with WhisperX, PyTorch and a Dockerfile to build Ollama on the same ROCm Stack. 
 
 PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polaris generation in the original PIP repository. And of course not compiled too in the official ROCm-PyTorch Dockerfile. However, if Polaris 20/21 GPU support is to be used in ComfyUI or WhisperX, there is no way around newly compiled PyTorch and Torchvision/Torchaudio whl/wheel python files. And for Ollama in ROCm 6.X you have to recompile the rocBLAS-Library too. That what this Docker Buildfile(s) will do for you.
 
