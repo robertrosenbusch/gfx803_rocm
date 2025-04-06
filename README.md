@@ -8,7 +8,7 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 > Before you start to build the Specific Container on what AI-App you wanna use for your GFX803-GPU, please check up the next few hints. It could save Lifetime to debug and prevent bad moods or throwing away your gfx803-GPU in a big bow.
 
 > [!NOTE]
-> ## At General
+> #### At General
 > 1. This is an hobby enthusiastic Project into my freetime. gfx803 is not supported since over two years on any Linux-Distro and was never designed to do some AI-Stuff. So be carefull.
 > 2. The published Dockercontainers downloaded a lot of stuff and needed a lot of time and storage space to recompile the neccesarry Stuff for gfx803. Big aware, its not my fault.
 > 3. Make sure you had have a good ISP-Connection, around 100 Gig free Storage and one to three hours time to recompile, depends what kind of APP you wanna use.
