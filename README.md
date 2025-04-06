@@ -5,7 +5,7 @@ This repo provides a docker main buildfile based on the original ROCm-Dockerimag
 PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polaris generation in the original PIP repository. And of course not compiled too in the official ROCm-PyTorch Dockerfile. However, if Polaris 20/21 GPU support is to be used in ComfyUI or WhisperX, there is no way around newly compiled PyTorch and Torchvision/Torchaudio whl/wheel python files. And for Ollama in ROCm 6.X you have to recompile the rocBLAS-Library too. That what this Docker Buildfile(s) will do for you.
 
 > [!IMPORTANT]
-> Before you start to build the Specific Container on what App you wanna use, please check up the next few hints. It could save Lifetime.
+> Before you start to build the Specific Container on what AI-App you wanna use for your GFX803-GPU, please check up the next few hints. It could save Lifetime.
 
 
 > [!NOTE]
