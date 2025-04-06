@@ -98,6 +98,8 @@ any current LinuxDistro|3.12|6.3.0|2.5.1|0.20.0|RX570/580/590 aka Polaris 20/21 
 
 
 # Install Ollama and Open-Webui for ROCm 6.3
+> [!NOTE]
+> You should have at least 8 GB of RAM available to run the 7B models, 16 GB to run the 13B models, and 32 GB to run the 33B models.
 
 1. install the docker-subsystem / docker.io on your linux system
 2. download the latest file version of this github-repos vi git clone
@@ -110,79 +112,3 @@ any current LinuxDistro|3.12|6.3.0|2.5.1|0.20.0|RX570/580/590 aka Polaris 20/21 
 9. For Benchmark your downloaded Models use `python /llm-benchmark/benchmark.py`
 
 
-> [!NOTE]
-> You should have at least 8 GB of RAM available to run the 7B models, 16 GB to run the 13B models, and 32 GB to run the 33B models.
-
-🚧 **my todoist stats:**
-<!-- TODO-IST:START -->
-🏆  8,004 Karma Points           
-🌸  Completed 0 tasks today           
-✅  Completed 673 tasks so far           
-⏳  Longest streak is 10 days
-
-- ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `#f03c15`
-- ![#c5f015](https://placehold.co/15x15/c5f015/c5f015.png) `#c5f015`
-- ![#1589F0](https://placehold.co/15x15/1589F0/1589F0.png) `#1589F0`
-
-
-
-🔴🟠🟡🟢🔵🟣🟤⚫⚪🔘🛑⭕
-
-🟥🟧🟨🟩🟦🟪🟫⬛⬜🔲🔳⏹☑✅❎
-
-❤️🧡💛💚💙💜🤎🖤🤍♥️💔💖💘💝💗💓💟💕❣️♡
-
-🔺🔻🔷🔶🔹🔸♦💠💎💧🧊
-
-🏴🏳🚩🏁
-
-◻️◼️◾️◽️▪️▫️
-❌ Closed PR
-<!-- TODO-IST:END -->
-
-> [!NOTE]
-> 1. Make sure, that both Kernel-Devices `/dev/dri` and `/dev/kfd` are aviable 
-> 2. Make sure, your Mainboard support [PCIe atomic](https://github.com/ROCm/ROCm/issues/2224#issuecomment-2299689450)  `sudo grep flags /sys/class/kfd/kfd/topology/nodes/*/io_links/0/properties`
-
-> [!NOTE]
-> 1. Make sure your user to start the Dockercontainer is a member of both groups `render`and `video`. 
-> 2. it could be possible (depends on your Linux-Distro) to add [a udev-Rulel](https://github.com/ROCm/ROCm/issues/1798#issuecomment-1849112550). 
-
-> [!TIP]
-> You should reboot after adding groups to your user.
-
-
-> [!CAUTION]
-> After some research in [Ollama](https://github.com/robertrosenbusch/gfx803_rocm/issues/8#issue-2919996555) and [PyTorch/ComfyUI](https://github.com/robertrosenbusch/gfx803_rocm/issues/13#issuecomment-2754796999), cause the devices `/dev/dri` and `/dev/kfd` crashed with SegFaults. Please proofe your used Linux-Kernel Version. Fedora 41 and Debian 13 using (in April 2015) both the suspected Linux-Kernel-Versions
-> |Kernel Version|5.19|6.2|6.8|6.9|6.10|6.11|6.12|6.13|6.14|
-> |--------------|-----|-----|------|-----|------|-----|-----|-----|-----|
-> |working on Ollama/PyTorch|✅|✅|✅|✅|✅|✅|🟥|🟥|✅|
-
-> * Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
-> * rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
-> * Ollama : [v0.5.12](https://github.com/ollama/ollama/releases/tag/v0.5.12)
-> * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
-
-
-> 1. install the docker-subsystem / docker.io on your linux system
-> 2. download the latest file version of this github-repos vi git clone
-3. build your Docker image via `docker build -f Dockerfile_rocm63_ollama . -t 'rocm63_ollama:latest'`
-4. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434 --name rocm63_ollama rocm63_ollama:latest bash`
-5. Enter to the Dockercontainer `docker exec -ti rocm63_ollama bash`
-6. [download a model](https://ollama.com/search) you need for e.g. `./ollama run deepseek-r1:1.5b`
-7. Start Open-WebUI `open-webui serve &` 
-8. Open your Webbrowser `http://YOUR_LOCAL_IP:8080` to use Open-WebUI
-9. For Benchmark your downloaded Models use `python /llm-benchmark/benchmark.py`
-
-
-> [!TIP]
-> Optional information to help a user be more successful.
-
-> [!IMPORTANT]
-> Crucial information necessary for users to succeed.
-
-> [!WARNING]
-> Critical content demanding immediate user attention due to potential risks.
-
-> [!CAUTION]
-> Negative potential consequences of an action.
