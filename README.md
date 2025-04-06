@@ -1,9 +1,30 @@
 # ROCm 6.3.0, PyTorch 2.5, Torchvision 0.20 with AMD GFX803 aka AMD Polaris aka AMD RX570/RX580/RX590 for ComfyUI, Ollama an whisperX
 
-This repo provides a docker main buildfile based on the original ROCm-Dockerimage to compile PyTorch and Torchvision/Torchaudio for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) generation to generate AI Pics on ComfyUI and ast automatic speech recognitio. And a Dockerfile to build Ollama on the same ROCm Stack. 
+This repo provides a docker main buildfile based on the original ROCm-Dockerimage to compile PyTorch and Torchvision/Torchaudio for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) generation to generate AI Pics on ComfyUI and fast automatic speech recognition with WhisperX. And a Dockerfile to build Ollama on the same ROCm Stack. 
 
 PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polaris generation in the original PIP repository. And of course not compiled too in the official ROCm-PyTorch Dockerfile. However, if Polaris 20/21 GPU support is to be used in ComfyUI or WhisperX, there is no way around newly compiled PyTorch and Torchvision/Torchaudio whl/wheel python files. And for Ollama in ROCm 6.X you have to recompile the rocBLAS-Library too. That what this Docker Buildfile(s) will do for you.
 
+> [!IMPORTANT]
+> Before you start to build the Specific Container on what App you wanna use, please check up the next few hints. It could save Lifetime.
+
+
+> [!NOTE]
+> 1. Make sure, that both Kernel-Devices `/dev/dri` and `/dev/kfd` are aviable 
+> 2. Make sure, your Mainboard support [PCIe atomic](https://github.com/ROCm/ROCm/issues/2224#issuecomment-2299689450)  `sudo grep flags /sys/class/kfd/kfd/topology/nodes/*/io_links/0/properties`
+
+> [!NOTE]
+> 1. Make sure your user to start the Dockercontainer is a member of both groups `render`and `video`. 
+> 2. it could be possible (depends on your Linux-Distro) to add [a udev-Rulel](https://github.com/ROCm/ROCm/issues/1798#issuecomment-1849112550). 
+
+> [!TIP]
+> You should reboot after adding groups to your user.
+
+
+> [!CAUTION]
+> After some research in [Ollama](https://github.com/robertrosenbusch/gfx803_rocm/issues/8#issue-2919996555) and [PyTorch/ComfyUI](https://github.com/robertrosenbusch/gfx803_rocm/issues/13#issuecomment-2754796999), cause the devices `/dev/dri` and `/dev/kfd` crashed with SegFaults. Please proofe your used Linux-Kernel Version. Fedora 41 and Debian 13 using (in April 2015) both the suspected Linux-Kernel-Versions
+> |Kernel Version|5.19|6.2|6.8|6.9|6.10|6.11|6.12|6.13|6.14|
+> |--------------|-----|-----|------|-----|------|-----|-----|-----|-----|
+> |working on Ollama/PyTorch|✅|✅|✅|✅|✅|✅|🟥|🟥|✅|
 
 
 ## ROCm-6.3.0 PyTorch for ComfyUI in a Dockerfile
@@ -70,6 +91,7 @@ any current LinuxDistro|3.12|6.3.0|2.5.1|0.20.0|RX570/580/590 aka Polaris 20/21 
 7. Start Open-WebUI `open-webui serve &` 
 8. Open your Webbrowser `http://YOUR_LOCAL_IP:8080` to use Open-WebUI
 9. For Benchmark your downloaded Models use `python /llm-benchmark/benchmark.py`
+
 
 > [!NOTE]
 > You should have at least 8 GB of RAM available to run the 7B models, 16 GB to run the 13B models, and 32 GB to run the 33B models.
