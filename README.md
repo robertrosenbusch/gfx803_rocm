@@ -5,8 +5,13 @@ This repo provides a docker main buildfile based on the original AMD ROCm-Docker
 PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polaris generation in the original PIP repository. And of course not compiled too in the official ROCm-PyTorch Dockerfile. However, if Polaris 20/21 GPU support is to be used in ComfyUI or WhisperX, there is no way around newly compiled PyTorch and Torchvision/Torchaudio whl/wheel python files. And for Ollama in ROCm 6.X you have to recompile the rocBLAS-Library too. That what this Docker Buildfile(s) will do for you.
 
 > [!IMPORTANT]
-> Before you start to build the Specific Container on what AI-App you wanna use for your GFX803-GPU, please check up the next few hints. It could save Lifetime.
+> Before you start to build the Specific Container on what AI-App you wanna use for your GFX803-GPU, please check up the next few hints. It could save Lifetime to debug and prevent bad moods or throwing away your gfx803-GPU in a big bow.
 
+> [!NOTE]
+> # At General
+> 1. This is an hobby enthusiastic Project into my freetime. gfx803 is not supported since over two years on any Linux-Distro and was never designed to do some AI-Stuff. So be carefull.
+> 2. The published Dockercontainers downloaded a lot of stuff and needed a lot of time and storage space to recompile the neccesarry Stuff for gfx803. Big aware, its not my fault.
+> 3. Make sure you had have a good ISP-Connection, around 100 Gig free Storage and one to three hours time to recompile, depends what kind of APP you wanna use.
 
 > [!NOTE]
 > 1. Make sure, that both Kernel-Devices `/dev/dri` and `/dev/kfd` are aviable 
