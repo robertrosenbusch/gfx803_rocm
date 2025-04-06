@@ -101,7 +101,14 @@ This repo provides a docker main buildfile based on the original ROCm-Dockerimag
 
 > [!NOTE]
 > Highlights information that users should take into account, even when skimming.
-> # Install Ollama and Open-Webui for ROCm 6.3
+> |OS            |linux|Python|ROCm |Ollama|GPU|Mapping Port|
+> |--------------|-----|------|-----|------|-----|-----|
+> |Ubuntu-24.04|6.X and 5.19 |3.12|6.3.0|v0.5.12|RX570/580/590 aka Polaris 20/21 aka GCN 4|8080,11434|
+> * Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
+> * rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
+> * Ollama : [v0.5.12](https://github.com/ollama/ollama/releases/tag/v0.5.12)
+> * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
+
 
 > 1. install the docker-subsystem / docker.io on your linux system
 > 2. download the latest file version of this github-repos vi git clone
