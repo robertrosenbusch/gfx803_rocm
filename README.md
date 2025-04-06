@@ -15,7 +15,7 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 
 > [!NOTE]
 > #### At General
-> 1. This is an hobby enthusiastic Project into my freetime. gfx803 on ROCm is not supported since over two years on any Linux-Distro and was never designed to do some AI-Stuff. So be carefull. Feel free to ask or to make some hints to improve this "project"
+> 1. This is an hobby enthusiastic Project into my freetime. gfx803 on ROCm is not supported since [over three years](https://www.techpowerup.com/288864/amd-rocm-4-5-drops-polaris-architecture-support) on any Linux-Distro and was never designed to do some AI-Stuff. So be carefull. Feel free to ask or to make some hints to improve this "project"
 > 2. The published Dockercontainers downloaded a lot of stuff and needed a lot of time and storage space to recompile the neccesarry Stuff for gfx803. Big aware, its not my fault.
 > 3. Make sure you had have a good ISP-Connection, _*around 100 Gig free Storage and at least one to three hours time to recompile*_, depends what kind of APP you wanna use and your Hardware/ISP.
 > 4. Feel free to rebuild this Dockerfile for gfx803 on your Distro-Baremetal-ROCm to use it natively. I am not interessted on, cause i dont wanna maintain any specific Distro-Version. I am sorry.
