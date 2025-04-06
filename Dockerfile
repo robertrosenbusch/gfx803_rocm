@@ -1,1 +1,0 @@
-/home/sysop/gfx803_rocm/Dockerfile_rocm63_pt25
