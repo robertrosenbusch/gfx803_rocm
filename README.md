@@ -1,6 +1,12 @@
 # ROCm 6.3.0, PyTorch 2.5, Torchvision 0.20 with AMD GFX803 aka AMD Polaris aka AMD RX570/RX580/RX590 for ComfyUI, Ollama an whisperX
 
-This repo provides a docker main buildfile based on the original AMD ROCm-Dockerimage to compile PyTorch and Torchvision/Torchaudio for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) generation to generate AI Pics on ComfyUI, fast automatic speech recognition with WhisperX, PyTorch and a Dockerfile to build Ollama on the same ROCm Stack. 
+This repo provides a docker main buildfile based on the original published/sponsored AMD ROCm-PyTorch-Dockerimage to compile PyTorch and Torchvision/Torchaudio for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) to:
+1. use PyTorch on gfx803
+2. generate AI Pics on ComfyUI on gfx803
+3. use WhisperX to fast automatic speech recognition on gfx803
+4. and use Ollama for LLVMs on gfx803
+
+into a Docker based on the same AMD-ROCm Stack. 
 
 PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polaris generation in the original PIP repository. And of course not compiled too in the official ROCm-PyTorch Dockerfile. However, if Polaris 20/21 GPU support is to be used in ComfyUI or WhisperX, there is no way around newly compiled PyTorch and Torchvision/Torchaudio whl/wheel python files. And for Ollama in ROCm 6.X you have to recompile the rocBLAS-Library too. That what this Docker Buildfile(s) will do for you.
 
@@ -11,7 +17,7 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 > #### At General
 > 1. This is an hobby enthusiastic Project into my freetime. gfx803 on ROCm is not supported since over two years on any Linux-Distro and was never designed to do some AI-Stuff. So be carefull. Feel free to ask or to make some hints to improve this "project"
 > 2. The published Dockercontainers downloaded a lot of stuff and needed a lot of time and storage space to recompile the neccesarry Stuff for gfx803. Big aware, its not my fault.
-> 3. Make sure you had have a good ISP-Connection, _*around 100 Gig free Storage and at least one to three hours time to recompile*_, depends what kind of APP you wanna use and you Hardware/ISP.
+> 3. Make sure you had have a good ISP-Connection, _*around 100 Gig free Storage and at least one to three hours time to recompile*_, depends what kind of APP you wanna use and your Hardware/ISP.
 > 4. Feel free to rebuild this Dockerfile for gfx803 on your Distro-Baremetal-ROCm to use it natively. I am not interessted on, cause i dont wanna maintain any specific Distro-Version. I am sorry.
 
 
@@ -21,12 +27,12 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 > 2. Make sure, your Mainboard support [PCIe atomic](https://github.com/ROCm/ROCm/issues/2224#issuecomment-2299689450)  `sudo grep flags /sys/class/kfd/kfd/topology/nodes/*/io_links/0/properties`
 
 > [!NOTE]
-> #### ROCm hardsoftwareware requirements
+> #### ROCm softwareware requirements
 > 1. Make sure your user to start the Dockercontainer is a member of both groups `render`and `video`. 
 > 2. it could be possible (depends on your Linux-Distro) to add [a udev-Rulel](https://github.com/ROCm/ROCm/issues/1798#issuecomment-1849112550). 
 
 > [!TIP]
-> You should reboot after adding groups to your user.
+> You should reboot after adding groups to your user and before you start the Dockercontainer.
 
 
 > [!CAUTION]
