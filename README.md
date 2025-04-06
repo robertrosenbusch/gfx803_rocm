@@ -97,11 +97,11 @@ This repo provides a docker main buildfile based on the original ROCm-Dockerimag
 ❌ Closed PR
 <!-- TODO-IST:END -->
 
-> [!NOTE]
+[!NOTE]
 1. Make sure, that both Kernel-Devices `/dev/dri` and `/dev/kfd` are aviable 
 2. Make sure, your Mainboard support [PCIe atomic](https://github.com/ROCm/ROCm/issues/2224#issuecomment-2299689450)  `sudo grep flags /sys/class/kfd/kfd/topology/nodes/*/io_links/0/properties`
 
-> [!NOTE]
+[!NOTE]
 1. Make sure your user to start the Dockercontainer is a member of both groups `render`and `video`. 
 2. it could be possible (depends on your Linux-Distro) to add [a udev-Rulel](https://github.com/ROCm/ROCm/issues/1798#issuecomment-1849112550). You should reboot after adding groups to your user.
 
