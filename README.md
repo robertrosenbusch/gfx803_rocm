@@ -43,6 +43,11 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 > |--------------|-----|-----|------|-----|------|-----|-----|-----|-----|
 > |working on Ollama/PyTorch|✅|✅|✅|✅|✅|✅|🟥|🟥|✅|
 
+# Quick links
+
+- About used Ollama [Docker-Components](#rocm-630-ollama-and-webopen-webui-in-a-dockerfile) 
+- Ollama [Benchmarks](#rocm-630-ollama-v054-benchmark-on-rx570-vs-cpu-ryzen7-3700x)
+- Ollama Install [Instructions](#install-ollama-and-open-webui-for-rocm-63)
 
 ## ROCm-6.3.0 PyTorch for ComfyUI in a Dockerfile
 
@@ -63,7 +68,7 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 |ROCm 5.7 + PyTorch v2.3|58.85 s/it|19.87 s/it|8.33 s/it|1.22 s/it|1.97 s/it|
 
 
-## ROCm-6.3.0 Ollama / Webopen-webui in a Dockerfile
+## ROCm-6.3.0 Ollama and Webopen-webui in a Dockerfile
 
 |OS            |Python|ROCm |Ollama|GPU|Mapping Port|
 |--------------|------|-----|------|-----|-----|
