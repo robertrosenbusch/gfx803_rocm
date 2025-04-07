@@ -30,6 +30,8 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 > #### ROCm softwareware requirements
 > 1. Make sure your user to start the Dockercontainer is a member of both groups `render`and `video`. 
 > 2. it could be possible (depends on your Linux-Distro) to add [a udev-Rulel](https://github.com/ROCm/ROCm/issues/1798#issuecomment-1849112550). 
+> 4. it is unimportant, which version of ROCm do you use on your Hostsystem
+> 3. it is _not_ necessary to install the entire or any ROCm-Stack-Part on the host system. The whole ROCm magic happens into the Dockercontainer-
 
 > [!TIP]
 > You should reboot after adding groups to your user and before you start the Dockercontainer.
