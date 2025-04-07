@@ -1,6 +1,6 @@
 # ROCm 6.3.0, PyTorch 2.5, Torchvision 0.20 with AMD GFX803 aka AMD Polaris aka AMD RX570/RX580/RX590 for ComfyUI, Ollama an whisperX
 
-This repo provides a docker main buildfile based on the original published/sponsored AMD ROCm-PyTorch-Dockerimage to compile PyTorch and Torchvision/Torchaudio for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) to:
+This repo provides a docker main buildfile based on the original published/sponsored AMD ROCm-PyTorch-Dockerimage to compile PyTorch, Torchvision/Torchaudio, ROCBlas and CTranslate2 for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) to:
 1. use [PyTorch](https://github.com/pytorch/pytorch) on gfx803
 2. generate AI Pics on [ComfyUI](https://github.com/comfyanonymous/ComfyUI) on gfx803
 3. use [WhisperX](https://github.com/m-bain/whisperX) to fast automatic speech recognition on gfx803
@@ -47,7 +47,7 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 
 |OS            |Python|ROCm |PyTorch|Torchvision|GPU|
 |--------------|------|-----|-----|-----|-----|
-any current LinuxDistro|3.12|6.3.0|2.5.1|0.20.0|RX570/580/590 aka Polaris 20/21 aka GCN 4|
+|Ubuntu 24.04|3.12|6.3.0|2.5.1|0.20.0|RX570/580/590 aka Polaris 20/21 aka GCN 4|
 
 * Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
 * PyTorch GIT: [v2.5.1](https://github.com/ROCm/pytorch/tree/release/2.5)
@@ -64,9 +64,9 @@ any current LinuxDistro|3.12|6.3.0|2.5.1|0.20.0|RX570/580/590 aka Polaris 20/21 
 
 ## ROCm-6.3.0 Ollama / Webopen-webui in a Dockerfile
 
-|OS            |linux|Python|ROCm |Ollama|GPU|Mapping Port|
-|--------------|-----|------|-----|------|-----|-----|
-|Ubuntu-24.04|6.X and 5.19 |3.12|6.3.0|v0.5.12|RX570/580/590 aka Polaris 20/21 aka GCN 4|8080,11434|
+|OS            |Python|ROCm |Ollama|GPU|Mapping Port|
+|--------------|------|-----|------|-----|-----|
+|Ubuntu-24.04|3.12|6.3.0|v0.5.12|RX570/580/590 aka Polaris 20/21 aka GCN 4|8080,11434|
 * Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
 * rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
 * Ollama : [v0.6.4](https://github.com/ollama/ollama/releases/tag/v0.6.4)
