@@ -1,6 +1,6 @@
 # ROCm 6.3.0, PyTorch 2.5, Torchvision 0.20 with AMD GFX803 aka AMD Polaris aka AMD RX570/RX580/RX590 for ComfyUI, Ollama an whisperX
 
-This repo provides a docker main buildfile based on the original published/sponsored AMD ROCm-PyTorch-Dockerimage to compile PyTorch, Torchvision/Torchaudio, ROCBlas and CTranslate2 for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) to:
+This repo provides a docker main buildfiles based on the original published/sponsored AMD ROCm-PyTorch-Dockerimage to compile PyTorch, Torchvision/Torchaudio, ROCBlas and CTranslate2 for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) to:
 1. use [PyTorch](https://github.com/pytorch/pytorch) on gfx803
 2. generate AI Pics on [ComfyUI](https://github.com/comfyanonymous/ComfyUI) on gfx803
 3. use [WhisperX](https://github.com/m-bain/whisperX) to fast automatic speech recognition on gfx803
@@ -24,7 +24,7 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 > [!NOTE]
 > #### ROCm hardware requirements
 > 1. Make sure, that both Kernel-Devices `/dev/dri` and `/dev/kfd` are aviable 
-> 2. Make sure, your Mainboard support [PCIe atomic](https://github.com/ROCm/ROCm/issues/2224#issuecomment-2299689450)  `sudo grep flags /sys/class/kfd/kfd/topology/nodes/*/io_links/0/properties`
+> 2. Make sure, your Mainboard support [PCIe atomic](https://github.com/ROCm/ROCm/issues/2224#issuecomment-2299689450) for your connected gfx803-GPU(s) `sudo grep flags /sys/class/kfd/kfd/topology/nodes/*/io_links/0/properties` 
 
 > [!NOTE]
 > #### ROCm software requirements
