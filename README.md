@@ -27,7 +27,7 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 > 2. Make sure, your Mainboard support [PCIe atomic](https://github.com/ROCm/ROCm/issues/2224#issuecomment-2299689450)  `sudo grep flags /sys/class/kfd/kfd/topology/nodes/*/io_links/0/properties`
 
 > [!NOTE]
-> #### ROCm softwareware requirements
+> #### ROCm software requirements
 > 1. Make sure your user to start the Dockercontainer is a member of both groups `render`and `video`. 
 > 2. it could be possible (depends on your Linux-Distro) to add [a udev-Rule](https://github.com/ROCm/ROCm/issues/1798#issuecomment-1849112550). 
 > 4. it is unimportant, which version of ROCm do you use on your Hostsystem
@@ -94,7 +94,7 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 
 1. install the docker-subsystem / docker.io on your linux system
 2. download the latest file version of this github-repos vi git clone
-4. build your Docker image via `docker build . -t 'rocm63_pt25:latest'`
+4. build your Docker image via `docker build -f . -t 'rocm63_pt25:latest'`
 5. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8188:8188 -v /YOUR/LOCAL/COMFYUI/CHECKPOINTS:/comfy/ --name rocm63_pt25 rocm63_pt25:latest bash`
 6. install ComfyUI and download a Model inside the container (/comfyui) _OR_ use [my ComfyUI-Container-Dockerfile](https://github.com/robertrosenbusch/gfx803_rocm/blob/main/Dockerfile_rocm63_comfyui)
 7. After installing ComfyUI _reinstall_ pytorch and torchvision wheels into your ComfyUI-Python-Environment. You will find the Polaris compiled Python-Wheel-Files into the `/pytorch/dist` and `/vision/dist` Directory.
