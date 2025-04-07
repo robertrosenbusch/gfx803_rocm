@@ -18,7 +18,7 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 > 1. This is an hobby enthusiastic Project into my freetime. gfx803 on ROCm is not supported since [over three years](https://www.techpowerup.com/288864/amd-rocm-4-5-drops-polaris-architecture-support) on any Linux-Distro and was never designed to do some AI-Stuff. So be carefull. Feel free to ask or to make some hints to improve this "project"
 > 2. The published Dockercontainers downloaded a lot of stuff and needed a lot of time and storage space to recompile the neccesarry Stuff for gfx803. Big aware, its not my fault.
 > 3. Make sure you had have a good ISP-Connection, _*around 100 Gig free Storage and at least one to three hours time to recompile*_, depends what kind of APP you wanna use and your Hardware/ISP.
-> 4. Feel free to rebuild this Dockerfile for gfx803 on your Distro-Baremetal-ROCm to use it natively. I am not interessted on, cause i dont wanna maintain any specific Distro-Version. I am sorry.
+> 4. Feel free to research/rebuild for ROCm/gfx803 on your Distro-Baremetal-ROCm to use it natively. I am not interessted on, cause i dont wanna maintain any specific Distro-Version. I am sorry.
 
 
 > [!NOTE]
@@ -29,13 +29,12 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 > [!NOTE]
 > #### ROCm softwareware requirements
 > 1. Make sure your user to start the Dockercontainer is a member of both groups `render`and `video`. 
-> 2. it could be possible (depends on your Linux-Distro) to add [a udev-Rulel](https://github.com/ROCm/ROCm/issues/1798#issuecomment-1849112550). 
+> 2. it could be possible (depends on your Linux-Distro) to add [a udev-Rule](https://github.com/ROCm/ROCm/issues/1798#issuecomment-1849112550). 
 > 4. it is unimportant, which version of ROCm do you use on your Hostsystem
-> 3. it is _not_ necessary to install the entire or any ROCm-Stack-Part on the host system. The whole ROCm magic happens into the Dockercontainer-
+> 3. it is _not_ necessary to install the entire or any ROCm-Stack-Part on the host system. The whole ROCm magic happens inside the Dockercontainer
 
 > [!TIP]
 > You should reboot after adding groups to your user and before you start the Dockercontainer.
-
 
 > [!CAUTION]
 > #### Prevent ROCm SegFaults on your Linux Distro
