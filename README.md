@@ -1,6 +1,6 @@
 # ROCm 6.3.0, PyTorch 2.5, Torchvision 0.20 with AMD GFX803 aka AMD Polaris aka AMD RX570/RX580/RX590 for PyTorch, ComfyUI, Ollama and WhisperX
 
-This repo provides a docker main buildfiles based on the original published/sponsored AMD ROCm-PyTorch-Dockerimage to compile PyTorch, Torchvision/Torchaudio, ROCBlas and CTranslate2 for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) to:
+This repo provides some docker main buildfiles based on the original published/sponsored AMD ROCm-PyTorch-Dockerimage to compile PyTorch, Torchvision/Torchaudio, ROCBlas and CTranslate2 for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) to:
 1. use [PyTorch](https://github.com/pytorch/pytorch) on gfx803
 2. generate AI Pics on [ComfyUI](https://github.com/comfyanonymous/ComfyUI) on gfx803
 3. use [WhisperX](https://github.com/m-bain/whisperX) to fast automatic speech recognition on gfx803
