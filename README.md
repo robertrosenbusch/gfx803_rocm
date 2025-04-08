@@ -75,7 +75,7 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 |Ubuntu-24.04|3.12|6.3.0|v0.5.12|RX570/580/590 aka Polaris 20/21 aka GCN 4|8080,11434|
 * Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
 * rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
-* Ollama : [v0.6.4](https://github.com/ollama/ollama/releases/tag/v0.6.4)
+* Ollama : [v0.6.5](https://github.com/ollama/ollama/releases/tag/v0.6.5)
 * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
 
 ##### ROCm-6.3.0 Ollama v0.5.4 Benchmark on RX570 vs CPU Ryzen7 3700x
