@@ -139,8 +139,6 @@ RUN echo "** Checkout Torchaudio Version: ${TORCHAUDIO_GIT_VERSION} **" && \
 
 WORKDIR /audio
 RUN echo "** BUILDING Torchaudio **" && \
-    #python /audio/setup.py develop && \
-    #python /audio/setup.py install && \
     python setup.py bdist_wheel && \
     true
 #RUN cp /var/lib/jenkins/vision/dist/*.whl /vision/dist && \

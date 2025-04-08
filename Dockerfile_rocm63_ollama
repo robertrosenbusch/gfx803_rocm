@@ -104,7 +104,7 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
     true
  
 ## Checkout Ollama
-ENV OLLAMA_GIT_VERSION="v0.6.4"
+ENV OLLAMA_GIT_VERSION="v0.6.5"
 RUN echo "Checkout OLLAMA: ${OLLAMA_GIT_VERSION}" && \
     git clone https://github.com/ollama/ollama.git -b ${OLLAMA_GIT_VERSION} /ollama && \
     true
