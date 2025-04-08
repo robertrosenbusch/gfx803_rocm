@@ -25,6 +25,7 @@ PyTorch, Torchvision _and_ rocBLAS-Library are not compiled to use the GPU-Polar
 > #### ROCm hardware requirements
 > 1. Make sure, that both Kernel-Devices `/dev/dri` and `/dev/kfd` are aviable 
 > 2. Make sure, your Mainboard support [PCIe atomic](https://github.com/ROCm/ROCm/issues/2224#issuecomment-2299689450) for your connected gfx803-GPU(s) `sudo grep flags /sys/class/kfd/kfd/topology/nodes/*/io_links/0/properties` 
+> 3. If you wanna use more then one gfx803 [take a look on this](https://github.com/robertrosenbusch/gfx803_rocm/issues/12#issuecomment-2763259884)
 
 > [!NOTE]
 > #### ROCm software requirements
