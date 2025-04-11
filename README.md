@@ -9,7 +9,8 @@ This repo provides some docker main buildfiles based on the original published/s
 into a Docker based on the same AMD-ROCm Stack. 
 
 # Quick links
-- General and about Motivations. [You should read it](#at-general). it could save lifeime.
+- General hints on GFX803 and about Motivations. [You should read it](#motivation). it could save lifeime.
+- Ollama |[Docker-Components](#rocm-630-ollama-and-webopen-webui-in-a-dockerfile) | [Benchmark] |Install|
 - About used Ollama [Docker-Components](#rocm-630-ollama-and-webopen-webui-in-a-dockerfile) 
 - Ollama [Benchmarks](#rocm-630-ollama-v054-benchmark-on-rx570-vs-cpu-ryzen7-3700x)
 - Ollama Install [Instructions](#install-ollama-and-open-webui-for-rocm-63)
