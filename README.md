@@ -63,7 +63,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 * Ollama : [v0.6.5](https://github.com/ollama/ollama/releases/tag/v0.6.5)
 * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
 
-##### ROCm-6.3.0 Ollama v0.5.4 Benchmark on RX570 vs CPU Ryzen7 3700x
+#### ROCm-6.3.0 Ollama v0.5.4 Benchmark on RX570 vs CPU Ryzen7 3700x
 |CPU/GPU       |deepseek-r1:8b|llama3.1:8b|llama2:7b|
 |--------------|-----|------|-----|
 |[GPU AMD RX570](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/gpu_rocm63_ollama_benchmark.png)|Total: 18.19 t/s|Total: 18.80 t/s|Total: 27.46 t/s|
@@ -71,7 +71,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 
 ![GFX803_rocm63_ollama_benchmark](https://github.com/robertrosenbusch/gfx803_rocm/blob/b3db63e7824effa281a5a386d8e1b4dd252aec94/benchmark/gfx803_rocm63_ollama_benchmark.png?raw=true)
 
-# Install Ollama and Open-Webui for ROCm 6.3
+## Install Ollama and Open-Webui for ROCm 6.3
 > [!NOTE]
 > You should have at least 8 GB of RAM available to run up to 7B models, and two GFX803 cards to run the 13B models
 
