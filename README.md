@@ -98,7 +98,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 |       |SD 1.5  (512x512)|SD 1.5  (512x768)|SDXL  (1024x1024)|SD3.5  (1024x1024)|Flux -Schnell (1024x1024)|
 |--------------|-----|------|-----|-----|-----|
 |ROCm 6.3 + PyTorch v2.5 (RX570)|[1.19 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sd15_512x512_sd.png)|[1.92 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sd15_512x768_sd.png)|[7.57 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sdxl_1024x1024l.png)|[19.56 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sd35_1024x1024.png)|[63.72 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_schnell_1024x1024.png)|
-|ROCm 6.3 + PyTorch v2.5 (RX590)|||| ||
+|ROCm 6.3 + PyTorch v2.5 (RX590)|1.06 s/it|1.48 s/it|6.22 s/it|n.a.|n.a.|
 |ROCm 5.7 + PyTorch v2.3|1.22 s/it|1.97 s/it|8.33 s/it|19.87 s/it|58.85 s/it|
 
 ## Install ROCm 6.3 PyTorch, TorchVision and TorchAudio via Docker for ComfyUI/WhisperX
