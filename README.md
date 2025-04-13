@@ -12,8 +12,8 @@ into a Docker based on the same AMD-ROCm Stack.
 - **General** [hints on GFX803 and about Motivations](#motivation). You should read it. it could save lifetime.
 - **Ollama** GFX803 |[Docker-Components](#rocm-630-ollama-and-openwebui-in-a-dockerfile) | [Benchmark](#rocm-630-ollama-v054-benchmark-on-rx570-vs-cpu-ryzen7-3700x) |[Install](#install-ollama-and-open-webui-for-rocm-63)
 - **PyTorch** GFX803 |[Docker-Components](#rocm-630-pytorch-for-comfyui-in-a-dockerfile)|[Install](#install-rocm-63-pytorch-torchvision-and-torchaudio-via-docker-for-comfyuiwhisperx)
-- **ComfyUi** GFX803 | [Docker-Components](#) | [Benchmark](#)| [Install](#)
-- **WhsiperX** GFX803 | [Docker-Components](#) | [Install](#)
+- **ComfyUi** on PyTorch GFX803 | [Docker-Components](#) | [Benchmark](#)| [Install](#)
+- **WhsiperX** on PyTorch GFX803 | [Docker-Components](#) | [Install](#)
 
 ## Motivation
 Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled to use the GPU-Polaris generation in the original PIP repository. And of course not compiled too in the official ROCm-PyTorch Dockerfile. However, if Polaris/gfx803 GPU support is to be used in Ollama,ComfyUI or WhisperX on ROCm, there is no way around newly compiled PyTorch and Torchvision/Torchaudio whl/wheel python files. And for Ollama in ROCm 6.X you have to recompile the rocBLAS-Library too. That what this Docker Buildfile(s) will do for you.
