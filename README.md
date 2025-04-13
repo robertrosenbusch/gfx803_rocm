@@ -82,7 +82,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 6. Open your Webbrowser `http://YOUR_LOCAL_IP:8080` to use Open-WebUI
 7. For Benchmark your downloaded Models use `python /llm-benchmark/benchmark.py`
 
-## ROCm-6.3.0 PyTorch for ComfyUI in a Dockerfile
+## ROCm-6.3.0 PyTorch,TorchVision and TorchAudio for ComfyUI in a Dockerfile
 
 |OS            |Python|ROCm |PyTorch|Torchvision|GPU|
 |--------------|------|-----|-----|-----|-----|
@@ -91,6 +91,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 * Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
 * PyTorch GIT: [v2.5.1](https://github.com/ROCm/pytorch/tree/release/2.5)
 * Torchvison GIT: [v0.20.0](https://github.com/pytorch/vision/releases/tag/v0.20.0)
+* TorchAudio GIT: [v2.5.1](https://github.com/pytorch/audio/releases/tag/v2.5.1)
 * rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
 
 
