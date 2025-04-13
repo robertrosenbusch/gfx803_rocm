@@ -95,10 +95,10 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 
 
 ### ROCm-6.3.0 ComfyUI Benchmark on RX570
-|       |SDXL  (1024x1024)|SD 1.5  (512x512)|SD 1.5  (512x768)|Flux -Schnell (1024x1024)|SD3.5  (1024x1024)|
+|       |SD 1.5  (512x512)|SD 1.5  (512x768)|SDXL  (1024x1024)|SD3.5  (1024x1024)|Flux -Schnell (1024x1024)|
 |--------------|-----|------|-----|-----|-----|
-|ROCm 6.3 + PyTorch v2.5 (RX570)|[63.72 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_schnell_1024x1024.png)|[19.56 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sd35_1024x1024.png)|[7.57 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sdxl_1024x1024l.png)| [1.19 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sd15_512x512_sd.png)|[1.92 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sd15_512x768_sd.png)|
-|ROCm 6.3 + PyTorch v2.5 (RX590)|[63.72 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_schnell_1024x1024.png)|[19.56 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sd35_1024x1024.png)|[7.57 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sdxl_1024x1024l.png)| [1.19 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sd15_512x512_sd.png)|[1.92 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sd15_512x768_sd.png)|
+|ROCm 6.3 + PyTorch v2.5 (RX570)|[1.19 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sd15_512x512_sd.png)|[1.92 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sd15_512x768_sd.png)|[7.57 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sdxl_1024x1024l.png)|[19.56 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sd35_1024x1024.png)|[63.72 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_schnell_1024x1024.png)|
+|ROCm 6.3 + PyTorch v2.5 (RX590)|||| ||
 |ROCm 5.7 + PyTorch v2.3|58.85 s/it|19.87 s/it|8.33 s/it|1.22 s/it|1.97 s/it|
 
 ## Install ROCm 6.3 PyTorch, TorchVision and TorchAudio via Docker for ComfyUI/WhisperX
@@ -108,13 +108,15 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 1. build your Docker image via `docker build -f  Dockerfile_rocm63_pt25 . -t 'rocm63_pt25:latest'`
 2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8188:8188 -v /YOUR/LOCAL/COMFYUI/CHECKPOINTS:/comfy/ --name rocm63_pt25 rocm63_pt25:latest bash`
 3. After installing ComfyUI _reinstall_ pytorch, torchvision and torchaudio wheels into your ComfyUI-Python-Environment. You will find the Polaris compiled Python-Wheel-Files into the `/pytorch/dist`, `/vision/dist` and `/audio/dist` Directory.
- *OR* use [my ComfyUI-Container-Dockerfile](https://github.com/robertrosenbusch/gfx803_rocm/blob/main/Dockerfile_rocm63_comfyui) 
+ *OR* use [my ComfyUI-Container-Dockerfile](https://github.com/robertrosenbusch/gfx803_rocm/blob/main/Dockerfile_rocm63_comfyui) | [WhisperX-Container-Dockerfile](#)
 
 
 OpenWebui
 > [!NOTE]
 > 1. Since ROCm 6.0 you have to use the _`--lowvram`_ option at ComfyUI's main.py to create correct results. *Dont know why* ...
 > 2. Since PyTorch 2.4 you have to use the _`MIOPEN_LOG_LEVEL=3`_ Environment-Var to surpress HipBlas-Warnings. *Dont know why* ...
+
+
 
 
 
