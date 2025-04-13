@@ -12,9 +12,8 @@ into a Docker based on the same AMD-ROCm Stack.
 - **General** [hints on GFX803 and about Motivations](#motivation). You should read it. it could save lifetime.
 - **Ollama** GFX803 |[Docker-Components](#rocm-630-ollama-and-webopen-webui-in-a-dockerfile) | [Benchmark](#rocm-630-ollama-v054-benchmark-on-rx570-vs-cpu-ryzen7-3700x) |[Install](#install-ollama-and-open-webui-for-rocm-63)
 - **PyTorch** GFX803 |[Docker-Components](#rocm-630-pytorch-for-comfyui-in-a-dockerfile)|[Install](#)
-- **ComfyUi** GFX803 | [Docker-Components](#) | [Install](#)
+- **ComfyUi** GFX803 | [Docker-Components](#) | [Benchmark](#)| [Install](#)
 - **WhsiperX** GFX803 | [Docker-Components](#) | [Install](#)
-
 
 
 ## Motivation
@@ -54,11 +53,36 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 > |--------------|-----|-----|------|-----|------|-----|-----|-----|-----|
 > |working on ROCm 6.3 for Ollama/PyTorch|✅|🟥|🟥|✅|✅|✅|✅|✅|✅|
 
-# Quick links
+## ROCm-6.3.0 Ollama and Webopen-webui in a Dockerfile
 
-- About used Ollama [Docker-Components](#rocm-630-ollama-and-webopen-webui-in-a-dockerfile) 
-- Ollama [Benchmarks](#rocm-630-ollama-v054-benchmark-on-rx570-vs-cpu-ryzen7-3700x)
-- Ollama Install [Instructions](#install-ollama-and-open-webui-for-rocm-63)
+|OS            |Python|ROCm |Ollama|GPU|Mapping Port|
+|--------------|------|-----|------|-----|-----|
+|Ubuntu-24.04|3.12|6.3.0|v0.5.12|RX570/580/590 aka Polaris 20/21 aka GCN 4|8080,11434|
+* Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
+* rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
+* Ollama : [v0.6.5](https://github.com/ollama/ollama/releases/tag/v0.6.5)
+* Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
+
+##### ROCm-6.3.0 Ollama v0.5.4 Benchmark on RX570 vs CPU Ryzen7 3700x
+|CPU/GPU       |deepseek-r1:8b|llama3.1:8b|llama2:7b|
+|--------------|-----|------|-----|
+|[GPU AMD RX570](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/gpu_rocm63_ollama_benchmark.png)|Total: 18.19 t/s|Total: 18.80 t/s|Total: 27.46 t/s|
+|[CPU AMD Ryzen 7 3700x](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/cpu_rocm63_ollama_benchmark.png)| Total: 7.33 t/s|Total: 7.53 t/s|Total: 8.76 t/s|
+
+![GFX803_rocm63_ollama_benchmark](https://github.com/robertrosenbusch/gfx803_rocm/blob/b3db63e7824effa281a5a386d8e1b4dd252aec94/benchmark/gfx803_rocm63_ollama_benchmark.png?raw=true)
+
+# Install Ollama and Open-Webui for ROCm 6.3
+> [!NOTE]
+> You should have at least 8 GB of RAM available to run up to 7B models, and two GFX803 cards to run the 13B models
+
+3. build your Docker image via `docker build -f Dockerfile_rocm63_ollama . -t 'rocm63_ollama:latest'`
+4. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434 --name rocm63_ollama rocm63_ollama:latest bash`
+5. Enter to the Dockercontainer `docker exec -ti rocm63_ollama bash`
+6. [download a model](https://ollama.com/search) you need for e.g. `./ollama run deepseek-r1:1.5b`
+7. Start Open-WebUI `open-webui serve &` 
+8. Open your Webbrowser `http://YOUR_LOCAL_IP:8080` to use Open-WebUI
+9. For Benchmark your downloaded Models use `python /llm-benchmark/benchmark.py`
+
 
 ## ROCm-6.3.0 PyTorch for ComfyUI in a Dockerfile
 
@@ -79,23 +103,6 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 |ROCm 5.7 + PyTorch v2.3|58.85 s/it|19.87 s/it|8.33 s/it|1.22 s/it|1.97 s/it|
 
 
-## ROCm-6.3.0 Ollama and Webopen-webui in a Dockerfile
-
-|OS            |Python|ROCm |Ollama|GPU|Mapping Port|
-|--------------|------|-----|------|-----|-----|
-|Ubuntu-24.04|3.12|6.3.0|v0.5.12|RX570/580/590 aka Polaris 20/21 aka GCN 4|8080,11434|
-* Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
-* rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
-* Ollama : [v0.6.5](https://github.com/ollama/ollama/releases/tag/v0.6.5)
-* Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
-
-##### ROCm-6.3.0 Ollama v0.5.4 Benchmark on RX570 vs CPU Ryzen7 3700x
-|CPU/GPU       |deepseek-r1:8b|llama3.1:8b|llama2:7b|
-|--------------|-----|------|-----|
-|[GPU AMD RX570](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/gpu_rocm63_ollama_benchmark.png)|Total: 18.19 t/s|Total: 18.80 t/s|Total: 27.46 t/s|
-|[CPU AMD Ryzen 7 3700x](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/cpu_rocm63_ollama_benchmark.png)| Total: 7.33 t/s|Total: 7.53 t/s|Total: 8.76 t/s|
-
-![GFX803_rocm63_ollama_benchmark](https://github.com/robertrosenbusch/gfx803_rocm/blob/b3db63e7824effa281a5a386d8e1b4dd252aec94/benchmark/gfx803_rocm63_ollama_benchmark.png?raw=true)
 
 
 --
@@ -103,30 +110,16 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 > [!WARNING]  
 > It takes a _lot_ of time and Storage space to compile. Keep your head up 
 
-1. install the docker-subsystem / docker.io on your linux system
-2. download the latest file version of this github-repos vi git clone
 4. build your Docker image via `docker build -f  Dockerfile_rocm63_pt25 . -t 'rocm63_pt25:latest'`
 5. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8188:8188 -v /YOUR/LOCAL/COMFYUI/CHECKPOINTS:/comfy/ --name rocm63_pt25 rocm63_pt25:latest bash`
 6. install ComfyUI and download a Model inside the container (/comfyui) _OR_ use [my ComfyUI-Container-Dockerfile](https://github.com/robertrosenbusch/gfx803_rocm/blob/main/Dockerfile_rocm63_comfyui)
-7. After installing ComfyUI _reinstall_ pytorch and torchvision wheels into your ComfyUI-Python-Environment. You will find the Polaris compiled Python-Wheel-Files into the `/pytorch/dist` and `/vision/dist` Directory.
+7. After installing ComfyUI _reinstall_ pytorch and torchvision wheels into your ComfyUI-Python-Environment. You will find the Polaris compiled Python-Wheel-Files into the `/pytorch/dist`, `/vision/dist` and `/audio/dist` Directory.
 > [!NOTE]
 > 1. Since ROCm 6.0 you have to use the _`--lowvram`_ option at ComfyUI's main.py to create correct results. *Dont know why* ...
 > 2. Since PyTorch 2.4 you have to use the _`MIOPEN_LOG_LEVEL=3`_ Environment-Var to surpress HipBlas-Warnings. *Dont know why* ...
 
 
 
-# Install Ollama and Open-Webui for ROCm 6.3
-> [!NOTE]
-> You should have at least 8 GB of RAM available to run up to 7B models, and two GFX803 cards to run the 13B models
 
-1. install the docker-subsystem / docker.io on your linux system
-2. download the latest file version of this github-repos vi git clone
-3. build your Docker image via `docker build -f Dockerfile_rocm63_ollama . -t 'rocm63_ollama:latest'`
-4. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434 --name rocm63_ollama rocm63_ollama:latest bash`
-5. Enter to the Dockercontainer `docker exec -ti rocm63_ollama bash`
-6. [download a model](https://ollama.com/search) you need for e.g. `./ollama run deepseek-r1:1.5b`
-7. Start Open-WebUI `open-webui serve &` 
-8. Open your Webbrowser `http://YOUR_LOCAL_IP:8080` to use Open-WebUI
-9. For Benchmark your downloaded Models use `python /llm-benchmark/benchmark.py`
 
 
