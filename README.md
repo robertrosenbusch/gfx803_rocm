@@ -11,7 +11,7 @@ into a Docker based on the same AMD-ROCm Stack.
 # Quick links
 - **General** [hints on GFX803 and about Motivations](#motivation). You should read it. it could save lifetime.
 - **Ollama** GFX803 |[Docker-Components](#rocm-630-ollama-and-openwebui-in-a-dockerfile) | [Benchmark](#rocm-630-ollama-v054-benchmark-on-rx570-vs-cpu-ryzen7-3700x) |[Install](#install-ollama-and-open-webui-for-rocm-63)
-- **PyTorch** GFX803 |[Docker-Components](#rocm-630-pytorch-for-comfyui-in-a-dockerfile)|[Install](#)
+- **PyTorch** GFX803 |[Docker-Components](#rocm-630-pytorch-for-comfyui-in-a-dockerfile)|[Install](#install-rocm-63-pytorch-torchvision-and-torchaudio-via-docker-for-comfyuiwhisperx)
 - **ComfyUi** GFX803 | [Docker-Components](#) | [Benchmark](#)| [Install](#)
 - **WhsiperX** GFX803 | [Docker-Components](#) | [Install](#)
 
