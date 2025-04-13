@@ -63,7 +63,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 * Ollama : [v0.6.5](https://github.com/ollama/ollama/releases/tag/v0.6.5)
 * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
 
-#### ROCm-6.3.0 Ollama v0.5.4 Benchmark on RX570 vs CPU Ryzen7 3700x
+### ROCm-6.3.0 Ollama v0.5.4 Benchmark on RX570 vs CPU Ryzen7 3700x
 |CPU/GPU       |deepseek-r1:8b|llama3.1:8b|llama2:7b|
 |--------------|-----|------|-----|
 |[GPU AMD RX570](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/gpu_rocm63_ollama_benchmark.png)|Total: 18.19 t/s|Total: 18.80 t/s|Total: 27.46 t/s|
@@ -75,13 +75,13 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 > [!NOTE]
 > You should have at least 8 GB of RAM available to run up to 7B models, and two GFX803 cards to run the 13B models
 
-3. build your Docker image via `docker build -f Dockerfile_rocm63_ollama . -t 'rocm63_ollama:latest'`
-4. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434 --name rocm63_ollama rocm63_ollama:latest bash`
-5. Enter to the Dockercontainer `docker exec -ti rocm63_ollama bash`
-6. [download a model](https://ollama.com/search) you need for e.g. `./ollama run deepseek-r1:1.5b`
-7. Start Open-WebUI `open-webui serve &` 
-8. Open your Webbrowser `http://YOUR_LOCAL_IP:8080` to use Open-WebUI
-9. For Benchmark your downloaded Models use `python /llm-benchmark/benchmark.py`
+1. build your Docker image via `docker build -f Dockerfile_rocm63_ollama . -t 'rocm63_ollama:latest'`
+2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434 --name rocm63_ollama rocm63_ollama:latest bash`
+3. Enter to the Dockercontainer `docker exec -ti rocm63_ollama bash`
+4. [download a model](https://ollama.com/search) you need for e.g. `./ollama run deepseek-r1:1.5b`
+5. Start Open-WebUI `open-webui serve &` 
+6. Open your Webbrowser `http://YOUR_LOCAL_IP:8080` to use Open-WebUI
+7. For Benchmark your downloaded Models use `python /llm-benchmark/benchmark.py`
 
 
 ## ROCm-6.3.0 PyTorch for ComfyUI in a Dockerfile
