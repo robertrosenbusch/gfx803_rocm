@@ -71,6 +71,7 @@ RUN echo "** BUILDING Torchaudio **" && \
 
 ## Prepare Conda for CTranslate-for-ROCm
 ## Install miniconda for WhisperX
+WORKDIR /
 RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh &&\
     /bin/bash /tmp/miniconda.sh -b -p /opt/conda && \
     rm /tmp/miniconda.sh && \
@@ -91,9 +92,9 @@ RUN /opt/conda/bin/conda install -y -c conda-forge libstdcxx-ng=12 &&\
     /opt/conda/bin/conda install -y -c conda-forge libstdcxx-ng=13 &&\
     true
 
-WORKDIR /    
+
 ### Checkout and Prepare CTranslate-for-ROCm
-RUN git clone https://github.com/arlo-phoenix/CTranslate2-rocm.git --recurse-submodules && \
+RUN git clone https://github.com/arlo-phoenix/CTranslate2-rocm.git --recurse-submodules /CTranslate2-rocm && \
     true 
 
 ### Compile and build WHL CTranslate-for-ROCm
