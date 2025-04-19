@@ -2,6 +2,7 @@
 # created, build and compiled by Robert Rosenbusch at April 2025
 # include llm-benchmnark and open-webui GUI
 
+### Build rocm64_gfx803_base first!
 FROM rocm64_gfx803_base:latest
 
 ENV OLLAMA_WEBGUI_PORT=8080 \
@@ -50,7 +51,7 @@ RUN echo "BUILDING Ollama for gfx803" && \
 
 ### Create a best practice Shell Script to start Ollama
 RUN touch ol_serve.sh && \
-    echo "export OLLAMA_HOST=0.0.0.0" > ol_serve.sh && \
+    echo "export {$OLLAMA_HOST}=0.0.0.0" > ol_serve.sh && \
     echo "./ollama serve&" >> ol_serve.sh && \
     chmod +x ol_serve.sh && \
     true
@@ -58,6 +59,7 @@ RUN touch ol_serve.sh && \
 EXPOSE ${OLLAMA_WEBGUI_PORT} ${OLLAMA_PORT}
 
 ENTRYPOINT ["OLLAMA_HOST=0.0.0.0 ./ollama serve&"]
+#ENTRYPOINT ["OLLAMA_HOST=0.0.0.0 ./ollama serve&"]
 #CMD ["/ollama/ol_serve.sh"]
 
 CMD ["/bin/bash","-c"]

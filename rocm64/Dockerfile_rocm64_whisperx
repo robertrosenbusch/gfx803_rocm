@@ -1,7 +1,8 @@
-# Docker Buildfile for  Whisper-WebUI/whisperX/CTranslate2-rocm to use a RX570 / Polaris / gfx803 AMD GPU with ROCm 6.3
-# created, build and compiled by Robert Rosenbusch at March 2025
-FROM rocm64_gfx803_base:latest
+# Docker Buildfile for ROCm 6.4 for Whisper-WebUI/whisperX/CTranslate2-rocm to use a RX570 / Polaris / gfx803 AMD GPU with ROCm 6.3
+# created, build and compiled by Robert Rosenbusch at April 2025
 
+### Build rocm64_gfx803_base first!
+FROM rocm64_gfx803_base:latest
 
 SHELL ["/bin/bash", "-c"]  
 ENV WHISPERX_GUI_PORT=7860 \
@@ -14,7 +15,6 @@ ENV WHISPERX_GUI_PORT=7860 \
     ### For your AMD GPU
     PYTORCH_ROCM_ARCH=gfx803 
     
-
 ###########
 ### Build PyTorch
 ###########
