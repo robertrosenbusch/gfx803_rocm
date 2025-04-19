@@ -1,6 +1,5 @@
-# Docker Buildfile for ROCm 6.4 to use Ollama with a RX570 / Polaris / gfx803 AMD GPU
-# created, build and compiled by Robert Rosenbusch at January-April 2025
-# include llm-benchmnark and open-webui 
+# Docker _BASE_ Buildfile for ROCm 6.4 to use Ollama/WhisperX/ComfyUI with a RX570 / Polaris / gfx803 AMD GPU
+# created, build and compiled by Robert Rosenbusch at April 2025
 
 FROM rocm/dev-ubuntu-24.04:6.4-complete
 
