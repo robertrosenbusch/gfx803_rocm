@@ -65,13 +65,11 @@ RUN echo "** BUILDING Torchaudio **" && \
     pip install --break-system-packages dist/*.whl && \
     true 
 
-
 ######
 # End of building pytorch and torchvision WHL-Files
 ###########
 
 ## Prepare Conda for CTranslate-for-ROCm
-
 ## Install miniconda for WhisperX
 RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh &&\
     /bin/bash /tmp/miniconda.sh -b -p /opt/conda && \
@@ -92,7 +90,6 @@ SHELL ["/opt/conda/bin/conda", "run", "--no-capture-output", "-n", "py_3.12", "/
 RUN /opt/conda/bin/conda install -y -c conda-forge libstdcxx-ng=12 &&\
     /opt/conda/bin/conda install -y -c conda-forge libstdcxx-ng=13 &&\
     true
-
 
 WORKDIR /    
 ### Checkout and Prepare CTranslate-for-ROCm
@@ -119,13 +116,13 @@ RUN pip install -r install_requirements.txt &&\
     echo LD_LIBRARY_PATH=$LD_LIBRARY_PATH >> /etc/environment && \
     true
 
-### Checkout and Whisper-WebUI       
+## Checkout Whisper-WebUI       
 WORKDIR /     
 RUN git clone https://github.com/jhj0517/Whisper-WebUI.git &&\
     true
 
+### Install Whisper-WebUI and reinstall all necesarry WHL into the Python Environment    
 WORKDIR /Whisper-WebUI
-### Install Whisper-WebUI and reinstall all necesarry WHL into the Python Environment
 RUN python3 -m venv venv && \
     ./venv/bin/python3 -m pip install --upgrade pip && \
     ./venv/bin/pip install -r requirements.txt && \
@@ -140,6 +137,7 @@ RUN python3 -m venv venv && \
     ./venv/bin/pip install numpy==1.26.4 &&\
     true    
 
+### Create a best practice Shell Script to start WhisperX
 RUN touch whisp.sh && \
     echo "./venv/bin/python3 app.py --whisper_type faster-whisper --share --server_name 0.0.0.0 --server_port ${WHISPERX_GUI_PORT}" > whisp.sh && \
     chmod +x whisp.sh && \
