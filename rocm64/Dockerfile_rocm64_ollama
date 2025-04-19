@@ -1,10 +1,10 @@
-# Docker Buildfile for ROCm 6.3 to use Ollama with a RX570 / Polaris / gfx803 AMD GPU
-# created, build and compiled by Robert Rosenbusch at January-April 2025
-# include llm-benchmnark and open-webui 
+# Docker Buildfile for ROCm 6.4 to use Ollama with a RX570 / Polaris / gfx803 AMD GPU
+# created, build and compiled by Robert Rosenbusch at April 2025
+# include llm-benchmnark and open-webui GUI
 
 FROM rocm64_gfx803_base:latest
 
-ENV WEBGUI_PORT=8080 \
+ENV OLLAMA_WEBGUI_PORT=8080 \
     OLLAMA_PORT=11434 \
     OLLAMA_HOST=0.0.0.0\
     COMMANDLINE_ARGS='' 
@@ -26,7 +26,7 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
     true
  
 ## Checkout Ollama
-ENV OLLAMA_GIT_VERSION="v0.6.5"
+ENV OLLAMA_GIT_VERSION="v0.6.6"
 RUN echo "Checkout OLLAMA: ${OLLAMA_GIT_VERSION}" && \
     git clone https://github.com/ollama/ollama.git -b ${OLLAMA_GIT_VERSION} /ollama && \
     true
@@ -48,15 +48,16 @@ RUN echo "BUILDING Ollama for gfx803" && \
     go build . && \
     true
 
+### Create a best practice Shell Script to start Ollama
 RUN touch ol_serve.sh && \
     echo "export OLLAMA_HOST=0.0.0.0" > ol_serve.sh && \
     echo "./ollama serve&" >> ol_serve.sh && \
     chmod +x ol_serve.sh && \
     true
 
-EXPOSE ${WEBGUI_PORT} ${OLLAMA_PORT}
+EXPOSE ${OLLAMA_WEBGUI_PORT} ${OLLAMA_PORT}
 
-#ENTRYPOINT ["export OLLAMA_HOST=0.0.0.0 ./ollama serve&"]
+ENTRYPOINT ["OLLAMA_HOST=0.0.0.0 ./ollama serve&"]
 #CMD ["/ollama/ol_serve.sh"]
 
- CMD ["/bin/bash","-c"]
+CMD ["/bin/bash","-c"]
