@@ -1,4 +1,5 @@
-# Docker Buildfile for ROCm 6.4 for Whisper-WebUI/whisperX/CTranslate2-rocm to use a RX570 / Polaris / gfx803 AMD GPU with ROCm 6.3
+# Docker Buildfile for ROCm 6.4 for Whisper-WebUI/whisperX/CTranslate2-rocm 
+# use a RX5(x)0 / Polaris / gfx803 AMD GPU with ROCm 6.3
 # created, build and compiled by Robert Rosenbusch at April 2025
 
 ### Build rocm64_gfx803_base first!
@@ -69,7 +70,7 @@ RUN echo "** BUILDING Torchaudio **" && \
 # End of building pytorch and torchvision WHL-Files
 ###########
 
-## Prepare Conda for CTranslate-for-ROCm
+##### Prepare Conda for CTranslate-for-ROCm
 ## Install miniconda for WhisperX
 WORKDIR /
 RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh &&\
@@ -91,7 +92,6 @@ SHELL ["/opt/conda/bin/conda", "run", "--no-capture-output", "-n", "py_3.12", "/
 RUN /opt/conda/bin/conda install -y -c conda-forge libstdcxx-ng=12 &&\
     /opt/conda/bin/conda install -y -c conda-forge libstdcxx-ng=13 &&\
     true
-
 
 ### Checkout and Prepare CTranslate-for-ROCm
 RUN git clone https://github.com/arlo-phoenix/CTranslate2-rocm.git --recurse-submodules /CTranslate2-rocm && \

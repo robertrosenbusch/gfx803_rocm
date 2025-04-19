@@ -62,7 +62,6 @@ RUN echo "** BUILDING Torchaudio **" && \
     pip install --break-system-packages dist/*.whl && \
     true 
 
-
 ######
 # End of building pytorch and torchvision WHL-Files
 ###########
@@ -77,23 +76,15 @@ RUN git clone https://github.com/ROCm/pyrsmi /pyrsmi && \
     true
 
 WORKDIR /pyrsmi
-
 RUN python3 -m pip install --break-system-packages -e . && \
     true
 
+### Install and Compile ComfyUI, reinstall pytorch and torchvision WHL Files    
 WORKDIR /    
-
-### Install and Compile ComfyUI, reinstall pytorch and torchvision WHL Files
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git /ComfyUI && \
     true
 
 WORKDIR /ComfyUI
-
-RUN touch comfi.sh && \
-    echo "MIOPEN_LOG_LEVEL=3 TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1  PYTORCH_TUNABLEOP_ENABLED=0  ./venv/bin/python main.py --listen --lowvram --port ${COMFYUI_PORT}  >> /comfy/comfy_rocm63_pt25.log 2>&1" > comfi.sh && \
-    chmod +x comfi.sh && \
-    true
-
 RUN python3 -m venv venv && \
     ./venv/bin/python3 -m pip install --break-system-packages --upgrade pip && \
     ./venv/bin/pip install --break-system-packages psutil && \
@@ -118,11 +109,17 @@ WORKDIR /ComfyUI
 RUN pip install --break-system-packages psutil && \
     ./venv/bin/pip install --break-system-packages -e /pyrsmi && \
     true
+
+### Create a best practice Shell Script to start ComfyUI    
+RUN touch comfi.sh && \
+    echo "MIOPEN_LOG_LEVEL=3 TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1  PYTORCH_TUNABLEOP_ENABLED=0  ./venv/bin/python main.py --listen --lowvram --port ${COMFYUI_PORT}  >> /comfy/comfy_rocm63_pt25.log 2>&1" > comfi.sh && \
+    chmod +x comfi.sh && \
+    true    
     
 ENV args="" 
 EXPOSE ${COMFYUI_PORT}
 
 ### Use "--lowvram" to get a correct output
-# ENTRYPOINT MIOPEN_LOG_LEVEL=3 TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1  PYTORCH_TUNABLEOP_ENABLED=0  ./venv/bin/python main.py --listen --lowvram --port ${PORT}  >> /comfy/comfy_rocm63_pt25.log 2>&1
+# ENTRYPOINT MIOPEN_LOG_LEVEL=3 TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1  PYTORCH_TUNABLEOP_ENABLED=0  ./venv/bin/python main.py --listen --lowvram --port ${COMFYUI_PORT}
 
 CMD ["/bin/bash","-c"]
