@@ -51,12 +51,13 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 > |Kernel Version|6.14|6.13|6.12|6.11|6.10|6.9|6.6|6.2|5.19|
 > |--------------|-----|-----|------|-----|------|-----|-----|-----|-----|
 > |working on ROCm 6.4 for Ollama/PyTorch|✅|🟥|🟥|✅|✅|✅|✅|✅|✅|
+> An user on this GIT-Repo reported he had have success to use a Kernelversion above [6.12.21](https://github.com/robertrosenbusch/gfx803_rocm/issues/8#issuecomment-2820146489)
 
-## ROCm-6.4.0 Building Dockerbase for GFX803 to do some fancy AI Stuff
+## ROCm-6.3.4 Building Dockerbase for GFX803 to do some fancy AI Stuff
 
-> [!IMPORTANT] Do build this Dockerimage is the base for all other
+> [!IMPORTANT] Do build this Dockerimage is the base for all other fancy
 
-## ROCm-6.4.0 Ollama and OpenWebui in a Dockerfile
+## ROCm-6.3.4 Ollama and OpenWebui in a Dockerfile
 
 * Used Ports: 8080,11434
 * Used ROCm Docker Version: [rocm/dev-ubuntu-24.04:6.4-complete](https://hub.docker.com/layers/rocm/dev-ubuntu-24.04/6.4-complete/images/sha256-5e210dfbab922a1f8883da360a2e997973bd53eabbc320b0bd593c01c615b5ce)     
