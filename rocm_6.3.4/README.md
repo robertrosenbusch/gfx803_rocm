@@ -1,4 +1,4 @@
-# Dockerized ROCm 6.4.0 to use fancy AI Stuff on Ollama/WhisperX/ComfyUI on [GFX803/Polaris/RX5x0]
+# Dockerized ROCm 6.3.4 to use fancy AI Stuff on Ollama/WhisperX/ComfyUI on [GFX803/Polaris/RX5x0]
 
 This repo provides some docker main buildfiles based on the original published/sponsored AMD ROCm-PyTorch-Dockerimage to (re)compile PyTorch, Torchvision/Torchaudio, ROCBlas and CTranslate2 for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) to:
 1. use [PyTorch](https://github.com/pytorch/pytorch) on gfx803
@@ -10,6 +10,7 @@ into a Docker based on the same AMD-ROCm Stack.
 
 # Quick links
 - **General** [hints on GFX803 and about Motivations](#motivation). You should read it. it could save lifetime.
+- **DockerBase** GFX803|[Docker-Components] | [Install]
 - **Ollama** GFX803 |[Docker-Components](#rocm-630-ollama-and-openwebui-in-a-dockerfile) | [Benchmark](#rocm-630-ollama-v054-benchmark-on-rx570-vs-cpu-ryzen7-3700x) |[Install](#install-ollama-and-open-webui-for-rocm-63)
 - **PyTorch** GFX803 |[Docker-Components](#rocm-630-ollama-and-openwebui-in-a-dockerfile)|[Install](#install-rocm-63-pytorch-torchvision-and-torchaudio-via-docker-for-comfyuiwhisperx)
 - **ComfyUi** on PyTorch GFX803 | [Docker-Components](#) | [Benchmark](#)| [Install](#)
@@ -46,10 +47,14 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 
 > [!CAUTION]
 > #### Prevent ROCm SegFaults on your Linux Distro
-> After some feedback/research from Users who are using the Dockercontainer from this GIT in [Ollama](https://github.com/robertrosenbusch/gfx803_rocm/issues/8#issue-2919996555) and [PyTorch/ComfyUI](https://github.com/robertrosenbusch/gfx803_rocm/issues/13#issuecomment-2754796999), cause the devices `/dev/dri` and  `/dev/kfd` crashed with SegFaults. Please proofe your used Linux-Kernel Version and switch up or down to a well known working Kernel-Version. Fedora 41, Arch and Debian 13 using (in April 2015) suspicious Linux-Kernel-Versions as default.
+> After some feedback/research from Users who are using the Dockercontainer from this GIT in [Ollama](https://github.com/robertrosenbusch/gfx803_rocm/issues/8#issue-2919996555) and [PyTorch/ComfyUI](https://github.com/robertrosenbusch/gfx803_rocm/issues/13#issuecomment-2754796999), cause the devices `/dev/dri` and  `/dev/kfd` crashed with SegFaults. Please proofe your used Linux-Kernel Version and switch up or down to a well known working Kernel-Version. Fedora 41, Arch and Debian 13 using (in April 2015) suspicious Linux-Kernel-Versions as default. On Kernelversion 6.12 its seems to be fixed on 6.12.
 > |Kernel Version|6.14|6.13|6.12|6.11|6.10|6.9|6.6|6.2|5.19|
 > |--------------|-----|-----|------|-----|------|-----|-----|-----|-----|
 > |working on ROCm 6.4 for Ollama/PyTorch|✅|🟥|🟥|✅|✅|✅|✅|✅|✅|
+
+## ROCm-6.4.0 Building Dockerbase for GFX803 to do some fancy AI Stuff
+
+> [!IMPORTANT] Do build this Dockerimage is the base for all other
 
 ## ROCm-6.4.0 Ollama and OpenWebui in a Dockerfile
 
@@ -72,7 +77,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 > [!NOTE]
 > You should have at least 8 GB of RAM available to run up to 7B models, and two GFX803 cards to run the 13B models
 
-1. build your Docker image via `docker build -f Dockerfile_rocm63_ollama . -t 'rocm63_ollama:latest'`
+1. build your GFX803 Base Docker image via `docker build -f Dockerfile_rocm64_base . -t 'rocm64_gfx803_base:latest'`
 2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434 --name rocm63_ollama rocm63_ollama:latest bash`
 3. Enter to the Dockercontainer `docker exec -ti rocm63_ollama bash`
 4. [download a model](https://ollama.com/search) you need for e.g. `./ollama run deepseek-r1:1.5b`
@@ -82,9 +87,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 
 ## ROCm-6.3.0 PyTorch,TorchVision and TorchAudio for ComfyUI in a Dockerfile
 
-|OS            |Python|ROCm |PyTorch|Torchvision|GPU|
-|--------------|------|-----|-----|-----|-----|
-|Ubuntu 24.04|3.12|6.3.0|2.5.1|0.20.0|RX570/580/590 aka Polaris 20/21 aka GCN 4|
+
 
 * Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
 * PyTorch GIT: [v2.5.1](https://github.com/ROCm/pytorch/tree/release/2.5)

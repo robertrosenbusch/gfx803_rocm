@@ -1,7 +1,7 @@
-# Docker _BASE_ Buildfile for ROCm 6.4 to use Ollama/WhisperX/ComfyUI with a RX570 / Polaris / gfx803 AMD GPU
+# Docker _BASE_ Buildfile for ROCm 6.3.4 to use Ollama/WhisperX/ComfyUI with a RX570 / Polaris / gfx803 AMD GPU
 # created, build and compiled by Robert Rosenbusch at April 2025
 
-FROM rocm/dev-ubuntu-24.04:6.4-complete
+FROM rocm/dev-ubuntu-24.04:6.3.4-complete
 
 SHELL ["/bin/bash", "-c"]  
 ENV COMMANDLINE_ARGS='' \
@@ -76,7 +76,7 @@ RUN wget https://github.com/Umio-Yasuno/amdgpu_top/releases/download/v0.10.4/amd
     true
 
 ## (Re-)Compile rocBLAS for gfx803    
-ENV ROCBLAS_GIT_VERSION="rocm-6.4.0"
+ENV ROCBLAS_GIT_VERSION="rocm-6.3.3" 
 RUN echo "Checkout ROCBLAS: ${ROCBLAS_GIT_VERSION}" && \
     git clone https://github.com/ROCm/rocBLAS.git -b ${ROCBLAS_GIT_VERSION} /rocblas && \
     true

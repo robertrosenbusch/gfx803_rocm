@@ -2,13 +2,12 @@
 # created, build and compiled by Robert Rosenbusch at April 2025
 # include llm-benchmnark and open-webui GUI
 
-### Build rocm64_gfx803_base first! Read the README.md, it could save lifetime :P
-FROM rocm6_gfx803_base:6.4
+### Build rocm64_gfx803_base first!
+FROM rocm6_gfx803_base:6.3.4
 
 ENV OLLAMA_WEBGUI_PORT=8080 \
     OLLAMA_PORT=11434 \
     OLLAMA_HOST=0.0.0.0\
-    # To Install and enable ollama WEBUI "1", to disable change it to "0"
     OLLAMA_WEBUI=1 \
     COMMANDLINE_ARGS='' 
 
@@ -28,7 +27,7 @@ RUN if [[ $OLLAMA_WEBUI == "1" ]]; then echo "INSTALL OPEN-WEBUI";curl -LsSf htt
     true
  
 ## Checkout Ollama
-ENV OLLAMA_GIT_VERSION="v0.6.7-rc0"
+ENV OLLAMA_GIT_VERSION="v0.6.6"
 RUN echo "Checkout OLLAMA: ${OLLAMA_GIT_VERSION}" && \
     git clone https://github.com/ollama/ollama.git -b ${OLLAMA_GIT_VERSION} /ollama && \
     true
@@ -37,6 +36,8 @@ RUN echo "Checkout OLLAMA: ${OLLAMA_GIT_VERSION}" && \
 WORKDIR /ollama
 RUN echo "REPLACE Ollama Source for gfx803"  && \
     sed -i 's/var RocmComputeMajorMin = "9"/var RocmComputeMajorMin = "8"/' discover/gpu.go && \
+    #sed -i 's/"gfx900;gfx940;gfx941;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102;gfx906:xnack-;gfx908:xnack-;gfx90a:xnack+;gfx90a:xnack-" /"gfx803;gfx900;gfx940;gfx941;gfx942;gfx1010;gfx1012;gfx1030;gfx1100;gfx1101;gfx1102;gfx906:xnack-;gfx908:xnack-;gfx90a:xnack+;gfx90a:xnack-" /g' CMakePresets.json && \
+    #sed -i 's/"list(FILTER AMDGPU_TARGETS INCLUDE REGEX "^gfx(900|94[012]|101[02]|1030|110[012])$")"/"list(FILTER AMDGPU_TARGETS INCLUDE REGEX "^gfx(803|900|94[012]|101[02]|1030|110[012])$")"/g' CMakeLists.txt && \    
     sed -i 's/find_package(hip REQUIRED)/#find_package(hip REQUIRED)/' CMakeLists.txt && \
     true
 
@@ -52,10 +53,13 @@ RUN echo "BUILDING Ollama for gfx803" && \
 RUN touch ol_serve.sh && \
     echo "#!/bin/bash" > ol_serve.sh &&\
     echo "export OLLAMA_HOST=${OLLAMA_HOST}" >> ol_serve.sh && \
-    if [[ $OLLAMA_WEBUI == "1" ]]; then echo "open-webui serve&" >> ol_serve.sh; echo "INSTALL OPEN-WEBUI"; else echo "NO OPEN-WEBUI installed"; fi &&\
+    if [[ $OLLAMA_WEBUI == "1" ]]; then echo "open-webui serve&" >> ol_serve.sh; echo "INSTALL OPEN-WEBUI"; else echo "NO OPEN-WEBUI"; fi &&\
     echo "./ollama serve" >> ol_serve.sh && \
     chmod +x ol_serve.sh && \
     true
+
+
+RUN if [[ $webgui == "0" ]]; then echo "True"; else echo "False"; fi
 
 EXPOSE ${OLLAMA_WEBGUI_PORT} ${OLLAMA_PORT}
 
