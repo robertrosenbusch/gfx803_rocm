@@ -1,0 +1,131 @@
+Verbose? [y/n] : n
+
+A) Use Default prompts
+B) Use Custom prompts
+
+>> A
+
+Verbose: False
+Use models: ['llama2:7b', 'llama3.1:8b', 'deepseek-r1:8b', 'deepseek-r1:latest', 'mistral:latest', 'qwen2.5:latest', 'gemma3:4b']
+Skip models: []
+Prompts: ['Why is the sky blue?', 'Write a report on the financials of Microsoft']
+
+Running benchmark on all available models
+Average stats:
+
+----------------------------------------------------
+        llama2:7b
+        	Prompt eval: 327.70 t/s
+        	Response: 28.08 t/s
+        	Total: 29.60 t/s
+
+        Stats:
+        	Prompt tokens: 55
+        	Response tokens: 922
+        	Model load time: 8.43s
+        	Prompt eval time: 0.17s
+        	Response time: 32.84s
+        	Total time: 41.43s
+----------------------------------------------------
+        
+Average stats:
+
+----------------------------------------------------
+        llama3.1:8b
+        	Prompt eval: 291.75 t/s
+        	Response: 20.03 t/s
+        	Total: 20.63 t/s
+
+        Stats:
+        	Prompt tokens: 35
+        	Response tokens: 1074
+        	Model load time: 10.18s
+        	Prompt eval time: 0.12s
+        	Response time: 53.63s
+        	Total time: 63.93s
+----------------------------------------------------
+        
+Average stats:
+
+----------------------------------------------------
+        deepseek-r1:8b
+        	Prompt eval: 190.97 t/s
+        	Response: 18.88 t/s
+        	Total: 19.03 t/s
+
+        Stats:
+        	Prompt tokens: 21
+        	Response tokens: 2472
+        	Model load time: 10.16s
+        	Prompt eval time: 0.11s
+        	Response time: 130.90s
+        	Total time: 141.17s
+----------------------------------------------------
+        
+Average stats:
+
+----------------------------------------------------
+        deepseek-r1:latest
+        	Prompt eval: 139.12 t/s
+        	Response: 20.43 t/s
+        	Total: 20.61 t/s
+
+        Stats:
+        	Prompt tokens: 21
+        	Response tokens: 2038
+        	Model load time: 33.65s
+        	Prompt eval time: 0.15s
+        	Response time: 99.73s
+        	Total time: 133.54s
+----------------------------------------------------
+        
+Average stats:
+
+----------------------------------------------------
+        mistral:latest
+        	Prompt eval: 197.95 t/s
+        	Response: 28.83 t/s
+        	Total: 29.72 t/s
+
+        Stats:
+        	Prompt tokens: 25
+        	Response tokens: 693
+        	Model load time: 48.95s
+        	Prompt eval time: 0.13s
+        	Response time: 24.03s
+        	Total time: 73.11s
+----------------------------------------------------
+        
+Average stats:
+
+----------------------------------------------------
+        qwen2.5:latest
+        	Prompt eval: 129.61 t/s
+        	Response: 20.31 t/s
+        	Total: 20.78 t/s
+
+        Stats:
+        	Prompt tokens: 31
+        	Response tokens: 1129
+        	Model load time: 61.23s
+        	Prompt eval time: 0.24s
+        	Response time: 55.59s
+        	Total time: 117.07s
+----------------------------------------------------
+        
+Average stats:
+
+----------------------------------------------------
+        gemma3:4b
+        	Prompt eval: 59.50 t/s
+        	Response: 27.94 t/s
+        	Total: 28.19 t/s
+
+        Stats:
+        	Prompt tokens: 32
+        	Response tokens: 1866
+        	Model load time: 58.11s
+        	Prompt eval time: 0.54s
+        	Response time: 66.78s
+        	Total time: 125.43s
+----------------------------------------------------
