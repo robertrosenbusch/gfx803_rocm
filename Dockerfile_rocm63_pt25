@@ -19,6 +19,7 @@ ENV PORT=8188 \
     FORCE_CUDA=1 \ 
     USE_CUDA=0 \
     USE_FFMPEG=1 \
+    CMAKE_POLICY_VERSION_MINIMUM=3.18 \
     #TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1 \
     #PYTORCH_TUNABLEOP_ENABLED=1 \
 #######
@@ -45,6 +46,7 @@ RUN echo MAX_JOBS=${MAX_JOBS} >> /etc/environment && \
     #echo TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=${TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL} >> /etc/environment && \
     #echo PYTORCH_TUNABLEOP_ENABLED=${PYTORCH_TUNABLEOP_ENABLED} >> /etc/environment && \
     echo PIP_ROOT_USER_ACTION=${PIP_ROOT_USER_ACTION} >> /etc/environment && \
+    echo CMAKE_POLICY_VERSION_MINIMUM=${CMAKE_POLICY_VERSION_MINIMUM} >> /etc/environment && \
     true
 
 ## Export the AMD Stuff
@@ -63,6 +65,7 @@ RUN export MAX_JOBS=${MAX_JOBS} && \
     #export TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=${TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL} && \
     #export  PYTORCH_TUNABLEOP_ENABLED=${PYTORCH_TUNABLEOP_ENABLED} && \
     export PIP_ROOT_USER_ACTION=${PIP_ROOT_USER_ACTION} && \
+    export CMAKE_POLICY_VERSION_MINIMUM=${CMAKE_POLICY_VERSION_MINIMUM} && \
     true
 
 # Update System and install ffmpeg for SDXL video and python virtual Env
@@ -71,7 +74,7 @@ RUN apt-get update -y && \
     # For Ollama and whisperx    
     apt-get install -y --no-install-recommends libomp-dev libopenblas-dev &&\
     pip install --upgrade pip wheel && \
-    pip install cmake mkl mkl-include && \ 
+    pip install cmake==3.18 mkl mkl-include && \ 
     apt --fix-broken install -y && \
     # symlink for Ollama
     ln -s /opt/rocm-6.3.0 /opt/rocm && \
