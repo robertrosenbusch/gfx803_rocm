@@ -1,7 +1,8 @@
-# Docker Buildfile for ComfyUI to use a RX570 / Polaris / gfx803 AMD GPU with ROCm 6.3
-# created, build and compiled by Robert Rosenbusch at December 2024
-FROM rocm64_gfx803_base:latest
+# Docker Buildfile for ComfyUI to use a RX570 / Polaris / gfx803 AMD GPU with ROCm 6.3.4
+# created, build and compiled by Robert Rosenbusch at December 2024 / May 2025
 
+### Build rocm64_gfx803_base:6.4 first! Read the README.md, it could save lifetime :P
+FROM rocm6_gfx803_base:6.4
 
 SHELL ["/bin/bash", "-c"]  
 ENV COMFYUI_PORT=8188 \
@@ -112,14 +113,13 @@ RUN pip install --break-system-packages psutil && \
 
 ### Create a best practice Shell Script to start ComfyUI    
 RUN touch comfi.sh && \
-    echo "MIOPEN_LOG_LEVEL=3 TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1  PYTORCH_TUNABLEOP_ENABLED=0  ./venv/bin/python main.py --listen --lowvram --port ${COMFYUI_PORT}  >> /comfy/comfy_rocm63_pt25.log 2>&1" > comfi.sh && \
+    echo "#!/bin/bash" > comfi.sh && \
+    ### with redirected LogFile    
+    #echo "MIOPEN_LOG_LEVEL=3 TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1  PYTORCH_TUNABLEOP_ENABLED=0  ./venv/bin/python main.py --listen --lowvram --port ${COMFYUI_PORT}  >> /comfy/comfy_rocm64_pt26.log 2>&1" > comfi.sh && \
+    ### Use "--lowvram" to get a correct output
+    echo "MIOPEN_LOG_LEVEL=3 TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1  PYTORCH_TUNABLEOP_ENABLED=0  ./venv/bin/python main.py --listen --lowvram --port ${COMFYUI_PORT} " > comfi.sh && \
     chmod +x comfi.sh && \
     true    
     
-ENV args="" 
 EXPOSE ${COMFYUI_PORT}
-
-### Use "--lowvram" to get a correct output
-# ENTRYPOINT MIOPEN_LOG_LEVEL=3 TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1  PYTORCH_TUNABLEOP_ENABLED=0  ./venv/bin/python main.py --listen --lowvram --port ${COMFYUI_PORT}
-
-CMD ["/bin/bash","-c"]
+ENTRYPOINT ["/ComfyUI/comfi.sh"]
