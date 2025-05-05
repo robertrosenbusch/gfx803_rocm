@@ -1,13 +1,14 @@
-# Docker Buildfile for ROCm 6.4.3 to use Ollama v0.6.6 with a RX570 / Polaris / gfx803 AMD GPU
-# created, build and compiled by Robert Rosenbusch at April 2025
+# Docker Buildfile for ROCm 6.3.4 to use Ollama v0.6.X with a RX570 / Polaris / gfx803 AMD GPU
+# created, build and compiled by Robert Rosenbusch at May-April 2025
 # include llm-benchmnark and open-webui GUI
 
-### Build rocm64_gfx803_base first!
+### Build rocm6_gfx803_base:6.3.4 first! Read the README.md, it could save lifetime :P
 FROM rocm6_gfx803_base:6.3.4
 
 ENV OLLAMA_WEBGUI_PORT=8080 \
     OLLAMA_PORT=11434 \
     OLLAMA_HOST=0.0.0.0\
+    # To Install and enable ollama WEBUI "1", to disable change it to "0"
     OLLAMA_WEBUI=1 \
     COMMANDLINE_ARGS='' 
 
@@ -27,7 +28,7 @@ RUN if [[ $OLLAMA_WEBUI == "1" ]]; then echo "INSTALL OPEN-WEBUI";curl -LsSf htt
     true
  
 ## Checkout Ollama
-ENV OLLAMA_GIT_VERSION="v0.6.6"
+ENV OLLAMA_GIT_VERSION="v0.6.8"
 RUN echo "Checkout OLLAMA: ${OLLAMA_GIT_VERSION}" && \
     git clone https://github.com/ollama/ollama.git -b ${OLLAMA_GIT_VERSION} /ollama && \
     true
@@ -51,13 +52,10 @@ RUN echo "BUILDING Ollama for gfx803" && \
 RUN touch ol_serve.sh && \
     echo "#!/bin/bash" > ol_serve.sh &&\
     echo "export OLLAMA_HOST=${OLLAMA_HOST}" >> ol_serve.sh && \
-    if [[ $OLLAMA_WEBUI == "1" ]]; then echo "open-webui serve&" >> ol_serve.sh; echo "INSTALL OPEN-WEBUI"; else echo "NO OPEN-WEBUI"; fi &&\
+    if [[ $OLLAMA_WEBUI == "1" ]]; then echo "open-webui serve&" >> ol_serve.sh; echo "INSTALL OPEN-WEBUI"; else echo "NO OPEN-WEBUI installed"; fi &&\
     echo "./ollama serve" >> ol_serve.sh && \
     chmod +x ol_serve.sh && \
     true
-
-
-RUN if [[ $webgui == "0" ]]; then echo "True"; else echo "False"; fi
 
 EXPOSE ${OLLAMA_WEBGUI_PORT} ${OLLAMA_PORT}
 
