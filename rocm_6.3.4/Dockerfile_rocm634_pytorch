@@ -5,9 +5,7 @@
 ### Build rocm64_gfx803_base:6.3.4 first! Read the README.md, it could save lifetime :P
 FROM rocm6_gfx803_base:6.3.4
 
-SHELL ["/bin/bash", "-c"]  
-ENV WHISPERX_GUI_PORT=7860 \
-    DEBIAN_FRONTEND=noninteractive \
+ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
     PYTHONENCODING==UTF-8 \
     REQS_FILE='requirements.txt' \

@@ -1,4 +1,4 @@
-# Docker _BASE_ Buildfile for ROCm 6.3.4 to use Ollama/WhisperX/ComfyUI with a RX570 / Polaris / gfx803 AMD GPU
+# Docker _BASE_ Buildfile for ROCm 6.3.4 to use Ollama/WhisperX/ComfyUI with a RX5(x)0 / Polaris / gfx803 AMD GPU 
 # created, build and compiled by Robert Rosenbusch at May-April 2025
 
 FROM rocm/dev-ubuntu-24.04:6.3.4-complete

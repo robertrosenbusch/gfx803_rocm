@@ -16,6 +16,7 @@ into a Docker based on the same AMD-ROCm Stack.
 - **ComfyUi** on PyTorch GFX803 | [Docker-Components](#) | [Benchmark](#)| [Install](#)
 - **WhsiperX** on PyTorch GFX803 | [Docker-Components](#) | [Install](#)
 
+
 ## Motivation
 Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled to use the GPU-Polaris generation in the original PIP repository. And of course not compiled too in the official ROCm-PyTorch Dockerfile. However, if Polaris/gfx803 GPU support is to be used in Ollama,ComfyUI or WhisperX on ROCm, there is no way around newly compiled PyTorch and Torchvision/Torchaudio whl/wheel python files. And for Ollama in ROCm 6.X you have to recompile the rocBLAS-Library too. That what this Docker Buildfile(s) will do for you.
 
@@ -56,12 +57,13 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 ## ROCm-6.3.4 Building Dockerbase for GFX803 to do some fancy AI Stuff
 
 > [!IMPORTANT] Do build this Dockerimage is the base for all other fancy
+1. docker build -f Dockerfile_rocm634_base . -t 'rocm6_gfx803_ollama:6.3.4
 
 ## ROCm-6.3.4 Ollama and OpenWebui in a Dockerfile
 
 * Used Ports: 8080,11434
 * Used ROCm Docker Version: [rocm/dev-ubuntu-24.04:6.4-complete](https://hub.docker.com/layers/rocm/dev-ubuntu-24.04/6.4-complete/images/sha256-5e210dfbab922a1f8883da360a2e997973bd53eabbc320b0bd593c01c615b5ce)     
-* rocBLAS Library: [6.4.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.4.0)
+* rocBLAS Library: [6.3.4](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.4.0)
 * Ollama : [v0.6.6](https://github.com/ollama/ollama/releases/tag/v0.6.6)
 * OpenWebui-GUI [latest](https://github.com/open-webui/open-webui.git)
 * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
@@ -74,11 +76,12 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 
 ![GFX803_rocm63_ollama_benchmark](https://github.com/robertrosenbusch/gfx803_rocm/blob/b3db63e7824effa281a5a386d8e1b4dd252aec94/benchmark/gfx803_rocm63_ollama_benchmark.png?raw=true)
 
-## Install Ollama and Open-Webui for ROCm 6.3
+## Install Ollama and Open-Webui for ROCm 6.3.4
 > [!NOTE]
 > You should have at least 8 GB of RAM available to run up to 7B models, and two GFX803 cards to run the 13B models
 
-1. build your GFX803 Base Docker image via `docker build -f Dockerfile_rocm64_base . -t 'rocm64_gfx803_base:latest'`
+1. build the DockerBase for GFX804
+build your GFX803 Base Docker image via `docker build -f Dockerfile_rocm64_base . -t 'rocm64_gfx803_base:latest'`
 2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434 --name rocm63_ollama rocm63_ollama:latest bash`
 3. Enter to the Dockercontainer `docker exec -ti rocm63_ollama bash`
 4. [download a model](https://ollama.com/search) you need for e.g. `./ollama run deepseek-r1:1.5b`

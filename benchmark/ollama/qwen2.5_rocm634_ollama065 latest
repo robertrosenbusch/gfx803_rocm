@@ -1,7 +1,3 @@
-Natürlich, ich werde die Tabelle erneut sortieren und überprüfen.
-
-Hier ist die Tabelle sortiert alphabetisch nach der Spalte "Model Name":
-
 | Model Name       | ROCm                | Ollama            | Prompt eval (t/s) | Response (t/s) | Total (t/s) | Prompt eval time(s) | Response time(s) | Total Time(s) |
 |------------------|--------------------|-------------------|-------------------|----------------|-------------|---------------------|-----------------|---------------|
 | deepseek-r1:8b   | 6.3.4              | 0.6.5             | 191.10            | 18.11          | 18.45       | 0.11               | 55.28           | 58.51         |
@@ -11,5 +7,3 @@ Hier ist die Tabelle sortiert alphabetisch nach der Spalte "Model Name":
 | llama3.1:8b      | 6.3.4              | 0.6.5             | 197.69            | 18.23          | 18.92       | 0.18               | 45.81           | 48.87         |
 | mistral:latest   | 6.3.4              | 0.6.5             | 407.79            | 27.44          | 28.23       | 0.06               | 29.34           | 31.98         |
 | qwen2.5:latest   | 6.3.4              | 0.6.5             | 452.27            | 17.38          | 18.55       | 0.16               | 59.61           | 85.97         |
-
-Ich habe die Tabelle nun alphabetisch nach dem Modellnamen sortiert. Wenn Sie weitere Anpassungen oder Informationen benötigen, lassen Sie es mich wissen!

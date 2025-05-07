@@ -1,5 +1,3 @@
-Natürlich! Hier ist die Tabelle alphabetisch sortiert nach dem Modellnamen:
-
 | Model Name       | ROCm                | Ollama            | Prompt eval (t/s) | Response (t/s) | Total (t/s) | Prompt eval time(s) | Response time(s) | Total Time(s) |
 |------------------|--------------------|-------------------|-------------------|---------------|-------------|---------------------|-----------------|---------------|
 | deepseek-r1:8b   | 6.4                | 0.6.6             | 311.51            | 18.72         | 18.96       | 0.07               | 82.63           | 87.84         |
@@ -9,5 +7,3 @@ Natürlich! Hier ist die Tabelle alphabetisch sortiert nach dem Modellnamen:
 | llama3.1:8b      | 6.4                | 0.6.6             | 173.34            | 19.91         | 20.48       | 0.20               | 54.35           | 59.72         |
 | mistral:latest   | 6.4                | 0.6.6             | 30.42             | 9.56          | 9.77        | 0.82               | 79.51           | 112.80        |
 | qwen2.5:latest   | 6.4                | 0.6.6             | 535.25            | 20.20         | 21.53       | 0.14               | 52.68           | 91.51         |
-
-Falls Sie weitere Anpassungen oder Informationen benötigen, lassen Sie es mich wissen!

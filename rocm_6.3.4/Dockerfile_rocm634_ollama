@@ -58,5 +58,4 @@ RUN touch ol_serve.sh && \
     true
 
 EXPOSE ${OLLAMA_WEBGUI_PORT} ${OLLAMA_PORT}
-
 ENTRYPOINT ["/ollama/ol_serve.sh"]
