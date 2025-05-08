@@ -146,4 +146,4 @@ RUN touch whisp.sh && \
     true    
 
 EXPOSE ${WHISPERX_GUI_PORT}
-ENTRYPOINT ["/Whisper-WebUI/whisp.sh"]
+ENTRYPOINT ["/bin/bash", "/Whisper-WebUI/whisp.sh"]
