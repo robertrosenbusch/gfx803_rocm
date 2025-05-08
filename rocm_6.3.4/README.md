@@ -56,7 +56,8 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 
 ## ROCm-6.3.4 Building Dockerbase for GFX803 to do some fancy AI Stuff
 
->[!IMPORTANT] Do build this Dockerimage is the base for all other fancy AI stuff on GFX803
+>[!IMPORTANT] 
+>Do build this Dockerimage is the base for all other fancy AI stuff on GFX803
 >1. Checkout this GIT repo via `git clone https://github.com/robertrosenbusch/gfx803_rocm.git` and change into the directory `gfx803_rocm`
 >2. Build the GFX803-Base-Docker-Image docker `build -f Dockerfile_rocm634_base . -t 'rocm6_gfx803_ollama:6.3.4`
 
