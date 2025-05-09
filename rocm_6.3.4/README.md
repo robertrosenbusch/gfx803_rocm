@@ -54,6 +54,8 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 > |working on ROCm 6.3.4 for Ollama/PyTorch|✅|🟥|🟥|✅|✅|✅|✅|✅|✅|
 > An user on this GIT-Repo reported he had have success to use a Kernelversion above [6.12.21](https://github.com/robertrosenbusch/gfx803_rocm/issues/8#issuecomment-2820146489)
 
+
+---
 ## ROCm-6.3.4 Building Dockerbase for GFX803 to do some fancy AI Stuff
 
 >[!IMPORTANT] 
@@ -70,7 +72,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 * OpenWebui-GUI [latest](https://github.com/open-webui/open-webui.git)
 * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
 
-### ROCm-6.3.4 Ollama v0.5.4 Benchmark on RX570 
+### ROCm-6.3.4 Ollama v0.6,(x) Benchmark on RX570 
 Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/ROCm-6.3.4-Ollama-Benchmarks)
 
 ## Install Ollama and Open-Webui for ROCm 6.3.4
