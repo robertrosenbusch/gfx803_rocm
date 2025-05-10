@@ -90,14 +90,12 @@ Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/
 1. build the DockerBase for gfx803 first   
 2. Build the Docker Image for Ollama, it takes aroud 60 Minutes: `docker build -f Dockerfile_rocm634_ollama . -t 'rocm634_gfx803_ollama:0.6.8'`
 3. Start the container via `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434  --name rocm643_ollama_068 rocm634_gfx803_ollama:0.6.8 bash`
-3. Enter to the Dockercontainer `docker exec -ti rocm63_ollama bash`
+3. Enter to the Dockercontainer `docker exec -ti rocm643_ollama_068 bash`
 4. [download a model](https://ollama.com/search) you need for e.g. `./ollama run deepseek-r1:1.5b`
 6. Open your Webbrowser `http://YOUR_LOCAL_IP:8080` to use Open-WebUI
-7. For Benchmark your downloaded Models use `python /llm-benchmark/benchmark.py`
+7. For Benchmark your downloaded Models use `python /llm-benchmark/benchmark.py` inside the container
 
 ## ROCm-6.3.0 PyTorch,TorchVision and TorchAudio for ComfyUI in a Dockerfile
-
-
 
 * Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
 * PyTorch GIT: [v2.5.1](https://github.com/ROCm/pytorch/tree/release/2.5)
