@@ -88,10 +88,10 @@ Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/
 > You should have at least 8 GB of VRAM available to run up to 7B models, and two GFX803 cards to run the 13B models
 
 1. build the DockerBase for gfx803 first   
-2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434 --name rocm63_ollama rocm63_ollama:latest bash`
+2. docker build -f Dockerfile_rocm634_ollama . -t 'rocm634_gfx803_ollama:0.6.8'
+3. Start the container via `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434  --name rocm643_ollama_068 rocm634_gfx803_ollama:0.6.8 bash`
 3. Enter to the Dockercontainer `docker exec -ti rocm63_ollama bash`
 4. [download a model](https://ollama.com/search) you need for e.g. `./ollama run deepseek-r1:1.5b`
-5. Start Open-WebUI `open-webui serve &` 
 6. Open your Webbrowser `http://YOUR_LOCAL_IP:8080` to use Open-WebUI
 7. For Benchmark your downloaded Models use `python /llm-benchmark/benchmark.py`
 
