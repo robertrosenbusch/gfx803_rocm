@@ -59,7 +59,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 ## ROCm-6.3.4 Building Dockerbase for GFX803 to do some fancy AI Stuff
 
 >[!IMPORTANT] 
->Do build this Dockerimage is the base for all other fancy AI stuff on GFX803. Its all based on an (official AMD ROCm Docker)[https://hub.docker.com/layers/rocm/dev-ubuntu-24.04/6.3.4-complete/images/sha256-76e99e263ef6ce69ba5d32905623c801fff3f85a6108e931820f6eb1d13eac67].
+>Do build this Dockerimage is the base for all other fancy AI stuff on GFX803. Its all based on an [official AMD ROCm Docke]([https://hub.docker.com/layers/rocm/dev-ubuntu-24.04/6.3.4-complete/images/sha256-76e99e263ef6ce69ba5d32905623c801fff3f85a6108e931820f6eb1d13eac67).
 ### Used Dockercomponents
 |OS            |Python|ROCm |GPU|
 |--------------|------|-----|-----|
