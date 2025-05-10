@@ -59,20 +59,22 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 ## ROCm-6.3.4 Building Dockerbase for GFX803 to do some fancy AI Stuff
 
 >[!IMPORTANT] 
->Do build this Dockerimage is the base for all other fancy AI stuff on GFX803
-
+>Do build this Dockerimage is the base for all other fancy AI stuff on GFX803. Its all based on an (official AMD ROCm Docker)[https://hub.docker.com/layers/rocm/dev-ubuntu-24.04/6.3.4-complete/images/sha256-76e99e263ef6ce69ba5d32905623c801fff3f85a6108e931820f6eb1d13eac67].
+### Used Dockercomponents
 |OS            |Python|ROCm |GPU|
 |--------------|------|-----|-----|
-|Ubuntu 24.04|3.12|6.3.4|RX570/580/590 aka Polaris 20/21 aka GCN 4|
+|Ubuntu 24.04|3.12|6.3.4|RX5(x)0 aka Polaris 20/21 aka GCN 4|
 
+### Install
 1. Checkout this GIT repo via `git clone https://github.com/robertrosenbusch/gfx803_rocm.git` and change into the directory `gfx803_rocm`
 2. Build the GFX803-Base-Docker-Image docker `build -f Dockerfile_rocm634_base . -t 'rocm6_gfx803_ollama:6.3.4`
+3. It could take around 30 to 40 minutes to recompile and buld this _base_ ROCm container
 
 ## ROCm-6.3.4 Ollama and OpenWebui in a Dockerfile
 
 * Used Ports: 8080,11434
 * rocBLAS Library: [6.3.4](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.4.0)
-* Ollama : [v0.6.8](https://github.com/ollama/ollama/releases/tag/v0.6.6)
+* Ollama : [v0.6.8](https://github.com/ollama/ollama/releases/tag/v0.6.8)
 * OpenWebui-GUI [latest](https://github.com/open-webui/open-webui.git)
 * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
 
