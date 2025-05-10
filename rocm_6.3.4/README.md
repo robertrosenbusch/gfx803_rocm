@@ -68,7 +68,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 ### Install
 1. Checkout this GIT repo via `git clone https://github.com/robertrosenbusch/gfx803_rocm.git` and change into the directory `gfx803_rocm`
 2. Build the GFX803-Base-Docker-Image docker `build -f Dockerfile_rocm634_base . -t 'rocm6_gfx803_ollama:6.3.4`
-3. It could take around 30 to 40 minutes to recompile and buld this _base_ ROCm container
+3. It could take around 30 to 60 minutes to download, recompile and build this _base_ ROCm container
 
 ## ROCm-6.3.4 Ollama and OpenWebui in a Dockerfile
 
@@ -78,16 +78,16 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 * OpenWebui-GUI [latest](https://github.com/open-webui/open-webui.git)
 * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
 
+
+### Used 
 ### ROCm-6.3.4 Ollama v0.6.(x) Benchmark on RX570 
 Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/ROCm-6.3.4-Ollama-Benchmarks)
 
-
-## Install Ollama and Open-Webui for ROCm 6.3.4
+### Install Ollama and Open-Webui for ROCm 6.3.4
 > [!NOTE]
-> You should have at least 8 GB of RAM available to run up to 7B models, and two GFX803 cards to run the 13B models
+> You should have at least 8 GB of VRAM available to run up to 7B models, and two GFX803 cards to run the 13B models
 
-1. build the DockerBase for gfx803 
-build your GFX803 Base Docker image via `docker build -f Dockerfile_rocm64_base . -t 'rocm64_gfx803_base:latest'`   
+1. build the DockerBase for gfx803 first   
 2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434 --name rocm63_ollama rocm63_ollama:latest bash`
 3. Enter to the Dockercontainer `docker exec -ti rocm63_ollama bash`
 4. [download a model](https://ollama.com/search) you need for e.g. `./ollama run deepseek-r1:1.5b`
