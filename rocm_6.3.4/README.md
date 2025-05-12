@@ -60,9 +60,9 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 >Build this Docker Baseimage for all other fancy AI stuff on GFX803. Its all based on an [official AMD ROCm Docker](https://hub.docker.com/layers/rocm/dev-ubuntu-24.04/6.3.4-complete/images/sha256-76e99e263ef6ce69ba5d32905623c801fff3f85a6108e931820f6eb1d13eac67) 
 
 ### ROCm-6.3.4: Used Docker Components for Baseimage on RX5(x)0/GFX803
-|OS            |Python|ROCm |GPU|
-|--------------|------|-----|-----|
-|Ubuntu 24.04|3.12|6.3.4|RX5(x)0 aka Polaris 20/21 aka GCN 4|
+|OS            |ROCm |rocBLAS|Python|GPU|
+|--------------|------|------|-----|-----|
+|Ubuntu 24.04|6.3.4|6.3.3|3.12|RX5(x)0 aka Polaris 20/21 aka GCN 4|
 
 ### Install
 1. Checkout this GIT repo via `git clone https://github.com/robertrosenbusch/gfx803_rocm.git` and change into the directory `gfx803_rocm`
@@ -95,14 +95,14 @@ Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/
 
 ---
 ### ROCm-6.3.0: Used Docker Components for PyTorch,TorchVision and TorchAudio on RX5(x)0/GFX803
-* PyTorch GIT: [v2.5.1](https://github.com/ROCm/pytorch/tree/release/2.5)
-* Torchvison GIT: [v0.20.0](https://github.com/pytorch/vision/releases/tag/v0.20.0)
-* TorchAudio GIT: [v2.5.1](https://github.com/pytorch/audio/releases/tag/v2.5.1)
+* PyTorch GIT: [v2.6.0](https://github.com/ROCm/pytorch/tree/release/2.6)
+* Torchvison GIT: [v0.21.0](https://github.com/pytorch/vision/releases/tag/v0.21.0)
+* TorchAudio GIT: [v2.6.0](https://github.com/pytorch/audio/releases/tag/v2.6.0)
 * rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
 
-## Install ROCm 6.3 PyTorch, TorchVision and TorchAudio via Docker for ComfyUI/WhisperX
+## Install ROCm 6.3 PyTorch, TorchVision and TorchAudio
 > [!WARNING]  
-> It takes a _lot_ of time and Storage space to compile. Around 100 GByte Storage and 3 hours to (re-)compile. Keep your head up. Its worth!
+> It takes a _lot_ of time and Storage space to compile. Around 40 GByte Storage and 2 hours to (re-)compile. Keep your head up. Its worth!
 
 1. build your Docker image via `docker build -f  Dockerfile_rocm63_pt25 . -t 'rocm63_pt25:latest'`
 2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8188:8188 -v /YOUR/LOCAL/COMFYUI/CHECKPOINTS:/comfy/ --name rocm63_pt25 rocm63_pt25:latest bash`
