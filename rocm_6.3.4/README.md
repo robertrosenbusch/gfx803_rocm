@@ -70,7 +70,6 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 3. It could take around 30 to 60 minutes to download, recompile and build this _base_ ROCm container Image
 
 ---
-##Ollama on gfx803
 
 ### ROCm-6.3.4: Used Docker Components for Ollama v0.6.(x) and OpenWebui on RX5(x)0/GFX803
 * Exposed Ports: 8080,11434
@@ -96,7 +95,9 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/ROCm-6.3.4-Ollama-Benchmarks)
 
 ---
+
 ##PyTorch
+
 ### ROCm-6.3.4: Used Docker Components for PyTorch,TorchVision and TorchAudio on RX5(x)0/GFX803
 * PyTorch GIT: [v2.6.0](https://github.com/ROCm/pytorch/tree/release/2.6)
 * Torchvison GIT: [v0.21.0](https://github.com/pytorch/vision/releases/tag/v0.21.0)
@@ -112,6 +113,15 @@ Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/
 3. to confirm your gfx803 working right use [a script like this one](https://github.com/robertrosenbusch/gfx803_rocm/issues/13#issuecomment-2755478167).
 
 ---
+
+## WhisperX
+
+
+
+
+
+
+
 OpenWebui
 > [!NOTE]
 > 1. Since ROCm 6.0 you have to use the _`--lowvram`_ option at ComfyUI's main.py to create correct results. *Dont know why* ...
