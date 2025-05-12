@@ -59,7 +59,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 >[!IMPORTANT] 
 >Build this Docker Baseimage for all other fancy AI stuff on GFX803. Its all based on an [official AMD ROCm Docker](https://hub.docker.com/layers/rocm/dev-ubuntu-24.04/6.3.4-complete/images/sha256-76e99e263ef6ce69ba5d32905623c801fff3f85a6108e931820f6eb1d13eac67) 
 
-### ROCm-6.3.4: Used Docker Components for Baseimage 
+### ROCm-6.3.4: Used Docker Components for Baseimage on RX5(x)0/GFX803
 |OS            |Python|ROCm |GPU|
 |--------------|------|-----|-----|
 |Ubuntu 24.04|3.12|6.3.4|RX5(x)0 aka Polaris 20/21 aka GCN 4|
@@ -70,18 +70,18 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 3. It could take around 30 to 60 minutes to download, recompile and build this _base_ ROCm container Image
 
 ---
-### ROCm-6.3.4: Ollama and OpenWebui in a Dockerfile
+### ROCm-6.3.4: Used Docker Components for Ollama v0.6.(x) and OpenWebui on RX5(x)0/GFX803
 * Exposed Ports: 8080,11434
 * rocBLAS Library: [6.3.4](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.4.0)
 * Ollama : [v0.6.8](https://github.com/ollama/ollama/releases/tag/v0.6.8)
 * OpenWebui-GUI [latest](https://github.com/open-webui/open-webui.git)
 * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
 
-### ROCm-6.3.4: Install Ollama v0.6.(x) and Open-Webui on RX5(x)0
+### ROCm-6.3.4: Install Ollama v0.6.(x) and Open-Webui on RX5(x)0/GFX803
 > [!NOTE]
 > You should have at least 8 GB of VRAM available to run up to 7B models, and two GFX803 cards to run the 13B models
 
-1. build the DockerBase from this GITRepo for gfx803 first.   
+1. build the Docker Baseimage from this GITRepo for gfx803 first.   
 2. Build the Docker Image for Ollama, it takes aroud 60 Minutes: `docker build -f Dockerfile_rocm634_ollama . -t 'rocm634_gfx803_ollama:0.6.8'`
 3. Start the container via `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434  --name rocm643_ollama_068 rocm634_gfx803_ollama:0.6.8 bash`
 3. Enter to the Dockercontainer `docker exec -ti rocm634_ollama_068 bash`
@@ -94,7 +94,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/ROCm-6.3.4-Ollama-Benchmarks)
 
 ---
-### ROCm-6.3.0: PyTorch,TorchVision and TorchAudio for ComfyUI in a Dockerfile
+### ROCm-6.3.0: Used Docker Components for PyTorch,TorchVision and TorchAudio on RX5(x)0/GFX803
 * PyTorch GIT: [v2.5.1](https://github.com/ROCm/pytorch/tree/release/2.5)
 * Torchvison GIT: [v0.20.0](https://github.com/pytorch/vision/releases/tag/v0.20.0)
 * TorchAudio GIT: [v2.5.1](https://github.com/pytorch/audio/releases/tag/v2.5.1)
