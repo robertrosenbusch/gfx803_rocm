@@ -10,7 +10,7 @@ into a Docker based on the same AMD-ROCm Stack.
 
 # Quick links
 - **General** [hints on GFX803 and about Motivations](#motivation). You should read it. it could save lifetime.
-- **DockerBase** GFX803|[Docker-Components] | [Install]
+- **DockerBase** GFX803|[Docker-Components](#rocm-634-used-docker-components-for-baseimage) | [Install](#rocm-634-building-dockerbase-for-gfx803-to-do-some-fancy-ai-stuff)
 - **Ollama** GFX803 |[Docker-Components](#rocm-630-ollama-and-openwebui-in-a-dockerfile) | [Benchmark](#rocm-630-ollama-v054-benchmark-on-rx570-vs-cpu-ryzen7-3700x) |[Install](#install-ollama-and-open-webui-for-rocm-63)
 - **PyTorch** GFX803 |[Docker-Components](#rocm-630-ollama-and-openwebui-in-a-dockerfile)|[Install](#install-rocm-63-pytorch-torchvision-and-torchaudio-via-docker-for-comfyuiwhisperx)
 - **ComfyUi** on PyTorch GFX803 | [Docker-Components](#) | [Benchmark](#)| [Install](#)
@@ -54,13 +54,12 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 > |working on ROCm 6.3.4 for Ollama/PyTorch|✅|🟥|🟥|✅|✅|✅|✅|✅|✅|
 > An user on this GIT-Repo reported he had have success to use a Kernelversion above [6.12.21](https://github.com/robertrosenbusch/gfx803_rocm/issues/8#issuecomment-2820146489)
 
-
 ---
-## ROCm-6.3.4 Building Dockerbase for GFX803 to do some fancy AI Stuff
-
+## ROCm-6.3.4: Building Dockerbase for GFX803 to do some fancy AI Stuff
 >[!IMPORTANT] 
->Do build this Dockerimage is the base for all other fancy AI stuff on GFX803. Its all based on an [official AMD ROCm Docker](https://hub.docker.com/layers/rocm/dev-ubuntu-24.04/6.3.4-complete/images/sha256-76e99e263ef6ce69ba5d32905623c801fff3f85a6108e931820f6eb1d13eac67) 
-### Used Dockercomponents
+>To build this Dockerimage is the base for all other fancy AI stuff on GFX803. Its all based on an [official AMD ROCm Docker](https://hub.docker.com/layers/rocm/dev-ubuntu-24.04/6.3.4-complete/images/sha256-76e99e263ef6ce69ba5d32905623c801fff3f85a6108e931820f6eb1d13eac67) 
+
+### ROCm-6.3.4: Used Docker Components for BaseImage 
 |OS            |Python|ROCm |GPU|
 |--------------|------|-----|-----|
 |Ubuntu 24.04|3.12|6.3.4|RX5(x)0 aka Polaris 20/21 aka GCN 4|
