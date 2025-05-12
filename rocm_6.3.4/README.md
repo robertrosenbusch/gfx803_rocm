@@ -103,6 +103,7 @@ Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/
 > [!WARNING]  
 > It takes a _lot_ of time and Storage space to compile. Around 40 GByte Storage and 2 hours to (re-)compile. Keep your head up. Its worth!
 
+0. build the Docker Baseimage from this GITRepo for gfx803 first. 
 1. build your Docker image via `docker build -f Dockerfile_rocm634_pytorch . -t 'rocm634_gfx803_pytorch:2.6'` 
 2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --name rocm643_pytorch_26 rocm634_gfx803_pytorch:2.6 bash`
 3. to confirm your gfx803 working right use [a script like this one](https://github.com/robertrosenbusch/gfx803_rocm/issues/13#issuecomment-2755478167).
