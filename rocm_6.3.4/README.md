@@ -81,14 +81,14 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 > [!NOTE]
 > You should have at least 8 GB of VRAM available to run up to 7B models, and two GFX803 cards to run the 13B models
 
-1. build the Docker Baseimage from this GITRepo for gfx803 first.   
-2. Build the Docker Image for Ollama, it takes aroud 60 Minutes: `docker build -f Dockerfile_rocm634_ollama . -t 'rocm634_gfx803_ollama:0.6.8'`
-3. Start the container via `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434  --name rocm643_ollama_068 rocm634_gfx803_ollama:0.6.8 bash`
+0. build the Docker Baseimage from this GITRepo for gfx803 first.  
+1. Build the Docker Image for Ollama, it takes aroud 60 Minutes: `docker build -f Dockerfile_rocm634_ollama . -t 'rocm634_gfx803_ollama:0.6.8'`
+2. Start the container via `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434  --name rocm643_ollama_068 rocm634_gfx803_ollama:0.6.8 bash`
 3. Enter to the Dockercontainer `docker exec -ti rocm634_ollama_068 bash`
 4. [download a model](https://ollama.com/search) you need for e.g. `./ollama run deepseek-r1:1.5b`
-6. Open your Webbrowser `http://YOUR_LOCAL_IP:8080` to use Open-WebUI
-7. If you wanna use e.g. VSCode or Open-WebUI from outside, the Port 11434 is exposed too.
-8. For Benchmark your downloaded Models use `python3 /llm-benchmark/benchmark.py` inside the container
+5. Open your Webbrowser `http://YOUR_LOCAL_IP:8080` to use Open-WebUI
+6. If you wanna use e.g. VSCode or Open-WebUI from outside, the Port 11434 is exposed too.
+7. For Benchmark your downloaded Models use `python3 /llm-benchmark/benchmark.py` inside the container
 
 ### ROCm-6.3.4: Benchmark Ollama v0.6.(x) on RX570 
 Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/ROCm-6.3.4-Ollama-Benchmarks)
