@@ -69,15 +69,13 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 2. Build the GFX803-Base-Docker-Image docker `build -f Dockerfile_rocm634_base . -t 'rocm6_gfx803_ollama:6.3.4`
 3. It could take around 30 to 60 minutes to download, recompile and build this _base_ ROCm container Image
 
-## ROCm-6.3.4 Ollama and OpenWebui in a Dockerfile
+---
+### ROCm-6.3.4: Ollama and OpenWebui in a Dockerfile
 * Exposed Ports: 8080,11434
 * rocBLAS Library: [6.3.4](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.4.0)
 * Ollama : [v0.6.8](https://github.com/ollama/ollama/releases/tag/v0.6.8)
 * OpenWebui-GUI [latest](https://github.com/open-webui/open-webui.git)
 * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
-
-### ROCm-6.3.4: Benchmark Ollama v0.6.(x) on RX570 
-Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/ROCm-6.3.4-Ollama-Benchmarks)
 
 ### ROCm-6.3.4: Install Ollama v0.6.(x) and Open-Webui on RX5(x)0
 > [!NOTE]
@@ -92,9 +90,11 @@ Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/
 7. If you wanna use e.g. VSCode or Open-WebUI from outside, the Port 11434 is exposed too.
 8. For Benchmark your downloaded Models use `python3 /llm-benchmark/benchmark.py` inside the container
 
-## ROCm-6.3.0 PyTorch,TorchVision and TorchAudio for ComfyUI in a Dockerfile
+### ROCm-6.3.4: Benchmark Ollama v0.6.(x) on RX570 
+Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/ROCm-6.3.4-Ollama-Benchmarks)
 
-* Used ROCm Docker Version: [rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0](https://hub.docker.com/layers/rocm/pytorch/rocm6.3_ubuntu24.04_py3.12_pytorch_release_2.4.0/images/sha256-98ddf20333bd01ff749b8092b1190ee369a75d3b8c71c2fac80ffdcb1a98d529?context=explore)     
+---
+### ROCm-6.3.0: PyTorch,TorchVision and TorchAudio for ComfyUI in a Dockerfile
 * PyTorch GIT: [v2.5.1](https://github.com/ROCm/pytorch/tree/release/2.5)
 * Torchvison GIT: [v0.20.0](https://github.com/pytorch/vision/releases/tag/v0.20.0)
 * TorchAudio GIT: [v2.5.1](https://github.com/pytorch/audio/releases/tag/v2.5.1)
