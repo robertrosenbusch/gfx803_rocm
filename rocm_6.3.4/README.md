@@ -94,22 +94,20 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/ROCm-6.3.4-Ollama-Benchmarks)
 
 ---
-### ROCm-6.3.0: Used Docker Components for PyTorch,TorchVision and TorchAudio on RX5(x)0/GFX803
+### ROCm-6.3.4: Used Docker Components for PyTorch,TorchVision and TorchAudio on RX5(x)0/GFX803
 * PyTorch GIT: [v2.6.0](https://github.com/ROCm/pytorch/tree/release/2.6)
 * Torchvison GIT: [v0.21.0](https://github.com/pytorch/vision/releases/tag/v0.21.0)
 * TorchAudio GIT: [v2.6.0](https://github.com/pytorch/audio/releases/tag/v2.6.0)
-* rocBLAS Library: [6.3.0](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.0)
 
 ## Install ROCm 6.3 PyTorch, TorchVision and TorchAudio
 > [!WARNING]  
 > It takes a _lot_ of time and Storage space to compile. Around 40 GByte Storage and 2 hours to (re-)compile. Keep your head up. Its worth!
 
-1. build your Docker image via `docker build -f  Dockerfile_rocm63_pt25 . -t 'rocm63_pt25:latest'`
-2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8188:8188 -v /YOUR/LOCAL/COMFYUI/CHECKPOINTS:/comfy/ --name rocm63_pt25 rocm63_pt25:latest bash`
-3. After installing ComfyUI _reinstall_ pytorch, torchvision and torchaudio wheels into your ComfyUI-Python-Environment. You will find the GFX803/Polaris compiled Python-Wheel-Files into the `/pytorch/dist`, `/vision/dist` and `/audio/dist` Directory.
- *OR* use [my ComfyUI-Container-Dockerfile](https://github.com/robertrosenbusch/gfx803_rocm/blob/main/Dockerfile_rocm63_comfyui) | [WhisperX-Container-Dockerfile](#)
+1. build your Docker image via `docker build -f Dockerfile_rocm634_pytorch . -t 'rocm634_gfx803_pytorch:2.6'` 
+2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --name rocm643_pytorch_26 rocm634_gfx803_pytorch:2.6 bash`
+3. to confirm your gfx803 working right use [a script like this one](https://github.com/robertrosenbusch/gfx803_rocm/issues/13#issuecomment-2755478167).
 
-
+---
 OpenWebui
 > [!NOTE]
 > 1. Since ROCm 6.0 you have to use the _`--lowvram`_ option at ComfyUI's main.py to create correct results. *Dont know why* ...
