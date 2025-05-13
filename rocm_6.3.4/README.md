@@ -127,9 +127,13 @@ Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/
 ### ROCm-6.3.4: Install WhisperX on RX5(x)0/GFX803
 > [!NOTE]
 > It takes a lot of time to (re)-compile all this Stuff for your GFX803 Card (around 3 hrs)
+> Beware you only use Models who fits into your VRAM
 
+0. build the Docker Baseimage from this GITRepo for gfx803 first.
+1. Build the Docker Image for WhisperX, it takes aroud 2,5 hours: `docker build -f Dockerfile_rocm634_whisperx . -t 'rocm634_gfx803_whisperx:latest'`
+2. Open your Webbrowser `http://YOUR_LOCAL_IP:7860` to use WhisperX-WebUI and Download a tiny/small LLVM
 
-
+---
 
 
 > [!NOTE]
