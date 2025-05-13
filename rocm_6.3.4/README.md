@@ -70,6 +70,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 3. It could take around 30 to 60 minutes to download, recompile and build this _base_ ROCm container Image
 
 ---
+## Ollama
 
 ### ROCm-6.3.4: Used Docker Components for Ollama v0.6.(x) and OpenWebui on RX5(x)0/GFX803
 * Exposed Ports: 8080,11434
@@ -95,15 +96,14 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/ROCm-6.3.4-Ollama-Benchmarks)
 
 ---
-
-##PyTorch
+## PyTorch
 
 ### ROCm-6.3.4: Used Docker Components for PyTorch,TorchVision and TorchAudio on RX5(x)0/GFX803
 * PyTorch GIT: [v2.6.0](https://github.com/ROCm/pytorch/tree/release/2.6)
 * Torchvison GIT: [v0.21.0](https://github.com/pytorch/vision/releases/tag/v0.21.0)
 * TorchAudio GIT: [v2.6.0](https://github.com/pytorch/audio/releases/tag/v2.6.0)
 
-### Install ROCm 6.3 PyTorch, TorchVision and TorchAudio
+### ROCm-6.3.4: Install PyTorch, TorchVision and TorchAudio on RX5(x)0/GFX803
 > [!WARNING]  
 > It takes a _lot_ of time and Storage space to compile. Around 40 GByte Storage and 2 hours to (re-)compile. Keep your head up. Its worth!
 
@@ -113,16 +113,25 @@ Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/
 3. to confirm your gfx803 working right use [a script like this one](https://github.com/robertrosenbusch/gfx803_rocm/issues/13#issuecomment-2755478167).
 
 ---
-
 ## WhisperX
 
+### ROCm-6.3.4: Used Docker Components for WhisperX
+* Exposed WhisperX GUI Port: 7860
+* PyTorch GIT: [v2.6.0](https://github.com/ROCm/pytorch/tree/release/2.6)
+* Torchvison GIT: [v0.21.0](https://github.com/pytorch/vision/releases/tag/v0.21.0)
+* TorchAudio GIT: [v2.6.0](https://github.com/pytorch/audio/releases/tag/v2.6.0)
+* CTranslate for ROCm: [latest](https://github.com/arlo-phoenix/CTranslate2-rocm.git)
+* WhisperX WebUI: [latest](https://github.com/jhj0517/Whisper-WebUI.git)
+
+
+### ROCm-6.3.4: Install WhisperX on RX5(x)0/GFX803
+> [!NOTE]
+> It takes a lot of time to (re)-compile all this Stuff for your GFX803 Card (around 3 hrs)
 
 
 
 
 
-
-OpenWebui
 > [!NOTE]
 > 1. Since ROCm 6.0 you have to use the _`--lowvram`_ option at ComfyUI's main.py to create correct results. *Dont know why* ...
 > 2. Since PyTorch 2.4 you have to use the _`MIOPEN_LOG_LEVEL=3`_ Environment-Var to surpress HipBlas-Warnings. *Dont know why* ...
