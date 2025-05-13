@@ -55,7 +55,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 > An user on this GIT-Repo reported he had have success to use a Kernelversion above [6.12.21](https://github.com/robertrosenbusch/gfx803_rocm/issues/8#issuecomment-2820146489)
 
 ---
-## ROCm-6.3.4: Building Docker Baseimage for GFX803 to do some fancy AI Stuff
+## ROCm-6.3.4: Docker Baseimage for RX5(x)0/GFX803
 >[!IMPORTANT] 
 >Build this Docker Baseimage for all other fancy AI stuff on GFX803. Its all based on an [official AMD ROCm Docker](https://hub.docker.com/layers/rocm/dev-ubuntu-24.04/6.3.4-complete/images/sha256-76e99e263ef6ce69ba5d32905623c801fff3f85a6108e931820f6eb1d13eac67) 
 
@@ -64,7 +64,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 |--------------|------|------|-----|-----|
 |Ubuntu 24.04|6.3.4|6.3.3|3.12|RX5(x)0 aka Polaris 20/21 aka GCN 4|
 
-### Install
+### ROCm-6.3.4: Install Baseimage for GFX803 to do some fancy AI Stuff
 1. Checkout this GIT repo via `git clone https://github.com/robertrosenbusch/gfx803_rocm.git` and change into the directory `gfx803_rocm`
 2. Build the GFX803-Base-Docker-Image docker `build -f Dockerfile_rocm634_base . -t 'rocm6_gfx803_ollama:6.3.4`
 3. It could take around 30 to 60 minutes to download, recompile and build this _base_ ROCm container Image
