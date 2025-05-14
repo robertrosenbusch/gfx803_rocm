@@ -1,3 +1,0 @@
-*.whl filter=lfs diff=lfs merge=lfs -text
-torchvision-0.19.0a0+fab8488-cp312-cp312-linux_x86_64.whl filter=lfs diff=lfs merge=lfs -text
-torch-2.4.0a0+gitb4b81bd-cp312-cp312-linux_x86_64.whl filter=lfs diff=lfs merge=lfs -text
