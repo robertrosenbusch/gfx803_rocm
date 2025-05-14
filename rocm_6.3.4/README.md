@@ -93,7 +93,8 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 7. For Benchmark your downloaded Models use `python3 /llm-benchmark/benchmark.py` inside the container
 
 ### ROCm-6.3.4: Benchmark Ollama v0.6.(x) on RX570 
-Benchmarks moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/ROCm-6.3.4-Ollama-Benchmarks)
+Benchmarks for Ollama moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/ROCm-6.3.4-Ollama-Benchmarks)
+
 ---
 ## ComfyUI
 
