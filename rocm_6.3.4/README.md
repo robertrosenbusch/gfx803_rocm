@@ -117,18 +117,12 @@ Benchmarks for Ollama moved to [Wiki](https://github.com/robertrosenbusch/gfx803
 
 0. build the Docker Baseimage from this GITRepo for gfx803 first. 
 1. build your Docker image via `docker build -f Dockerfile_rocm634_comfyui . -t 'rocm634_gfx803_comfyui:latest'`
-2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
-    -p 8188:8188 -v /YOUR_LOCAL_COMFYUI_MODELS/:/comfy/ \
-    --name rocm634_comfyui rocm634_gfx803_comfyui:latest /bin/bash`
+2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8188:8188 -v /YOUR_LOCAL_COMFYUI_MODELS/:/comfy/ --name rocm634_comfyui rocm634_gfx803_comfyui:latest /bin/bash`
 3. You will find the GFX803/Polaris compiled Python-Wheel-Files into the `/pytorch/dist`, `/vision/dist` and `/audio/dist` Directory.
 
 
 ### ROCm-6.3.0 ComfyUI Benchmark on RX570/RX590
-|       |SD 1.5  (512x512)|SD 1.5  (512x768)|SDXL  (1024x1024)|SD3.5  (1024x1024)|Flux -Schnell (1024x1024)|
-|--------------|-----|------|-----|-----|-----|
-|ROCm 6.3 + PyTorch v2.5 (RX570)|[1.19 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sd15_512x512_sd.png)|[1.92 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sd15_512x768_sd.png)|[7.57 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sdxl_1024x1024l.png)|[19.56 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_sd35_1024x1024.png)|[63.72 s/it](https://github.com/robertrosenbusch/gfx803_rocm/tree/main/benchmark/comfyui_schnell_1024x1024.png)|
-|ROCm 6.3 + PyTorch v2.5 (RX590)|1.06 s/it|1.48 s/it|6.22 s/it|n.a.|n.a.|
-|ROCm 5.7 + PyTorch v2.3 (RX570)|1.22 s/it|1.97 s/it|8.33 s/it|19.87 s/it|58.85 s/it|
+Benchmarks for ComfyUI moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/Benchmark-ComfyUI:-ROCm-6.3.0)
 
 ---
 ## PyTorch
