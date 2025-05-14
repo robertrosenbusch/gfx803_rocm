@@ -109,7 +109,7 @@ Benchmarks for Ollama moved to [Wiki](https://github.com/robertrosenbusch/gfx803
 
 ### ROCm-6.3.4: Build/Install ComfyUI on RX5(x)0/GFX803
 > [!WARNING]  
-> It takes a _lot_ of time and Storage space to compile. Around 100 GByte Storage and 2,5 hours to (re-)compile. Keep your head up. Its worth!
+> It takes a _lot_ of time and Storage space to compile. Around 50 GByte Storage and 2.5 hours to (re-)compile. Keep your head up. Its worth!
 
 > [!NOTE]
 > 1. Since ROCm 6.0 you have to use the _`--lowvram`_ option at ComfyUI's main.py to create correct results. *Dont know why* ...
@@ -117,7 +117,9 @@ Benchmarks for Ollama moved to [Wiki](https://github.com/robertrosenbusch/gfx803
 
 0. build the Docker Baseimage from this GITRepo for gfx803 first. 
 1. build your Docker image via `docker build -f Dockerfile_rocm634_comfyui . -t 'rocm634_gfx803_comfyui:latest'`
-2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8188:8188 -v /YOUR_LOCAL_COMFYUI_MODELS/:/comfy/ --name rocm634_comfyui rocm634_gfx803_comfyui:latest /bin/bash`
+2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
+    -p 8188:8188 -v /YOUR_LOCAL_COMFYUI_MODELS/:/comfy/ \
+    --name rocm634_comfyui rocm634_gfx803_comfyui:latest /bin/bash`
 3. You will find the GFX803/Polaris compiled Python-Wheel-Files into the `/pytorch/dist`, `/vision/dist` and `/audio/dist` Directory.
 
 
