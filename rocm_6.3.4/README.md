@@ -1,20 +1,20 @@
 # Dockerized ROCm 6.3.4 to use fancy AI Stuff on Ollama/WhisperX/ComfyUI on [GFX803/Polaris/RX5x0]
 
-This repo provides some docker main buildfiles based on the original published/sponsored AMD ROCm-PyTorch-Dockerimage to (re)compile PyTorch, Torchvision/Torchaudio, ROCBlas and CTranslate2 for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) to:
+This repo provides some docker main buildfiles based on the original published/sponsored AMD ROCm-DEV-Dockerimage to (re)compile PyTorch, Torchvision/Torchaudio, ROCBlas and CTranslate2 for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) to:
 1. use [PyTorch](https://github.com/pytorch/pytorch) on gfx803
 2. generate AI Pics on [ComfyUI](https://github.com/comfyanonymous/ComfyUI) on gfx803
-3. use [WhisperX](https://github.com/m-bain/whisperX) to fast automatic speech recognition on gfx803
+3. use [WhisperX](https://github.com/m-bain/whisperX) to fast automatic speech recognition and transcription on gfx803
 4. and use [Ollama](https://github.com/ollama/ollama) for LLVMs on gfx803
 
 into a Docker based on the same AMD-ROCm Stack. 
 
 # Quick links
 - **General** [hints on GFX803 and about Motivations](#motivation). You should read it. it could save lifetime.
-- **DockerBase** GFX803|[Docker-Components](#rocm-634-used-docker-components-for-baseimage) | [Install](#rocm-634-building-dockerbase-for-gfx803-to-do-some-fancy-ai-stuff)
-- **Ollama** GFX803 |[Docker-Components](#rocm-630-ollama-and-openwebui-in-a-dockerfile) | [Benchmark](#rocm-630-ollama-v054-benchmark-on-rx570-vs-cpu-ryzen7-3700x) |[Install](#install-ollama-and-open-webui-for-rocm-63)
-- **ComfyUi** on PyTorch GFX803 | [Docker-Components](#) | [Benchmark](#)| [Install](#)
-- **PyTorch** GFX803 |[Docker-Components](#rocm-630-ollama-and-openwebui-in-a-dockerfile)|[Install](#install-rocm-63-pytorch-torchvision-and-torchaudio-via-docker-for-comfyuiwhisperx)
-- **WhsiperX** on PyTorch GFX803 | [Docker-Components](#) | [Install](#)
+- **DockerBase** GFX803|[Docker-Components](#rocm-634-used-docker-components-for-baseimage-on-rx5x0gfx803) | [Install](#rocm-634-buildinstall-baseimage-for-gfx803-to-do-some-fancy-ai-stuff)
+- **Ollama** GFX803 |[Docker-Components](#rocm-634-used-docker-components-for-ollama-v06x-and-openwebui-on-rx5x0gfx803) | [Install](#rocm-634-buildinstall-ollama-v06x-and-open-webui-on-rx5x0gfx803)[Benchmark](#rocm-634-benchmark-ollama-v06x-on-rx570) |
+- **ComfyUi** on PyTorch GFX803 | [Docker-Components](#rocm-634-used-docker-components-for-comfyui) | [Install](#rocm-634-buildinstall-comfyui-on-rx5x0gfx803)[Benchmark](#rocm-630-comfyui-benchmark-on-rx570rx590)|
+- **PyTorch** GFX803 |[Docker-Components](#rocm-634-used-docker-components-for-pytorchtorchvision-and-torchaudio-on-rx5x0gfx803)|[Install](#rocm-634-buildinstall-pytorch-torchvision-and-torchaudio-on-rx5x0gfx803)
+- **WhsiperX** on PyTorch GFX803 | [Docker-Components](#rocm-634-used-docker-components-for-whisperx) | [Install](#rocm-634-buildinstall-whisperx-on-rx5x0gfx803)
 
 
 ## Motivation
@@ -59,6 +59,9 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 >[!IMPORTANT] 
 >Build this Docker Baseimage for all other fancy AI stuff on GFX803. Its all based on an [official AMD ROCm Docker](https://hub.docker.com/layers/rocm/dev-ubuntu-24.04/6.3.4-complete/images/sha256-76e99e263ef6ce69ba5d32905623c801fff3f85a6108e931820f6eb1d13eac67) 
 
+> [!NOTE]
+> It could take around 30 to 60 minutes to download, recompile and build this _base_ ROCm container Image, depends on your Hardware and your ISP
+
 ### ROCm-6.3.4: Used Docker Components for Baseimage on RX5(x)0/GFX803
 |OS            |ROCm |rocBLAS|Python|GPU|
 |--------------|------|------|-----|-----|
@@ -67,7 +70,6 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 ### ROCm-6.3.4: Build/Install Baseimage for GFX803 to do some fancy AI Stuff
 1. Checkout this GIT repo via `git clone https://github.com/robertrosenbusch/gfx803_rocm.git` and change into the directory `gfx803_rocm`
 2. Build the GFX803-Base-Docker-Image docker `build -f Dockerfile_rocm634_base . -t 'rocm6_gfx803_base:6.3.4`
-3. It could take around 30 to 60 minutes to download, recompile and build this _base_ ROCm container Image
 
 ---
 ## Ollama
@@ -125,27 +127,6 @@ Benchmarks for Ollama moved to [Wiki](https://github.com/robertrosenbusch/gfx803
 
 ### ROCm-6.3.0 ComfyUI Benchmark on RX570/RX590
 Benchmarks for ComfyUI moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/Benchmark-ComfyUI:-ROCm-6.3.0)
-
----
-## WhisperX
-
-### ROCm-6.3.4: Used Docker Components for WhisperX
-* Exposed WhisperX GUI Port: 7860
-* PyTorch GIT: [v2.6.0](https://github.com/ROCm/pytorch/tree/release/2.6)
-* Torchvison GIT: [v0.21.0](https://github.com/pytorch/vision/releases/tag/v0.21.0)
-* TorchAudio GIT: [v2.6.0](https://github.com/pytorch/audio/releases/tag/v2.6.0)
-* CTranslate for ROCm: [latest](https://github.com/arlo-phoenix/CTranslate2-rocm.git)
-* WhisperX WebUI: [latest](https://github.com/jhj0517/Whisper-WebUI.git)
-
-
-### ROCm-6.3.4: Build/Install WhisperX on RX5(x)0/GFX803
-> [!NOTE]
-> It takes a lot of time to (re)-compile all this Stuff for your GFX803 Card (around 3 hrs)
-> Beware you only use Models who fits into your VRAM
-
-0. build the Docker Baseimage from this GITRepo for gfx803 first.
-1. Build the Docker Image for WhisperX, it takes aroud 2,5 hours: `docker build -f Dockerfile_rocm634_whisperx . -t 'rocm634_gfx803_whisperx:latest'`
-2. Open your Webbrowser `http://YOUR_LOCAL_IP:7860` to use WhisperX-WebUI and Download a tiny/small LLVM
 
 ---
 ## PyTorch
