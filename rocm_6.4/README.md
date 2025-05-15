@@ -1,4 +1,4 @@
-# Dockerized ROCm 6.3.4 to use fancy AI Stuff on Ollama/WhisperX/ComfyUI on [GFX803/Polaris/RX5x0]
+# Dockerized ROCm 6.4.0 to use fancy AI Stuff on Ollama/WhisperX/ComfyUI on [GFX803/Polaris/RX5x0]
 
 This repo provides some docker main buildfiles based on the original published/sponsored AMD ROCm-DEV-Dockerimage to (re)compile PyTorch, Torchvision/Torchaudio, ROCBlas and CTranslate2 for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) to:
 1. use [PyTorch](https://github.com/pytorch/pytorch) on gfx803
@@ -51,32 +51,31 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 > After some feedback/research from Users who are using the Dockercontainer from this GIT in [Ollama](https://github.com/robertrosenbusch/gfx803_rocm/issues/8#issue-2919996555) and [PyTorch/ComfyUI](https://github.com/robertrosenbusch/gfx803_rocm/issues/13#issuecomment-2754796999), cause the devices `/dev/dri` and  `/dev/kfd` crashed with SegFaults. Please proofe your used Linux-Kernel Version and switch up or down to a well known working Kernel-Version. Fedora 41, Arch and Debian 13 using (in April 2015) suspicious Linux-Kernel-Versions as default. On Kernelversion 6.12 its seems to be fixed on 6.12.
 > |Kernel Version|6.14|6.13|6.12|6.11|6.10|6.9|6.6|6.2|5.19|
 > |--------------|-----|-----|------|-----|------|-----|-----|-----|-----|
-> |working on ROCm 6.3.4 for Ollama/PyTorch|✅|🟥|🟥|✅|✅|✅|✅|✅|✅|
+> |working on ROCm 6.3.4/6.4.0 for Ollama/PyTorch|✅|🟥|🟥|✅|✅|✅|✅|✅|✅|
 > An user on this GIT-Repo reported he had have success to use a Kernelversion above [6.12.21](https://github.com/robertrosenbusch/gfx803_rocm/issues/8#issuecomment-2820146489)
 
 ---
-## ROCm-6.3.4: Docker Baseimage for RX5(x)0/GFX803
+## ROCm-6.4.0: Docker Baseimage for RX5(x)0/GFX803
 >[!IMPORTANT] 
->Build this Docker Baseimage for all other fancy AI stuff on GFX803. Its all based on an [official AMD ROCm Docker](https://hub.docker.com/layers/rocm/dev-ubuntu-24.04/6.3.4-complete/images/sha256-76e99e263ef6ce69ba5d32905623c801fff3f85a6108e931820f6eb1d13eac67) 
+>Build this Docker Baseimage for all other fancy AI stuff on GFX803. Its all based on an [official AMD ROCm Docker](https://hub.docker.com/layers/rocm/dev-ubuntu-24.04/6.4-complete/images/sha256-9fbf729ab0d20e7f198be388bd81abcd9f63f1092119086dd4bb4d971b4318d4) 
 
 > [!NOTE]
 > It could take around 30 to 60 minutes to download, recompile and build this _base_ ROCm container Image, depends on your Hardware and your ISP
 
-### ROCm-6.3.4: Used Docker Components for Baseimage on RX5(x)0/GFX803
+### ROCm-6.4.0: Used Docker Components for Baseimage on RX5(x)0/GFX803
 |OS            |ROCm |rocBLAS|Python|GPU|
 |--------------|------|------|-----|-----|
-|Ubuntu 24.04|6.3.4|6.3.3|3.12|RX5(x)0 aka Polaris 20/21 aka GCN 4|
+|Ubuntu 24.04|6.4.0|6.4.0|3.12|RX5(x)0 aka Polaris 20/21 aka GCN 4|
 
-### ROCm-6.3.4: Build/Install Baseimage for GFX803 to do some fancy AI Stuff
+### ROCm-6.4.0: Build/Install Baseimage for GFX803 to do some fancy AI Stuff
 1. Checkout this GIT repo via `git clone https://github.com/robertrosenbusch/gfx803_rocm.git` and change into the directory `gfx803_rocm`
-2. Build the GFX803-Base-Docker-Image docker `build -f Dockerfile_rocm634_base . -t 'rocm6_gfx803_base:6.3.4`
+2. Build the GFX803-Base-Docker-Image docker `build -f Dockerfile_rocm64_base . -t 'rocm6_gfx803_base:6.4`
 
 ---
 ## Ollama
 
-### ROCm-6.3.4: Used Docker Components for Ollama v0.6.(x) and OpenWebui on RX5(x)0/GFX803
+### ROCm-6.4.0: Used Docker Components for Ollama v0.6.(x) and OpenWebui on RX5(x)0/GFX803
 * Exposed Ports: 8080,11434
-* rocBLAS Library: [6.3.4](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.4)
 * Ollama : [v0.6.8](https://github.com/ollama/ollama/releases/tag/v0.6.8)
 * OpenWebui-GUI [latest](https://github.com/open-webui/open-webui.git)
 * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
