@@ -11,10 +11,10 @@ into a Docker based on the same AMD-ROCm Stack.
 # Quick links
 - **General** [hints on GFX803 and about Motivations](#motivation). You should read it. it could save lifetime.
 - **DockerBase** GFX803|[Docker-Components](#rocm-634-used-docker-components-for-baseimage) | [Install](#rocm-634-building-dockerbase-for-gfx803-to-do-some-fancy-ai-stuff)
-- **Ollama** GFX803 |[Docker-Components](#rocm-630-ollama-and-openwebui-in-a-dockerfile) | [Benchmark](#rocm-630-ollama-v054-benchmark-on-rx570-vs-cpu-ryzen7-3700x) |[Install](#install-ollama-and-open-webui-for-rocm-63)
-- **ComfyUi** on PyTorch GFX803 | [Docker-Components](#) | [Benchmark](#)| [Install](#)
+- **Ollama** GFX803 |[Docker-Components](#rocm-630-ollama-and-openwebui-in-a-dockerfile) | [Install](#install-ollama-and-open-webui-for-rocm-63)[Benchmark](#rocm-630-ollama-v054-benchmark-on-rx570-vs-cpu-ryzen7-3700x) |
+- **ComfyUi** on PyTorch GFX803 | [Docker-Components](#) | [Install](#)[Benchmark](#)|
 - **PyTorch** GFX803 |[Docker-Components](#rocm-630-ollama-and-openwebui-in-a-dockerfile)|[Install](#install-rocm-63-pytorch-torchvision-and-torchaudio-via-docker-for-comfyuiwhisperx)
-- **WhsiperX** on PyTorch GFX803 | [Docker-Components](#) | [Install](#)
+- **WhsiperX** on PyTorch GFX803 | [Docker-Components](#rocm-634-used-docker-components-for-whisperx) | [Install](#rocm-634-buildinstall-whisperx-on-rx5x0gfx803)
 
 
 ## Motivation
