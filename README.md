@@ -1,9 +1,9 @@
 # Dockerized ROCm 6.3.4 to use fancy AI Stuff on Ollama/WhisperX/ComfyUI on [GFX803/Polaris/RX5x0]
 
-This repo provides some docker main buildfiles based on the original published/sponsored AMD ROCm-PyTorch-Dockerimage to (re)compile PyTorch, Torchvision/Torchaudio, ROCBlas and CTranslate2 for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) to:
+This repo provides some docker main buildfiles based on the original published/sponsored AMD ROCm-DEV-Dockerimage to (re)compile PyTorch, Torchvision/Torchaudio, ROCBlas and CTranslate2 for the [AMD RX570/RX580/RX590](https://en.wikipedia.org/wiki/Radeon_500_series) to:
 1. use [PyTorch](https://github.com/pytorch/pytorch) on gfx803
 2. generate AI Pics on [ComfyUI](https://github.com/comfyanonymous/ComfyUI) on gfx803
-3. use [WhisperX](https://github.com/m-bain/whisperX) to fast automatic speech recognition on gfx803
+3. use [WhisperX](https://github.com/m-bain/whisperX) to fast automatic speech recognition and transcription on gfx803
 4. and use [Ollama](https://github.com/ollama/ollama) for LLVMs on gfx803
 
 into a Docker based on the same AMD-ROCm Stack. 
@@ -59,6 +59,9 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 >[!IMPORTANT] 
 >Build this Docker Baseimage for all other fancy AI stuff on GFX803. Its all based on an [official AMD ROCm Docker](https://hub.docker.com/layers/rocm/dev-ubuntu-24.04/6.3.4-complete/images/sha256-76e99e263ef6ce69ba5d32905623c801fff3f85a6108e931820f6eb1d13eac67) 
 
+> [!NOTE]
+> It could take around 30 to 60 minutes to download, recompile and build this _base_ ROCm container Image, depends on your Hardware and your ISP
+
 ### ROCm-6.3.4: Used Docker Components for Baseimage on RX5(x)0/GFX803
 |OS            |ROCm |rocBLAS|Python|GPU|
 |--------------|------|------|-----|-----|
@@ -67,7 +70,6 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 ### ROCm-6.3.4: Build/Install Baseimage for GFX803 to do some fancy AI Stuff
 1. Checkout this GIT repo via `git clone https://github.com/robertrosenbusch/gfx803_rocm.git` and change into the directory `gfx803_rocm`
 2. Build the GFX803-Base-Docker-Image docker `build -f Dockerfile_rocm634_base . -t 'rocm6_gfx803_base:6.3.4`
-3. It could take around 30 to 60 minutes to download, recompile and build this _base_ ROCm container Image
 
 ---
 ## Ollama
