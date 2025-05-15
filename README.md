@@ -66,7 +66,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 
 ### ROCm-6.3.4: Build/Install Baseimage for GFX803 to do some fancy AI Stuff
 1. Checkout this GIT repo via `git clone https://github.com/robertrosenbusch/gfx803_rocm.git` and change into the directory `gfx803_rocm`
-2. Build the GFX803-Base-Docker-Image docker `build -f Dockerfile_rocm634_base . -t 'rocm6_gfx803_ollama:6.3.4`
+2. Build the GFX803-Base-Docker-Image docker `build -f Dockerfile_rocm634_base . -t 'rocm6_gfx803_base:6.3.4`
 3. It could take around 30 to 60 minutes to download, recompile and build this _base_ ROCm container Image
 
 ---
@@ -74,7 +74,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 
 ### ROCm-6.3.4: Used Docker Components for Ollama v0.6.(x) and OpenWebui on RX5(x)0/GFX803
 * Exposed Ports: 8080,11434
-* rocBLAS Library: [6.3.4](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.4.0)
+* rocBLAS Library: [6.3.4](https://github.com/ROCm/rocBLAS/releases/tag/rocm-6.3.4)
 * Ollama : [v0.6.8](https://github.com/ollama/ollama/releases/tag/v0.6.8)
 * OpenWebui-GUI [latest](https://github.com/open-webui/open-webui.git)
 * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
