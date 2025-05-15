@@ -118,11 +118,34 @@ Benchmarks for Ollama moved to [Wiki](https://github.com/robertrosenbusch/gfx803
 0. build the Docker Baseimage from this GITRepo for gfx803 first. 
 1. build your Docker image via `docker build -f Dockerfile_rocm634_comfyui . -t 'rocm634_gfx803_comfyui:latest'`
 2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8188:8188 -v /YOUR_LOCAL_COMFYUI_MODELS/:/comfy/ --name rocm634_comfyui rocm634_gfx803_comfyui:latest /bin/bash`
-3. You will find the GFX803/Polaris compiled Python-Wheel-Files into the `/pytorch/dist`, `/vision/dist` and `/audio/dist` Directory.
+4. Open your Webbrowser `http://YOUR_LOCAL_IP:11434` to use ComfyUI
+5. Enter to the Dockercontainer `docker exec -ti rocm634_gfx803_comfyui:latest bash` and Download your Modelstuff or SymLink it from `/comfy` 
+6. You will find the GFX803/Polaris compiled Python-Wheel-Files inside into the `/pytorch/dist`, `/vision/dist` and `/audio/dist` Directory.
 
 
 ### ROCm-6.3.0 ComfyUI Benchmark on RX570/RX590
 Benchmarks for ComfyUI moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/Benchmark-ComfyUI:-ROCm-6.3.0)
+
+---
+## WhisperX
+
+### ROCm-6.3.4: Used Docker Components for WhisperX
+* Exposed WhisperX GUI Port: 7860
+* PyTorch GIT: [v2.6.0](https://github.com/ROCm/pytorch/tree/release/2.6)
+* Torchvison GIT: [v0.21.0](https://github.com/pytorch/vision/releases/tag/v0.21.0)
+* TorchAudio GIT: [v2.6.0](https://github.com/pytorch/audio/releases/tag/v2.6.0)
+* CTranslate for ROCm: [latest](https://github.com/arlo-phoenix/CTranslate2-rocm.git)
+* WhisperX WebUI: [latest](https://github.com/jhj0517/Whisper-WebUI.git)
+
+
+### ROCm-6.3.4: Build/Install WhisperX on RX5(x)0/GFX803
+> [!NOTE]
+> It takes a lot of time to (re)-compile all this Stuff for your GFX803 Card (around 3 hrs)
+> Beware you only use Models who fits into your VRAM
+
+0. build the Docker Baseimage from this GITRepo for gfx803 first.
+1. Build the Docker Image for WhisperX, it takes aroud 2,5 hours: `docker build -f Dockerfile_rocm634_whisperx . -t 'rocm634_gfx803_whisperx:latest'`
+2. Open your Webbrowser `http://YOUR_LOCAL_IP:7860` to use WhisperX-WebUI and Download a tiny/small LLVM
 
 ---
 ## PyTorch
@@ -156,11 +179,12 @@ Benchmarks for ComfyUI moved to [Wiki](https://github.com/robertrosenbusch/gfx80
 ### ROCm-6.3.4: Build/Install WhisperX on RX5(x)0/GFX803
 > [!NOTE]
 > It takes a lot of time to (re)-compile all this Stuff for your GFX803 Card (around 3 hrs)
-> Beware you only use Models who fits into your VRAM
+> Beware you only use Models who fits into your GPU-VRAM
 
 0. build the Docker Baseimage from this GITRepo for gfx803 first.
 1. Build the Docker Image for WhisperX, it takes aroud 2,5 hours: `docker build -f Dockerfile_rocm634_whisperx . -t 'rocm634_gfx803_whisperx:latest'`
-2. Open your Webbrowser `http://YOUR_LOCAL_IP:7860` to use WhisperX-WebUI and Download a tiny/small LLVM
+2. Open your Webbrowser `http://YOUR_LOCAL_IP:7860` to use WhisperX-WebUI and Download a tiny/small/default LLVM to transcribe
+3. Enter to the Dockercontainer `docker exec -ti rocm634_gfx803_whisperx:latest bash` and use `amdgpu_top` to monitor your GPU
 
 
 
