@@ -167,9 +167,66 @@ Benchmarks for ComfyUI moved to [Wiki](https://github.com/robertrosenbusch/gfx80
 2. Open your Webbrowser `http://YOUR_LOCAL_IP:7860` to use WhisperX-WebUI and Download a tiny/small/default LLVM to transcribe
 3. Enter to the Dockercontainer `docker exec -ti rocm634_gfx803_whisperx:latest bash` and use `amdgpu_top` to monitor your GPU
 
+----
 
+## RVC WebUI with ROCm 5.4.2 for gfx803 (AMD RX580 / Polaris GPUs)
 
+### ROCm-5.4.2: Used Docker Components for RVC WebUI
+- **Exposed RVC WebUI Port**: 7865
+- **PyTorch GIT**: v2.0.1
+- **TorchVision GIT**: v0.15.2
+- **TorchAudio GIT**: v2.0.2
+- **RVC WebUI**: Latest (cloned from https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI)
 
+### ROCm-5.4.2: Build/Install RVC WebUI on RX5(x)0/GFX803
+**Note**: It takes significant time to compile all components for your GFX803 card (approximately 3-5 hours for the base image). Be aware that you should use models that fit into your GPU VRAM to avoid memory issues.
 
+1. **Build the Docker Base Image for gfx803 First**:
+   This step compiles PyTorch and related libraries for ROCm 5.4.2 compatibility. It takes around 3-5 hours depending on your system.
+   
+   ```bash
+   docker build -f rocm_5.4/Dockerfile.base_rocm5.4_source_compile -t rocm542_gfx803_base:5.4.2 .
+   ```
+  
+   The resulting image size is approximately **23.3 GB**.
 
+2. **Build the Docker Image for RVC WebUI**:
+   This step builds the RVC WebUI application on top of the base image and takes less time (approximately 30-60 minutes).
+   
+   ```bash
+   docker build -f rocm_5.4/Dockerfile.rvc_original -t rvc_webui_rocm:5.4.2 .
+   ```
+   
+   The resulting image size is approximately **26.4 GB**.
 
+3. **Run the Docker Container for RVC WebUI**:
+   Start the container with GPU access and necessary volume mounts to access the web interface.
+   
+   ```bash
+   docker run -d \
+     --name rocm54_rvcwebui \
+     --device=/dev/kfd --device=/dev/dri --group-add video \
+     -e HSA_OVERRIDE_GFX_VERSION=8.0.3 \
+     -e PYTORCH_ROCM_ARCH=gfx803 \
+     -e RVC_PORT=7865 \
+     -p 7865:7865 \
+     -v /path/to/host/directory/training_data:/datasets \
+     -v /path/to/host/directory/rvc_assets:/app/assets \
+     -v /path/to/host/directory/rvc_weights:/app/weights \
+     -v /path/to/host/directory/rvc_logs:/app/logs \
+     -v /path/to/host/directory/huggingface_cache:/root/.cache/huggingface \
+     -e HUGGINGFACE_HUB_CACHE="/root/.cache/huggingface" \
+     -v /path/to/host/directory/torch_cache:/root/.cache/torch \
+     -e TORCH_HOME="/root/.cache/torch" \
+     -v /path/to/host/directory/general_cache:/root/.cache \
+     -e XDG_CACHE_HOME="/root/.cache" \
+     rvc_webui_rocm:5.4.2
+
+4. **Access the RVC WebUI**:
+   Open your web browser and navigate to `http://YOUR_LOCAL_IP:7865` to use the RVC WebUI. Ensure pre-trained models are downloaded (handled by `entrypoint_rvc.sh` or via volume mounts) and start using voice conversion features.
+
+5. **Monitor GPU Usage (Optional)**:
+   Enter the Docker container to monitor GPU usage with tools like `rocm-smi` if needed:
+   ```bash
+   docker exec -ti rocm54_rvcwebui bash rocm-smi
+   
