@@ -42,7 +42,7 @@ This folder (`rocm_5.4`) contains the following files for setting up RVC with RO
 Working with ROCm on older AMD GPUs like the RX580 (gfx803 / Polaris) presents unique challenges due to limited official support in newer versions. Below are key takeaways and experiences from this project that may help others working on similar setups:
 
 1. **Base Image Selection is Critical**: Start with a compatible ROCm base image (e.g., `rocm/dev-ubuntu-22.04:5.4.2-complete`) that matches the Ubuntu and Python versions required for ROCm. This ensures essential drivers and libraries are correctly installed.
-2. **Hardware Support Limitations**: Official ROCm support for gfx803 ends at specific versions (e.g., 5.7 or earlier). Using versions beyond this can lead to compatibility issues, missing kernels, or low-level errors like `invalid device function` or `segfault in libamdhip64.so`.
+2. **Hardware Support Limitations**: Official ROCm support for gfx803 ends at specific versions (e.g., 4.5 or earlier). Using versions beyond this can lead to compatibility issues, missing kernels, or low-level errors like `invalid device function` or `segfault in libamdhip64.so`.
 3. **Official PyTorch ROCm Wheels May Be Misleading**: Wheels from `download.pytorch.org/whl/rocmX.Y` are often optimized for newer architectures and may not support older GPUs. If `torch.cuda.is_available()` returns `True` but runtime errors occur (e.g., `HIP error: invalid device function`), the wheels are likely incompatible.
 4. **Source Compilation for PyTorch is Often Necessary**: For older hardware, compiling PyTorch from source with `PYTORCH_ROCM_ARCH=gfx803` ensures the correct kernels are built. While time-consuming, this is the most reliable way to achieve compatibility.
 5. **Kernel Version Matters**: The host system's Linux kernel version can affect ROCm driver compatibility, especially with newer ROCm versions. Ensure your kernel matches versions listed as "supported" in ROCm documentation.
@@ -87,7 +87,6 @@ To help users visualize the interface, below are placeholders for screenshots. T
 - **Screenshot 3**: Audio Conversion Result (`screenshots/screenshot3.png`)
 - ![Audio Conversion Result](screenshots/screenshot1.png)
 
-*Note*: Screenshots are not included in this README yet. They will be added in future updates. If you wish to contribute screenshots, please upload them to this repository and update the paths above.
 
 ### File Paths in RVC Interface
 
