@@ -169,7 +169,7 @@ Benchmarks for ComfyUI moved to [Wiki](https://github.com/robertrosenbusch/gfx80
 
 ----
 
-## RVC WebUI with ROCm 5.4.2 for gfx803 (AMD RX580 / Polaris GPUs)
+## RVC WebUI
 
 ### ROCm-5.4.2: Used Docker Components for RVC WebUI
 - **Exposed RVC WebUI Port**: 7865
