@@ -141,9 +141,9 @@ RUN python3 -m venv venv && \
 ### Create a best practice Shell Script to start WhisperX
 RUN touch whisp.sh && \
     echo "#!/bin/bash" > whisp.sh && \
-    echo "./venv/bin/python3 app.py --whisper_type faster-whisper --share --server_name 0.0.0.0 --server_port ${WHISPERX_GUI_PORT}" > whisp.sh && \
+    echo "./venv/bin/python3 app.py --whisper_type faster-whisper --share --server_name 0.0.0.0 --server_port ${WHISPERX_GUI_PORT}" >> whisp.sh && \
     chmod +x whisp.sh && \
     true    
 
 EXPOSE ${WHISPERX_GUI_PORT}
-ENTRYPOINT ["/Whisper-WebUI/whisp.sh"]
+ENTRYPOINT ["/bin/bash", "/Whisper-WebUI/whisp.sh"]
