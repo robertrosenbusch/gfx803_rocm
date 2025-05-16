@@ -15,11 +15,6 @@ I also extend my heartfelt thanks to the **RVC-Project Team** for developing the
 This project provides a Docker-based setup for running the **Retrieval-based-Voice-Conversion-WebUI (RVC)** with **ROCm 5.4.2** support on older AMD GPUs like the **RX580 (gfx803 / Polaris)**. The goal is to enable machine learning workloads, specifically voice conversion, on hardware with limited or discontinued official ROCm support. This repository contains Dockerfiles and scripts to build and run the RVC WebUI, leveraging custom-compiled PyTorch for ROCm compatibility.
 
 This `README.md` summarizes the setup process, shares key experiences and challenges encountered while working with ROCm on older hardware, and provides instructions for building, running, and using the RVC application.
-## Overview
-
-This project provides a Docker-based setup for running the **Retrieval-based-Voice-Conversion-WebUI (RVC)** with **ROCm 5.4.2** support on older AMD GPUs like the **RX580 (gfx803 / Polaris)**. The goal is to enable machine learning workloads, specifically voice conversion, on hardware with limited or discontinued official ROCm support. This repository contains Dockerfiles and scripts to build and run the RVC WebUI, leveraging custom-compiled PyTorch for ROCm compatibility.
-
-This `README.md` summarizes the setup process, shares key experiences and challenges encountered while working with ROCm on older hardware, and provides instructions for building, running, and using the RVC application.
 
 ---
 
