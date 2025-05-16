@@ -1,7 +1,5 @@
 # ROCm 5.4.2 Support for RVC WebUI on gfx803 (AMD RX580 / Polaris GPUs)
 
-![Project Banner](screenshots/banner.png) <!-- Optional: Add a banner or logo if desired -->
-
 **Created and Compiled by Levent Sunay (lsunay) - May 2025**
 
 ## Acknowledgments
@@ -10,11 +8,7 @@ Before diving into the details, I would like to express my sincere gratitude to 
  
 I also extend my heartfelt thanks to the **RVC-Project Team** for developing the amazing **Retrieval-based-Voice-Conversion-WebUI (RVC)**. Their open-source work has been the cornerstone of this project, enabling voice conversion capabilities on AMD GPUs with ROCm support. You can explore their repository and learn more about their innovative work at [https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI](https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI/tree/main).
 
-## Overview
 
-This project provides a Docker-based setup for running the **Retrieval-based-Voice-Conversion-WebUI (RVC)** with **ROCm 5.4.2** support on older AMD GPUs like the **RX580 (gfx803 / Polaris)**. The goal is to enable machine learning workloads, specifically voice conversion, on hardware with limited or discontinued official ROCm support. This repository contains Dockerfiles and scripts to build and run the RVC WebUI, leveraging custom-compiled PyTorch for ROCm compatibility.
-
-This `README.md` summarizes the setup process, shares key experiences and challenges encountered while working with ROCm on older hardware, and provides instructions for building, running, and using the RVC application.
 ## Overview
 
 This project provides a Docker-based setup for running the **Retrieval-based-Voice-Conversion-WebUI (RVC)** with **ROCm 5.4.2** support on older AMD GPUs like the **RX580 (gfx803 / Polaris)**. The goal is to enable machine learning workloads, specifically voice conversion, on hardware with limited or discontinued official ROCm support. This repository contains Dockerfiles and scripts to build and run the RVC WebUI, leveraging custom-compiled PyTorch for ROCm compatibility.
@@ -159,6 +153,59 @@ The `entrypoint_rvc.sh` script plays a critical role in preparing the container'
 - **Starting the RVC Server**: Launches the RVC WebUI server using `infer-web.py` (or `run.sh` if available) on the specified port (default: 7865), making the web interface accessible.
 
 This script ensures that even if models are not included in the Docker image (to keep the image size small), they are available at runtime through volume mounts or automatic download.
+
+### Running the Docker Container
+
+To run the RVC WebUI container with GPU access and persistent storage for models, weights, logs, and cache data, use the following command:
+
+```bash  
+  docker run -d \
+  --name rocm54_rvcwebui \
+  --device=/dev/kfd --device=/dev/dri --group-add video \
+  -e HSA_OVERRIDE_GFX_VERSION=8.0.3 \
+  -e PYTORCH_ROCM_ARCH=gfx803 \
+  -e RVC_PORT=7865 \
+  -p 7865:7865 \
+  -v /home/levent/rvc_training_data:/datasets \
+  -v /virt-machines/dockerdata/rvc_rocm_data/assets:/app/assets \
+  -v /virt-machines/dockerdata/rvc_rocm_data/weights:/app/weights \
+  -v /virt-machines/dockerdata/rvc_rocm_data/logs:/app/logs \
+  -v /virt-machines/dockerdata/applio_rocm/huggingface_cache:/root/.cache/huggingface \
+  -e HUGGINGFACE_HUB_CACHE="/root/.cache/huggingface" \
+  -v /virt-machines/dockerdata/applio_rocm/torch_cache:/root/.cache/torch \
+  -e TORCH_HOME="/root/.cache/torch" \
+  -v /virt-machines/dockerdata/applio_rocm/general_cache:/root/.cache \
+  -e XDG_CACHE_HOME="/root/.cache" \
+  rvc_webui_rocm:5.4.2
+```
+
+#### Explanation of Volume Mounts and Parameters
+
+- **`--device=/dev/kfd` and `--device=/dev/dri`**: Grants the container access to the AMD GPU kernel driver and rendering interface for ROCm support.
+- **`--group-add video`**: Adds the container user to the necessary group for GPU access (may already be handled if running as root).
+- **`-e HSA_OVERRIDE_GFX_VERSION=8.0.3` and `-e PYTORCH_ROCM_ARCH=gfx803`**: Sets environment variables to ensure ROCm compatibility with gfx803 architecture.
+- **`-e RVC_PORT=7865` and `-p 7865:7865`**: Configures and maps the container's port 7865 (default RVC port) to the host's port 7865, allowing access to the web interface at `http://localhost:7865`.
+- **`-v /home/levent/rvc_training_data:/datasets`**: Mounts a host directory for training datasets. Use `/datasets/...` paths in the RVC interface for training data.
+- **`-v /virt-machines/dockerdata/rvc_rocm_data/assets:/app/assets`**: Mounts a host directory to store pre-trained models persistently. This ensures models are not re-downloaded on container restarts.
+- **`-v /virt-machines/dockerdata/rvc_rocm_data/weights:/app/weights`**: Mounts a host directory for RVC weights or processed data, critical for saving trained or processed data across container runs.
+- **`-v /virt-machines/dockerdata/rvc_rocm_data/logs:/app/logs`**: Mounts a host directory for RVC logs, useful for debugging and tracking training processes.
+- **`-v ...:/root/.cache/...` and `-e ...`**: Mounts and sets environment variables for various cache directories (Hugging Face, Torch, general cache) to persist model downloads and intermediate data on the host, reducing redundant downloads and improving performance.
+
+*Note*: Ensure the host paths for volumes exist before running the container. Create them with `mkdir -p /path/to/host/directory` if needed. Adjust paths in the `docker run` command to match your host system's directory structure.
+
+#### Additional Setup for ROCm on Linux
+
+To use ROCm on Linux, ensure all required drivers are installed as described in the official AMD ROCm documentation (refer to [AMD ROCm Installation Guide](https://docs.amd.com/)). You might also need to set the following environment variables on your host system before running the container (or include them in the `docker run` command as shown above):
+
+export ROCM_PATH=/opt/rocm
+export HSA_OVERRIDE_GFX_VERSION=8.0.3
+
+Make sure your user is part of the `render` and `video` groups to access GPU resources:
+
+sudo usermod -aG render $USERNAME
+sudo usermod -aG video $USERNAME
+
+*Note*: Replace `$USERNAME` with your actual username on the host system. These commands ensure proper permissions for GPU access, which is essential for ROCm functionality. If running the container as root or with appropriate Docker configurations, these group settings may already be handled.
 
 ### Logging Build Errors for Debugging
 
