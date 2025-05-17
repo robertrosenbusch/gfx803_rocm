@@ -69,37 +69,37 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 
 ### ROCm-6.4.0: Build/Install Baseimage for GFX803 to do some fancy AI Stuff
 1. Checkout this GIT repo via `git clone https://github.com/robertrosenbusch/gfx803_rocm.git` and change into the directory `gfx803_rocm`
-2. Build the GFX803-Base-Docker-Image docker `build -f Dockerfile_rocm64_base . -t 'rocm6_gfx803_base:6.4`
+2. Build the GFX803-Base-Docker-Image `docker build -f Dockerfile_rocm64_base . -t 'rocm6_gfx803_base:6.4'`
 
 ---
 ## Ollama
 
 ### ROCm-6.4.0: Used Docker Components for Ollama v0.6.(x) and OpenWebui on RX5(x)0/GFX803
 * Exposed Ports: 8080,11434
-* Ollama : [v0.6.8](https://github.com/ollama/ollama/releases/tag/v0.6.8)
+* Ollama : [v0.7.0](https://github.com/ollama/ollama/releases/tag/v0.7.0)
 * OpenWebui-GUI [latest](https://github.com/open-webui/open-webui.git)
 * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
 
-### ROCm-6.3.4: Build/Install Ollama v0.6.(x) and Open-Webui on RX5(x)0/GFX803
+### ROCm-6.3.4: Build/Install Ollama v0.7.(x) and Open-Webui on RX5(x)0/GFX803
 > [!NOTE]
 > You should have at least 8 GB of VRAM available to run up to 7B models, and two GFX803 cards to run the 13B models
 
 0. build the Docker Baseimage from this GITRepo for gfx803 first.  
-1. Build the Docker Image for Ollama, it takes aroud 60 Minutes: `docker build -f Dockerfile_rocm634_ollama . -t 'rocm634_gfx803_ollama:0.6.8'`
-2. Start the container via `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434  --name rocm634_ollama_068 rocm634_gfx803_ollama:0.6.8 bash`
+1. Build the Docker Image for Ollama, it takes aroud 60 Minutes: `docker build -f Dockerfile_rocm64_ollama . -t 'rocm634_gfx803_ollama:0.7.0'`
+2. Start the container via `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434  --name rocm634_ollama_070 rocm634_gfx803_ollama:0.7.0 bash`
 3. Enter to the Dockercontainer `docker exec -ti rocm634_ollama_068 bash`
 4. [download a model](https://ollama.com/search) you need for e.g. `./ollama run deepseek-r1:1.5b`
 5. Open your Webbrowser `http://YOUR_LOCAL_IP:8080` to use Open-WebUI
 6. If you wanna use e.g. VSCode or Open-WebUI from outside, the Port 11434 is exposed too.
 7. For Benchmark your downloaded Models use `python3 /llm-benchmark/benchmark.py` inside the container
 
-### ROCm-6.3.4: Benchmark Ollama v0.6.(x) on RX570 
-Benchmarks for Ollama moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/ROCm-6.3.4-Ollama-Benchmarks)
+### ROCm-6.4.0: Benchmark Ollama v0.6.(x)/ v0.7.(x) on RX570 
+Benchmarks for Ollama moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/ROCm-6.4.0-Ollama-Benchmarks)
 
 ---
 ## ComfyUI
 
-### ROCm-6.3.4: Used Docker Components for ComfyUI
+### ROCm-6.4.0: Used Docker Components for ComfyUI
 * Exposed ComfyUI GUI Port: 8188
 * PyTorch GIT: [v2.6.0](https://github.com/ROCm/pytorch/tree/release/2.6)
 * Torchvison GIT: [v0.21.0](https://github.com/pytorch/vision/releases/tag/v0.21.0)
@@ -108,7 +108,7 @@ Benchmarks for Ollama moved to [Wiki](https://github.com/robertrosenbusch/gfx803
 * ComfyUI Manager: [latest](https://github.com/ltdrdata/ComfyUI-Manager.git)
 
 
-### ROCm-6.3.4: Build/Install ComfyUI on RX5(x)0/GFX803
+### ROCm-6.4.0: Build/Install ComfyUI on RX5(x)0/GFX803
 > [!WARNING]  
 > It takes a _lot_ of time and Storage space to compile. Around 50 GByte Storage and 2.5 hours to (re-)compile. Keep your head up. Its worth!
 
@@ -117,10 +117,10 @@ Benchmarks for Ollama moved to [Wiki](https://github.com/robertrosenbusch/gfx803
 > 2. Since PyTorch 2.4 you have to use the _`MIOPEN_LOG_LEVEL=3`_ Environment-Var to surpress HipBlas-Warnings. *Dont know why* ...
 
 0. build the Docker Baseimage from this GITRepo for gfx803 first. 
-1. build your Docker image via `docker build -f Dockerfile_rocm634_comfyui . -t 'rocm634_gfx803_comfyui:latest'`
-2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8188:8188 -v /YOUR_LOCAL_COMFYUI_MODELS/:/comfy/ --name rocm634_comfyui rocm634_gfx803_comfyui:latest /bin/bash`
+1. build your Docker image via `docker build -f Dockerfile_rocm64_comfyui . -t 'rocm64_gfx803_comfyui:latest'`
+2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8188:8188 -v /YOUR_LOCAL_COMFYUI_MODELS/:/comfy/ --name rocm64_comfyui rocm64_gfx803_comfyui:latest /bin/bash`
 4. Open your Webbrowser `http://YOUR_LOCAL_IP:11434` to use ComfyUI
-5. Enter to the Dockercontainer `docker exec -ti rocm634_gfx803_comfyui:latest bash` and Download your Modelstuff or SymLink it from `/comfy` 
+5. Enter to the Dockercontainer `docker exec -ti rocm64_gfx803_comfyui:latest bash` and Download your Modelstuff or SymLink it from `/comfy` 
 6. You will find the GFX803/Polaris compiled Python-Wheel-Files inside into the `/pytorch/dist`, `/vision/dist` and `/audio/dist` Directory.
 
 
@@ -130,12 +130,12 @@ Benchmarks for ComfyUI moved to [Wiki](https://github.com/robertrosenbusch/gfx80
 ---
 ## PyTorch
 
-### ROCm-6.3.4: Used Docker Components for PyTorch,TorchVision and TorchAudio on RX5(x)0/GFX803
+### ROCm-6.4.0: Used Docker Components for PyTorch,TorchVision and TorchAudio on RX5(x)0/GFX803
 * PyTorch GIT: [v2.6.0](https://github.com/ROCm/pytorch/tree/release/2.6)
 * Torchvison GIT: [v0.21.0](https://github.com/pytorch/vision/releases/tag/v0.21.0)
 * TorchAudio GIT: [v2.6.0](https://github.com/pytorch/audio/releases/tag/v2.6.0)
 
-### ROCm-6.3.4: Build/Install PyTorch, TorchVision and TorchAudio on RX5(x)0/GFX803
+### ROCm-6.4.0: Build/Install PyTorch, TorchVision and TorchAudio on RX5(x)0/GFX803
 > [!WARNING]  
 > It takes a _lot_ of time and Storage space to compile. Around 40 GByte Storage and 2 hours to (re-)compile. Keep your head up. Its worth!
 
