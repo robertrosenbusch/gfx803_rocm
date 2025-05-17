@@ -10,8 +10,8 @@ into a Docker based on the same AMD-ROCm Stack.
 
 # Quick links
 - **General** [hints on GFX803 and about Motivations](#motivation). You should read it. it could save lifetime.
-- **DockerBase** GFX803|[Docker-Components](#rocm-634-used-docker-components-for-baseimage-on-rx5x0gfx803) | [Install](#rocm-634-buildinstall-baseimage-for-gfx803-to-do-some-fancy-ai-stuff)
-- **Ollama** GFX803 |[Docker-Components](#rocm-634-used-docker-components-for-ollama-v06x-and-openwebui-on-rx5x0gfx803) | [Install](#rocm-634-buildinstall-ollama-v06x-and-open-webui-on-rx5x0gfx803)[Benchmark](#rocm-634-benchmark-ollama-v06x-on-rx570) |
+- **DockerBase** GFX803|[Docker-Components](#rocm-640-used-docker-components-for-baseimage-on-rx5x0gfx803) | [Install](#rocm-640-buildinstall-baseimage-for-gfx803-to-do-some-fancy-ai-stuff)
+- **Ollama** GFX803 |[Docker-Components](#rocm-640-used-docker-components-for-ollama-v06x-and-openwebui-on-rx5x0gfx803) | [Install](#rocm-640-buildinstall-ollama-v07x-and-open-webui-on-rx5x0gfx803)[Benchmark](#rocm-640-benchmark-ollama-v06x-v07x-on-rx570) |
 - **ComfyUi** on PyTorch GFX803 | [Docker-Components](#rocm-634-used-docker-components-for-comfyui) | [Install](#rocm-634-buildinstall-comfyui-on-rx5x0gfx803)[Benchmark](#rocm-630-comfyui-benchmark-on-rx570rx590)|
 - **PyTorch** GFX803 |[Docker-Components](#rocm-634-used-docker-components-for-pytorchtorchvision-and-torchaudio-on-rx5x0gfx803)|[Install](#rocm-634-buildinstall-pytorch-torchvision-and-torchaudio-on-rx5x0gfx803)
 - **WhsiperX** on PyTorch GFX803 | [Docker-Components](#rocm-634-used-docker-components-for-whisperx) | [Install](#rocm-634-buildinstall-whisperx-on-rx5x0gfx803)
@@ -80,14 +80,14 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 * OpenWebui-GUI [latest](https://github.com/open-webui/open-webui.git)
 * Interactive LLM-Benchmark for Ollama: [latest](https://github.com/willybcode/llm-benchmark.git)
 
-### ROCm-6.3.4: Build/Install Ollama v0.7.(x) and Open-Webui on RX5(x)0/GFX803
+### ROCm-6.4.0: Build/Install Ollama v0.7.(x) and Open-Webui on RX5(x)0/GFX803
 > [!NOTE]
 > You should have at least 8 GB of VRAM available to run up to 7B models, and two GFX803 cards to run the 13B models
 
 0. build the Docker Baseimage from this GITRepo for gfx803 first.  
-1. Build the Docker Image for Ollama, it takes aroud 60 Minutes: `docker build -f Dockerfile_rocm64_ollama . -t 'rocm634_gfx803_ollama:0.7.0'`
-2. Start the container via `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434  --name rocm634_ollama_070 rocm634_gfx803_ollama:0.7.0 bash`
-3. Enter to the Dockercontainer `docker exec -ti rocm634_ollama_068 bash`
+1. Build the Docker Image for Ollama, it takes aroud 60 Minutes: `docker build -f Dockerfile_rocm64_ollama . -t 'rocm64_gfx803_ollama:0.7.0'`
+2. Start the container via `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -p 8080:8080 -p 11434:11434  --name rocm64_ollama_070 rocm64_gfx803_ollama:0.7.0 bash`
+3. Enter to the Dockercontainer `docker exec -ti rocm64_ollama_070 bash`
 4. [download a model](https://ollama.com/search) you need for e.g. `./ollama run deepseek-r1:1.5b`
 5. Open your Webbrowser `http://YOUR_LOCAL_IP:8080` to use Open-WebUI
 6. If you wanna use e.g. VSCode or Open-WebUI from outside, the Port 11434 is exposed too.
@@ -140,8 +140,8 @@ Benchmarks for ComfyUI moved to [Wiki](https://github.com/robertrosenbusch/gfx80
 > It takes a _lot_ of time and Storage space to compile. Around 40 GByte Storage and 2 hours to (re-)compile. Keep your head up. Its worth!
 
 0. build the Docker Baseimage from this GITRepo for gfx803 first. 
-1. build your Docker image via `docker build -f Dockerfile_rocm634_pytorch . -t 'rocm634_gfx803_pytorch:2.6'` 
-2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --name rocm643_pytorch_26 rocm634_gfx803_pytorch:2.6 bash`
+1. build your Docker image via `docker build -f Dockerfile_rocm64_pytorch . -t 'rocm64_gfx803_pytorch:2.6'` 
+2. start the container via: `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --name rocm64_pytorch_26 rocm64_gfx803_pytorch:2.6 bash`
 3. to confirm your gfx803 working right use [a script like this one](https://github.com/robertrosenbusch/gfx803_rocm/issues/13#issuecomment-2755478167).
 
 ---
@@ -162,9 +162,9 @@ Benchmarks for ComfyUI moved to [Wiki](https://github.com/robertrosenbusch/gfx80
 > Beware you only use Models who fits into your GPU-VRAM
 
 0. build the Docker Baseimage from this GITRepo for gfx803 first.
-1. Build the Docker Image for WhisperX, it takes aroud 2,5 hours: `docker build -f Dockerfile_rocm634_whisperx . -t 'rocm634_gfx803_whisperx:latest'`
+1. Build the Docker Image for WhisperX, it takes aroud 2,5 hours: `docker build -f Dockerfile_rocm64_whisperx . -t 'rocm64_gfx803_whisperx:latest'`
 2. Open your Webbrowser `http://YOUR_LOCAL_IP:7860` to use WhisperX-WebUI and Download a tiny/small/default LLVM to transcribe
-3. Enter to the Dockercontainer `docker exec -ti rocm634_gfx803_whisperx:latest bash` and use `amdgpu_top` to monitor your GPU
+3. Enter to the Dockercontainer `docker exec -ti rocm64_gfx803_whisperx:latest bash` and use `amdgpu_top` to monitor your GPU
 
 
 
