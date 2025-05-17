@@ -11,10 +11,10 @@ into a Docker based on the same AMD-ROCm Stack.
 # Quick links
 - **General** [hints on GFX803 and about Motivations](#motivation). You should read it. it could save lifetime.
 - **DockerBase** GFX803|[Docker-Components](#rocm-640-used-docker-components-for-baseimage-on-rx5x0gfx803) | [Install](#rocm-640-buildinstall-baseimage-for-gfx803-to-do-some-fancy-ai-stuff)
-- **Ollama** GFX803 |[Docker-Components](#rocm-640-used-docker-components-for-ollama-v06x-and-openwebui-on-rx5x0gfx803) | [Install](#rocm-640-buildinstall-ollama-v07x-and-open-webui-on-rx5x0gfx803)[Benchmark](#rocm-640-benchmark-ollama-v06x-v07x-on-rx570) |
-- **ComfyUi** on PyTorch GFX803 | [Docker-Components](#rocm-634-used-docker-components-for-comfyui) | [Install](#rocm-634-buildinstall-comfyui-on-rx5x0gfx803)[Benchmark](#rocm-630-comfyui-benchmark-on-rx570rx590)|
+- **Ollama** GFX803 |[Docker-Components](#rocm-640-used-docker-components-for-ollama-v06x-and-openwebui-on-rx5x0gfx803) | [Install](#rocm-640-buildinstall-ollama-v07x-and-open-webui-on-rx5x0gfx803)|[Benchmark](#rocm-640-benchmark-ollama-v06x-v07x-on-rx570) |
+- **ComfyUi** on PyTorch GFX803 | [Docker-Components](#rocm-634-used-docker-components-for-comfyui) | [Install](#rocm-634-buildinstall-comfyui-on-rx5x0gfx803)|[Benchmark](#rocm-630-comfyui-benchmark-on-rx570rx590)|
 - **PyTorch** GFX803 |[Docker-Components](#rocm-634-used-docker-components-for-pytorchtorchvision-and-torchaudio-on-rx5x0gfx803)|[Install](#rocm-634-buildinstall-pytorch-torchvision-and-torchaudio-on-rx5x0gfx803)
-- **WhsiperX** on PyTorch GFX803 | [Docker-Components](#rocm-634-used-docker-components-for-whisperx) | [Install](#rocm-634-buildinstall-whisperx-on-rx5x0gfx803)
+- **WhsiperX** on PyTorch GFX803 | [Docker-Components](#rocm-640-used-docker-components-for-whisperx) | [Install](#rocm-640-buildinstall-whisperx-on-rx5x0gfx803)
 
 
 ## Motivation
@@ -147,7 +147,7 @@ Benchmarks for ComfyUI moved to [Wiki](https://github.com/robertrosenbusch/gfx80
 ---
 ## WhisperX
 
-### ROCm-6.3.4: Used Docker Components for WhisperX
+### ROCm-6.4.0: Used Docker Components for WhisperX
 * Exposed WhisperX GUI Port: 7860
 * PyTorch GIT: [v2.6.0](https://github.com/ROCm/pytorch/tree/release/2.6)
 * Torchvison GIT: [v0.21.0](https://github.com/pytorch/vision/releases/tag/v0.21.0)
@@ -156,7 +156,7 @@ Benchmarks for ComfyUI moved to [Wiki](https://github.com/robertrosenbusch/gfx80
 * WhisperX WebUI: [latest](https://github.com/jhj0517/Whisper-WebUI.git)
 
 
-### ROCm-6.3.4: Build/Install WhisperX on RX5(x)0/GFX803
+### ROCm-6.4.0: Build/Install WhisperX on RX5(x)0/GFX803
 > [!NOTE]
 > It takes a lot of time to (re)-compile all this Stuff for your GFX803 Card (around 3 hrs)
 > Beware you only use Models who fits into your GPU-VRAM
