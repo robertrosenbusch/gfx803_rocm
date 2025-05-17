@@ -1,11 +1,13 @@
-# Docker Buildfile for ROCm 6.3 to recompile PyTorch/Torchvision/Torchaudio 
-# use a RX5(x)0 / Polaris / gfx803 AMD GPU with ROCm 6.3
+# Docker Buildfile for ROCm 6.4 to recompile PyTorch/Torchvision/Torchaudio 
+# use a RX5(x)0 / Polaris / gfx803 AMD GPU with ROCm 6.4
 # created, build and compiled by Robert Rosenbusch at April 2025
 
-### Build rocm64_gfx803_base:6.3.4 first! Read the README.md, it could save lifetime :P
-FROM rocm6_gfx803_base:6.3.4
+### Build rocm6_gfx803_base:6.4 first! Read the README.md, it could save lifetime :P
+FROM rocm6_gfx803_base:6.4
 
-ENV DEBIAN_FRONTEND=noninteractive \
+SHELL ["/bin/bash", "-c"]  
+ENV WHISPERX_GUI_PORT=7860 \
+    DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
     PYTHONENCODING==UTF-8 \
     REQS_FILE='requirements.txt' \

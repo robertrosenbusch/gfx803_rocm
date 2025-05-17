@@ -1,9 +1,9 @@
-# Docker Buildfile for ROCm 6.3.4 for Whisper-WebUI/whisperX/CTranslate2-rocm 
-# use a RX5(x)0 / Polaris / gfx803 AMD GPU with ROCm 6.3.4
+# Docker Buildfile for ROCm 6.4 for Whisper-WebUI/whisperX/CTranslate2-rocm 
+# use a RX5(x)0 / Polaris / gfx803 AMD GPU with ROCm 6.4
 # created, build and compiled by Robert Rosenbusch at December 2024 / May 2025
 
-### Build rocm64_gfx803_base:6.3.4 first! Read the README.md, it could save lifetime :P
-FROM rocm6_gfx803_base:6.3.4
+### Build rocm64_gfx803_base:6.4 first! Read the README.md, it could save lifetime :P
+FROM rocm6_gfx803_base:6.4
 
 SHELL ["/bin/bash", "-c"]  
 ENV WHISPERX_GUI_PORT=7860 \
@@ -139,13 +139,11 @@ RUN python3 -m venv venv && \
     true    
 
 ### Create a best practice Shell Script to start WhisperX
-SHELL ["/bin/bash", "-c"]  
 RUN touch whisp.sh && \
-    echo '#!/bin/bash' > whisp.sh && \
-    echo "MIOPEN_LOG_LEVEL=3 ./venv/bin/python3 app.py --whisper_type faster-whisper --share --server_name 0.0.0.0 --server_port ${WHISPERX_GUI_PORT}" >> whisp.sh && \
+    echo "#!/bin/bash" > whisp.sh && \
+    echo "./venv/bin/python3 app.py --whisper_type faster-whisper --share --server_name 0.0.0.0 --server_port ${WHISPERX_GUI_PORT}" >> whisp.sh && \
     chmod +x whisp.sh && \
     true    
 
 EXPOSE ${WHISPERX_GUI_PORT}
-ENTRYPOINT ["/Whisper-WebUI/whisp.sh"]
-
+ENTRYPOINT ["/bin/bash", "/Whisper-WebUI/whisp.sh"]
