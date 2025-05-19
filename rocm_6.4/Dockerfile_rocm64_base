@@ -59,7 +59,7 @@ RUN export OLLAMA_HOST=${OLLAMA_HOST} && \
   
 ## Update System and install golang for ollama and python virtual Env
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends virtualenv google-perftools golang git python3-venv cmake wget ffmpeg python3 && \
+    apt-get install -y --no-install-recommends virtualenv google-perftools golang git python3-venv cmake wget ffmpeg python3 curl && \
     # for Ollama and WhsiperX
     apt-get install -y --no-install-recommends libomp-dev libopenblas-dev &&\
     # optional stuff to debug and made your docker experience more efficiency :P
