@@ -17,6 +17,7 @@ ENV COMMANDLINE_ARGS='' \
     USE_ROCM=1 \ 
     USE_NINJA=1 \
     FORCE_CUDA=1 \ 
+    JOBLIB_START_METHOD=thread \
     #TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1 \
     #PYTORCH_TUNABLEOP_ENABLED=1 \
 #######
@@ -39,6 +40,7 @@ RUN echo OLLAMA_HOST=${OLLAMA_HOST} >> /etc/environment && \
     echo USE_ROCM=${USE_ROCM} >> /etc/environment && \
     echo USE_NINJA=${USE_NINJA} >> /etc/environment && \
     echo FORCE_CUDA=${FORCE_CUDA} >> /etc/environment && \
+    echo JOBLIB_START_METHOD=${JOBLIB_START_METHOD} >> /etc/environment && \
     echo PIP_ROOT_USER_ACTION=${PIP_ROOT_USER_ACTION} >> /etc/environment && \
     true
 
@@ -54,6 +56,7 @@ RUN export OLLAMA_HOST=${OLLAMA_HOST} && \
     export USE_ROCM=${USE_ROCM}  && \
     export USE_NINJA=${USE_NINJA} && \
     export FORCE_CUDA=${FORCE_CUDA} && \
+    export JOBLIB_START_METHOD=${JOBLIB_START_METHOD} && \
     export PIP_ROOT_USER_ACTION=${PIP_ROOT_USER_ACTION} && \
     true
   
