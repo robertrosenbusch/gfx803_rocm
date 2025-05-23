@@ -1,4 +1,4 @@
-# Docker Buildfile for ROCm 6.4 to use Ollama v0.6.X with a RX570 / Polaris / gfx803 AMD GPU
+# Docker Buildfile for ROCm 6.4 to use Ollama v0.7.x/0.6.X and llama.cpp with a RX5(x)0 / Polaris / gfx803 AMD GPU
 # created, build and compiled by Robert Rosenbusch at May-April 2025
 # include llm-benchmnark and open-webui GUI
 
@@ -8,8 +8,10 @@ FROM rocm6_gfx803_base:6.4
 ENV OLLAMA_WEBGUI_PORT=8080 \
     OLLAMA_PORT=11434 \
     OLLAMA_HOST=0.0.0.0\
-    # To Install and enable ollama WEBUI "1", to disable change it to "0"
+    # To Install and enable ollama WEBUI set OLLAMA_WEBUI=1, to disable change it to "0"
     OLLAMA_WEBUI=1 \
+    # To Install LLama.cpp set LLAMA_CPP=1, to disable change it to "0"
+    LLAMA_CPP=1 \
     COMMANDLINE_ARGS='' 
 
 ## Checkout interactive LLM Benchmark for Ollama
