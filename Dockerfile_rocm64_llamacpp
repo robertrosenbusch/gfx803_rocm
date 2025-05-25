@@ -6,14 +6,14 @@ FROM rocm6_gfx803_base:6.4
 
 ENV COMMANDLINE_ARGS='' 
 
-## Checkout interactive LLM Benchmark for Ollama
+## Checkout LLama.cpp
 RUN echo "Checkout LLama.cpp:" && \
     git clone https://github.com/ggml-org/llama.cpp /llama.cpp  && \
     true 
 
 WORKDIR /llama.cpp
 
-
+## Compile LLama.cpp
 RUN HIPCXX="$(hipconfig -l)/clang" HIP_PATH="$(hipconfig -R)" cmake -S . -B build -DGGML_HIP=ON -DLLAMA_CURL=OFF -DAMDGPU_TARGETS=gfx803 -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release -- -j ${MAX_JOBS} && \
     true
 
