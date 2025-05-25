@@ -13,6 +13,7 @@ RUN echo "Checkout LLama.cpp:" && \
 
 WORKDIR /llama.cpp
 
+
 RUN HIPCXX="$(hipconfig -l)/clang" HIP_PATH="$(hipconfig -R)" cmake -S . -B build -DGGML_HIP=ON -DLLAMA_CURL=OFF -DAMDGPU_TARGETS=gfx803 -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release -- -j ${MAX_JOBS} && \
     true
 
