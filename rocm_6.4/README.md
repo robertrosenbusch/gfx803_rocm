@@ -74,7 +74,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 ---
 ## Ollama
 
-### ROCm-6.4.0: Used Docker Components for Ollama v0.7.(x) and OpenWebui on RX5(x)0/GFX803
+### ROCm-6.4.0: Used Docker Components for Ollama v0.6.(x) and OpenWebui on RX5(x)0/GFX803
 * Exposed Ports: 8080,11434
 * Ollama : [v0.7.0](https://github.com/ollama/ollama/releases/tag/v0.7.0)
 * OpenWebui-GUI [latest](https://github.com/open-webui/open-webui.git)
