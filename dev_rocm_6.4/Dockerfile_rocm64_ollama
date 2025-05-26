@@ -1,0 +1,64 @@
+# Docker Buildfile for ROCm 6.4 to use Ollama v0.7.x/0.6.X and llama.cpp with a RX5(x)0 / Polaris / gfx803 AMD GPU
+# created, build and compiled by Robert Rosenbusch at May-April 2025
+# include llm-benchmnark and open-webui GUI
+
+### Build rocm6_gfx803_base:6.4 first! Read the README.md, it could save lifetime :P
+FROM rocm6_gfx803_base:6.4
+
+ENV OLLAMA_WEBGUI_PORT=8080 \
+    OLLAMA_PORT=11434 \
+    OLLAMA_HOST=0.0.0.0\
+    # To Install and enable ollama WEBUI set OLLAMA_WEBUI=1, to disable change it to "0"
+    OLLAMA_WEBUI=1 \
+    # To Install LLama.cpp set LLAMA_CPP=1, to disable change it to "0"
+    LLAMA_CPP=1 \
+    COMMANDLINE_ARGS='' 
+
+## Checkout interactive LLM Benchmark for Ollama
+RUN git clone https://github.com/willybcode/llm-benchmark.git /llm-benchmark && \
+    true 
+
+WORKDIR /llm-benchmark
+RUN pip install -r requirements.txt --break-system-packages && \
+    sed -i 's/return \[model\["name"\] for model in models/return \[model\["model"\] for model in models/' benchmark.py&& \ 
+    sed -i 's/return OllamaResponse.model_validate(last_element)/return last_element/' benchmark.py &&\
+    true
+
+## Install Open WebUI    
+WORKDIR / 
+RUN if [[ $OLLAMA_WEBUI == "1" ]]; then echo "INSTALL OPEN-WEBUI";curl -LsSf https://astral.sh/uv/install.sh | sh; pip install open-webui --break-system-packages; else echo "NO OPEN-WEBUI"; fi &&\
+    true
+ 
+## Checkout Ollama
+ENV OLLAMA_GIT_VERSION="v0.7.1"
+RUN echo "Checkout OLLAMA: ${OLLAMA_GIT_VERSION}" && \
+    git clone https://github.com/ollama/ollama.git -b ${OLLAMA_GIT_VERSION} /ollama && \
+    true
+
+## Replace gfx803 on Ollama    
+WORKDIR /ollama
+RUN echo "REPLACE Ollama Source for gfx803"  && \
+    sed -i 's/var RocmComputeMajorMin = "9"/var RocmComputeMajorMin = "8"/' discover/gpu.go && \
+    sed -i 's/find_package(hip REQUIRED)/#find_package(hip REQUIRED)/' CMakeLists.txt && \
+    true
+
+## Compile Ollama    
+RUN echo "BUILDING Ollama for gfx803" && \
+    cmake -B build -DAMDGPU_TARGETS="${ROCM_ARCH}" && \
+    cmake --build build && \    
+    go generate ./... && \
+    go build . && \
+    true
+
+### Create a best practice Shell Script to start Ollama
+RUN touch ol_serve.sh && \
+    echo "#!/bin/bash" > ol_serve.sh &&\
+    echo "export OLLAMA_HOST=${OLLAMA_HOST}" >> ol_serve.sh && \
+    if [[ $OLLAMA_WEBUI == "1" ]]; then echo "open-webui serve&" >> ol_serve.sh; echo "INSTALL OPEN-WEBUI"; else echo "NO OPEN-WEBUI installed"; fi &&\
+    echo "./ollama serve" >> ol_serve.sh && \
+    chmod +x ol_serve.sh && \
+    true
+
+EXPOSE ${OLLAMA_WEBGUI_PORT} ${OLLAMA_PORT}
+
+ENTRYPOINT ["/ollama/ol_serve.sh"]
