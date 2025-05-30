@@ -30,7 +30,7 @@ RUN if [[ $OLLAMA_WEBUI == "1" ]]; then echo "INSTALL OPEN-WEBUI";curl -LsSf htt
     true
  
 ## Checkout Ollama
-ENV OLLAMA_GIT_VERSION="v0.7.1"
+ENV OLLAMA_GIT_VERSION="v0.9.0"
 RUN echo "Checkout OLLAMA: ${OLLAMA_GIT_VERSION}" && \
     git clone https://github.com/ollama/ollama.git -b ${OLLAMA_GIT_VERSION} /ollama && \
     true
