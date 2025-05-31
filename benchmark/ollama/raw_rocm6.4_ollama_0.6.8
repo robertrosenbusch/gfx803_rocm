@@ -1,3 +1,15 @@
+| Model Name          | ROCm | Ollama | Prompt eval (t/s) | Response (t/s) | Total (t/s) | Prompt eval time (s) | Response time (s) | Total Time (s) |
+|---------------------|------|--------|-------------------|----------------|-------------|-----------------------|-------------------|----------------|
+| deepseek-r1:8b      | 6.4  | 0.6.8  | 276.07            | 17.98          | 18.15       | 0.08                  | 119.28            | 162.67         |
+| deepseek-r1:latest  | 6.4  | 0.6.8  | 338.86            | 18.07          | 18.19       | 0.06                  | 163.45            | 186.20         |
+| gemma3:4b           | 6.4  | 0.6.8  | 88.31             | 25.45          | 25.76       | 0.36                  | 72.77             | 78.01          |
+| llama2:7b           | 6.4  | 0.6.8  | 1104.01           | 26.52          | 27.81       | 0.05                  | 41.33             | 45.98          |
+| llama3.1:8b         | 6.4  | 0.6.8  | 510.33            | 18.40          | 18.83       | 0.07                  | 77.19             | 82.39          |
+| mistral:latest      | 6.4  | 0.6.8  | 156.99            | 25.41          | 25.77       | 0.16                  | 56.76             | 62.00          |
+| qwen2.5:latest      | 6.4  | 0.6.8  | 128.50            | 18.19          | 19.29       | 0.57                  | 56.41             | 76.40          |
+
+
+
 Verbose: False
 Use models: ['qwen2.5:latest', 'mistral:latest', 'llama3.1:8b', 'llama2:7b', 'gemma3:4b', 'deepseek-r1:latest', 'deepseek-r1:8b']
 Skip models: []
@@ -7,6 +19,10 @@ Running benchmark on all available models
 Average stats:
 
 ----------------------------------------------------
+        
+Average stats:
+
+---------------------------------------------------
         qwen2.5:latest
         	Prompt eval: 128.50 t/s
         	Response: 18.19 t/s
