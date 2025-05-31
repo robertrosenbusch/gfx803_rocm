@@ -49,9 +49,9 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 > [!CAUTION]
 > #### Prevent ROCm SegFaults on your Linux Distro
 > After some feedback/research from Users who are using the Dockercontainer from this GIT in [Ollama](https://github.com/robertrosenbusch/gfx803_rocm/issues/8#issue-2919996555) and [PyTorch/ComfyUI](https://github.com/robertrosenbusch/gfx803_rocm/issues/13#issuecomment-2754796999), cause the devices `/dev/dri` and  `/dev/kfd` crashed with SegFaults. Please proofe your used Linux-Kernel Version and switch up or down to a well known working Kernel-Version. Fedora 41, Arch and Debian 13 using (in April 2015) suspicious Linux-Kernel-Versions as default. On Kernelversion 6.12 its seems to be fixed on 6.12.
-> |Kernel Version|6.14|6.13|6.12|6.11|6.10|6.9|6.6|6.2|5.19|
-> |--------------|-----|-----|------|-----|------|-----|-----|-----|-----|
-> |working on ROCm 6.3.4/6.4.0 for Ollama/PyTorch|✅|🟥|🟥|✅|✅|✅|✅|✅|✅|
+> |Kernel Version|6.15|6.14|6.13|6.12|6.11|6.10|6.9|6.6|6.2|5.19|
+> |--------------|-----|-----|-----|------|-----|------|-----|-----|-----|-----|
+> |working on ROCm 6.3.4/6.4.0 for Ollama/PyTorch|🟥|✅|🟥|🟥|✅|✅|✅|✅|✅|✅|
 > An user on this GIT-Repo reported he had have success to use a Kernelversion above [6.12.21](https://github.com/robertrosenbusch/gfx803_rocm/issues/8#issuecomment-2820146489)
 
 ---
