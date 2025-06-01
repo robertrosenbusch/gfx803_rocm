@@ -12,7 +12,9 @@ ENV OLLAMA_WEBGUI_PORT=8080 \
     OLLAMA_WEBUI=1 \
     # To Install LLama.cpp set LLAMA_CPP=1, to disable change it to "0"
     LLAMA_CPP=1 \
-    COMMANDLINE_ARGS='' 
+    COMMANDLINE_ARGS='' \
+    # Sets the number of threads during compilation
+    MAX_JOBS=14
 
 ## Checkout interactive LLM Benchmark for Ollama
 RUN git clone https://github.com/willybcode/llm-benchmark.git /llm-benchmark && \
@@ -28,7 +30,7 @@ RUN pip install -r requirements.txt --break-system-packages && \
 WORKDIR / 
 RUN if [[ $OLLAMA_WEBUI == "1" ]]; then echo "INSTALL OPEN-WEBUI";curl -LsSf https://astral.sh/uv/install.sh | sh; pip install open-webui --break-system-packages; else echo "NO OPEN-WEBUI"; fi &&\
     true
- 
+
 ## Checkout Ollama
 ENV OLLAMA_GIT_VERSION="v0.9.0"
 RUN echo "Checkout OLLAMA: ${OLLAMA_GIT_VERSION}" && \
@@ -44,10 +46,10 @@ RUN echo "REPLACE Ollama Source for gfx803"  && \
 
 ## Compile Ollama    
 RUN echo "BUILDING Ollama for gfx803" && \
-    cmake -B build -DAMDGPU_TARGETS="${ROCM_ARCH}" && \
-    cmake --build build && \    
+    cmake -B build -DAMDGPU_TARGETS="${ROCM_ARCH}" \ 
+    cmake --build build -- -j${MAX_JOBS} && \
     go generate ./... && \
-    go build . && \
+    go build -p ${MAX_JOBS} . && \
     true
 
 ### Create a best practice Shell Script to start Ollama
