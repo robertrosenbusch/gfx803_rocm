@@ -10,11 +10,7 @@ ENV OLLAMA_WEBGUI_PORT=8080 \
     OLLAMA_HOST=0.0.0.0\
     # To Install and enable ollama WEBUI set OLLAMA_WEBUI=1, to disable change it to "0"
     OLLAMA_WEBUI=1 \
-    # To Install LLama.cpp set LLAMA_CPP=1, to disable change it to "0"
-    LLAMA_CPP=1 \
     COMMANDLINE_ARGS='' \
-    # Sets the number of threads during compilation
-    MAX_JOBS=14
 
 ## Checkout interactive LLM Benchmark for Ollama
 RUN git clone https://github.com/willybcode/llm-benchmark.git /llm-benchmark && \
