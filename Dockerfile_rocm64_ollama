@@ -46,7 +46,7 @@ RUN echo "REPLACE Ollama Source for gfx803"  && \
 
 ## Compile Ollama    
 RUN echo "BUILDING Ollama for gfx803" && \
-    cmake -B build -DAMDGPU_TARGETS="${ROCM_ARCH}" \ 
+    cmake -B build -DAMDGPU_TARGETS="${ROCM_ARCH}" && \ 
     cmake --build build -- -j${MAX_JOBS} && \
     go generate ./... && \
     go build -p ${MAX_JOBS} . && \
