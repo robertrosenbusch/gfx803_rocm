@@ -1,0 +1,99 @@
+# Docker Buildfile for ROCm 6.4 to recompile PyTorch/Torchvision/Torchaudio 
+# use a RX5(x)0 / Polaris / gfx803 AMD GPU with ROCm 6.4
+# created, build and compiled by Robert Rosenbusch at April 2025
+
+### Build rocm6_gfx803_base:6.4 first! Read the README.md, it could save lifetime :P
+FROM rocm6_gfx803_base:6.4_2204
+
+SHELL ["/bin/bash", "-c"]  
+ENV WHISPERX_GUI_PORT=7860 \
+    DEBIAN_FRONTEND=noninteractive \
+    PYTHONUNBUFFERED=1 \
+    PYTHONENCODING==UTF-8 \
+    REQS_FILE='requirements.txt' \
+    COMMANDLINE_ARGS='' \
+    PIP_ROOT_USER_ACTION='ignore' \
+    ### For your AMD GPU
+    PYTORCH_ROCM_ARCH=gfx803 
+    
+###########
+### Build PyTorch
+###########
+WORKDIR /    
+#ENV PYTORCH_GIT_VERSION="release/2.6"
+#ENV PYTORCH_GIT_VERSION="v2.0.1"
+#RUN echo "** Checkout PyTorch: ${PYTORCH_GIT_VERSION} **" && \  
+#    git clone --recursive https://github.com/ROCm/pytorch.git -b ${PYTORCH_GIT_VERSION} /pytorch && \
+#    true
+
+ENV PYTORCH_GIT_TAG="release/2.2"
+RUN echo "Checkout PyTorch Version: ${PYTORCH_GIT_TAG}" && \
+    git clone --depth 1 --recursive --branch ${PYTORCH_GIT_TAG} https://github.com/pytorch/pytorch.git /pytorch && \
+    true
+
+WORKDIR /pytorch
+ENV ROCM_PATH='/opt/rocm'
+
+RUN echo "** BUILDING PYTORCH *** " && \ 
+python3 --version && \
+# dpkg -r --force-depends python3-yaml python3-filelock || true &&
+mkdir -p /pytorch/dist && \
+python3 setup.py clean && \
+# Install PyTorch's own requirements.txt
+echo "Installing PyTorch build requirements from ${REQS_FILE}..." && \
+python3 -m pip install -r ${REQS_FILE} && \
+# ---- Re-pin NumPy version after requirements install ----
+echo "Re-pinning NumPy to 1.23.5 after PyTorch requirements install..." && \
+python3 -m pip install "numpy==1.23.5" --force-reinstall && \
+python3 -c "import numpy; print(f'NumPy version for PyTorch build: {numpy.__version__}')" && \
+# ---- End of NumPy pinning ----
+echo "Running amd_build.py..." && \
+python3 tools/amd_build/build_amd.py && \
+echo "Running setup.py bdist_wheel..." && \
+python3 setup.py bdist_wheel && \
+echo "Installing built PyTorch wheel..." && \
+python3 -m pip install dist/torch*.whl && \
+#    python3 --version && \
+#    dpkg -r --force-depends python3-yaml python3-filelock &&\
+#    mkdir -p /pytorch/dist && \
+#    python3 setup.py clean && \
+#    pip3 install -r ${REQS_FILE} && \
+#    python3 tools/amd_build/build_amd.py && \
+ #   python3 setup.py bdist_wheel && \
+#    pip3 install --break-system-packages dist/torch*.whl && \
+    true     
+
+###########
+### Build TorchVision
+###########
+ENV TORCH_GIT_VERSION="v0.15.2"
+RUN echo "** Checkout Torchvision Version: ${TORCH_GIT_VERSION} ** " && \ 
+   git clone https://github.com/pytorch/vision.git -b ${TORCH_GIT_VERSION} /vision && \
+   true
+
+WORKDIR /vision
+RUN echo "** BUILDING PYTORCH *** " && \ 
+    python3 setup.py bdist_wheel && \
+    pip install --break-system-packages  dist/torchvision-*.whl && \
+    mkdir -p /vision/dist && \
+    true
+
+###########
+### Build TorchAudio
+###########
+ENV TORCHAUDIO_GIT_VERSION="v2.0.2"
+RUN echo "** Checkout Torchaudio Version: ${TORCHAUDIO_GIT_VERSION} **" && \ 
+    git clone https://github.com/pytorch/audio.git -b ${TORCHAUDIO_GIT_VERSION} /audio && \
+    true
+
+WORKDIR /audio
+RUN echo "** BUILDING Torchaudio **" && \
+    python3 setup.py bdist_wheel && \
+    pip install --break-system-packages dist/*.whl && \
+    true 
+
+######
+# End of building pytorch and torchvision WHL-Files
+###########
+
+CMD ["/bin/bash","-c"]
