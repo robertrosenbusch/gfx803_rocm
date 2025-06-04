@@ -93,7 +93,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 6. If you wanna use e.g. VSCode or Open-WebUI from outside, the Port 11434 is exposed too.
 7. For Benchmark your downloaded Models use `python3 /llm-benchmark/benchmark.py` inside the container
 
-### ROCm-6.4.0: Benchmark Ollama v0.6.(x)/ v0.7.(x)/ v0.8.(x)/ v0.8.(x) on RX570 
+### ROCm-6.4.0: Benchmark Ollama v0.6.(x)/ v0.7.(x)/v0.8.(x)/v0.9.(x) on RX570 
 Benchmarks for Ollama moved to [Wiki](https://github.com/robertrosenbusch/gfx803_rocm/wiki/ROCm-6.4.0-Ollama-Benchmarks)
 
 ---
