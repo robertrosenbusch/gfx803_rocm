@@ -163,12 +163,9 @@ Benchmarks for ComfyUI moved to [Wiki](https://github.com/robertrosenbusch/gfx80
 
 0. build the Docker Baseimage from this GITRepo for gfx803 first.
 1. Build the Docker Image for WhisperX, it takes aroud 2,5 hours: `docker build -f Dockerfile_rocm64_whisperx . -t 'rocm64_gfx803_whisperx:latest'`
-2. Open your Webbrowser `http://YOUR_LOCAL_IP:7860` to use WhisperX-WebUI and Download a tiny/small/default LLVM to transcribe
-3. Enter to the Dockercontainer `docker exec -ti rocm64_gfx803_whisperx:latest bash` and use `amdgpu_top` to monitor your GPU
-
-
-
-
+2. Start the container via `docker run -it --device=/dev/kfd --device=/dev/dri --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --name rocm64_whisperx rocm64_gfx803_whisperx:latest bash`
+3. Open your Webbrowser `http://YOUR_LOCAL_IP:7860` to use WhisperX-WebUI and Download a tiny/small/default LLVM to transcribe
+4. Enter to the Dockercontainer `docker exec -ti rocm64_gfx803_whisperx:latest bash` and use `amdgpu_top` to monitor your GPU
 
 
 
