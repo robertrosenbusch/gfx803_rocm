@@ -1,9 +1,12 @@
-# Docker Buildfile for ROCm 6.4 to use Ollama v0.7.x/0.6.X and llama.cpp with a RX5(x)0 / Polaris / gfx803 AMD GPU
+# Docker Buildfile for ROCm 6.4.1 to use Ollama v0.9. till 0.6.X with a RX5(x)0 / Polaris / gfx803 AMD GPU
 # created, build and compiled by Robert Rosenbusch at May-April 2025
 # include llm-benchmnark and open-webui GUI
 
 ### Build rocm6_gfx803_base:6.4 first! Read the README.md, it could save lifetime :P
-FROM rocm6_gfx803_base:6.4
+FROM rocm6_gfx803_base:6.4.1
+LABEL org.opencontainers.image.authors="Robert Rosenbusch <mail@robert-rosenbusch.de>"
+LABEL org.opencontainers.image.url="https://github.com/robertrosenbusch/gfx803_rocm"
+LABEL org.opencontainers.image.title="Dockerized ROCm 6.4.0 to use fancy AI Stuff on Ollama/WhisperX/ComfyUI on [GFX803/Polaris/RX5x0]"
 
 ENV OLLAMA_WEBGUI_PORT=8080 \
     OLLAMA_PORT=11434 \

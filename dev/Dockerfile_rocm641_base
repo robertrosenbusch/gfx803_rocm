@@ -1,7 +1,11 @@
-# Docker _BASE_ Buildfile for ROCm 6.4 to use Ollama/WhisperX/ComfyUI with a RX570 / Polaris / gfx803 AMD GPU
+# Docker _BASE_ Buildfile for ROCm 6.4.1 to use Ollama/WhisperX/ComfyUI with a RX570 / Polaris / gfx803 AMD GPU
 # created, build and compiled by Robert Rosenbusch at May-April 2025
 
-FROM rocm/dev-ubuntu-24.04:6.4-complete
+FROM rocm/dev-ubuntu-24.04:6.4.1-complete
+LABEL org.opencontainers.image.authors="Robert Rosenbusch <mail@robert-rosenbusch.de>"
+LABEL org.opencontainers.image.url="https://github.com/robertrosenbusch/gfx803_rocm"
+LABEL org.opencontainers.image.title="Dockerized ROCm 6.4.1 Base Container to use fancy AI Stuff on Ollama/WhisperX/ComfyUI/LLama.cpp/SD.Next on [GFX803/Polaris/RX5x0]"
+
 
 SHELL ["/bin/bash", "-c"]  
 ENV COMMANDLINE_ARGS='' \
@@ -17,7 +21,7 @@ ENV COMMANDLINE_ARGS='' \
     USE_ROCM=1 \ 
     USE_NINJA=1 \
     FORCE_CUDA=1 \ 
-    JOBLIB_START_METHOD=thread \
+    #JOBLIB_START_METHOD=thread \
     #TORCH_ROCM_AOTRITON_ENABLE_EXPERIMENTAL=1 \
     #PYTORCH_TUNABLEOP_ENABLED=1 \
 #######
@@ -40,7 +44,7 @@ RUN echo OLLAMA_HOST=${OLLAMA_HOST} >> /etc/environment && \
     echo USE_ROCM=${USE_ROCM} >> /etc/environment && \
     echo USE_NINJA=${USE_NINJA} >> /etc/environment && \
     echo FORCE_CUDA=${FORCE_CUDA} >> /etc/environment && \
-    echo JOBLIB_START_METHOD=${JOBLIB_START_METHOD} >> /etc/environment && \
+    #echo JOBLIB_START_METHOD=${JOBLIB_START_METHOD} >> /etc/environment && \
     echo PIP_ROOT_USER_ACTION=${PIP_ROOT_USER_ACTION} >> /etc/environment && \
     true
 
@@ -56,7 +60,7 @@ RUN export OLLAMA_HOST=${OLLAMA_HOST} && \
     export USE_ROCM=${USE_ROCM}  && \
     export USE_NINJA=${USE_NINJA} && \
     export FORCE_CUDA=${FORCE_CUDA} && \
-    export JOBLIB_START_METHOD=${JOBLIB_START_METHOD} && \
+    #export JOBLIB_START_METHOD=${JOBLIB_START_METHOD} && \
     export PIP_ROOT_USER_ACTION=${PIP_ROOT_USER_ACTION} && \
     true
   
