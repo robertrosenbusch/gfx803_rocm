@@ -6,7 +6,7 @@
 FROM rocm6_gfx803_base:6.4.1
 LABEL org.opencontainers.image.authors="Robert Rosenbusch <mail@robert-rosenbusch.de>"
 LABEL org.opencontainers.image.url="https://github.com/robertrosenbusch/gfx803_rocm"
-LABEL org.opencontainers.image.title="Dockerized ROCm 6.4.0 to use fancy AI Stuff on Ollama/WhisperX/ComfyUI on [GFX803/Polaris/RX5x0]"
+LABEL org.opencontainers.image.title="Dockerized ROCm 6.4.1 to use fancy AI Stuff on Ollama/WhisperX/ComfyUI on [GFX803/Polaris/RX5x0]"
 
 SHELL ["/bin/bash", "-c"]  
 ENV WHISPERX_GUI_PORT=7860 \
