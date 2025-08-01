@@ -137,7 +137,7 @@ Benchmarks for ComfyUI moved to [Wiki](https://github.com/robertrosenbusch/gfx80
 
 ### ROCm-6.4.0: Build/Install PyTorch, TorchVision and TorchAudio on RX5(x)0/GFX803
 > [!WARNING]  
-> It takes a _lot_ of time and Storage space to compile. Around 40 GByte Storage and 2 hours to (re-)compile. Keep your head up. Its worth!
+> It takes a _lot_ of time and Storage space to compile. Around 40 GByte Storage and 2 hours to (re-)compile. You need 16 Gig RAM on your host system. Keep your head up. Its worth!
 
 0. build the Docker Baseimage from this GITRepo for gfx803 first. 
 1. build your Docker image via `docker build -f Dockerfile_rocm64_pytorch . -t 'rocm64_gfx803_pytorch:2.6'` 
