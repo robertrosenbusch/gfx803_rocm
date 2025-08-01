@@ -52,7 +52,7 @@ Ollama, PyTorch, Torchvision/Torchaudio _and_ rocBLAS-Library are not compiled t
 > |Kernel Version|>=6.15.8|6.14|6.13|>=6.12.21|6.11|6.10|6.9|6.6|6.2|5.19|
 > |--------------|-----|-----|-----|------|-----|------|-----|-----|-----|-----|
 > |working on ROCm6.4.(x) for Ollama/PyTorch/WhisperX|✅|🟥|🟥|✅|✅|✅|✅|✅|✅|✅|
-> Beware(!) the AMD-ROCm Team just only support 
+ Beware(!) the AMD-ROCm Team just only official support [these Kernel-Versions!](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html#supported-operating-systems)
 
 ---
 ## ROCm-6.4.0: Docker Baseimage for RX5(x)0/GFX803
