@@ -81,6 +81,9 @@ RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -
     export PATH=/opt/conda/bin:$PATH &&\
     true
 
+RUN /opt/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main \
+ && /opt/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
+
 RUN /opt/conda/bin/conda update -n base -c defaults conda &&\
     /opt/conda/bin/conda create -n py_3.12 python=3.12 &&\    
     /opt/conda/bin/conda init &&\
